@@ -13,7 +13,7 @@ const MEAT = {
 Art = Code = Philosophy = Play
 All boundaries are optional.
 
-⚠️ COGNITIVE WARNING ⚠️
+⚠️ COGNITIVE WARNING hello⚠️
 Not recommended if you are experiencing:
 • Mental health challenges
 • Substance-altered states
