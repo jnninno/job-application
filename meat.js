@@ -59,7 +59,7 @@ Have fun! Stay professional! Don't lose yourself!`,
   '[button.begin]': 'BEGIN REVIEW',
   
   // ================================================
-  // PHASE 2: CONSENSUS REALITY - PLACEHOLDERS
+  // PHASE 2: CONSENSUS REALITY
   // ================================================
   // === HUB ===
   '[hub.consensus.title]': 'APPLICATION REVIEW HUB',
@@ -100,10 +100,10 @@ Have fun! Stay professional! Don't lose yourself!`,
   '[button.animator.flee]': "I'D LOVE TO SEE THOSE EXPENSIVE PIXELS",
   '[button.animator.deeper.1]': 'THE GAP BETWEEN FRAMES... I SEE IT',
   '[button.animator.flee.1]': "THAT'S JUST HOW ANIMATION WORKS THOUGH",
-  '[button.animator.unlock]': "I'LL TAKE THE MAP, SEE WHAT I CAN SEE",
-  '[button.animator.flee.2]': 'THANKS, BUT I UNDERSTAND REALITY FINE',
-  '[button.animator.accept]': 'TAKE MAP',
-  '[button.animator.reject]': 'REFUSE MAP',
+  '[button.animator.unlock]': 'OH THANK YOU, WHAT DO YOU HAVE?',
+  '[button.animator.flee.2]': "OH DON'T WORRY, I'M SURE YOUR REEL IS ENOUGH",
+  '[button.animator.accept]': 'TAKE THE OLD MAP',
+  '[button.animator.reject]': 'REFUSE THE STRANGE MAP',
   
   // WRITER (2 inquiries)
   '[button.writer.inquire]': '[button.writer.inquire]',
@@ -206,34 +206,34 @@ Have fun! Stay professional! Don't lose yourself!`,
   '[portfolio.void]': '...',
   
   // === CANDIDATES 1-7 (CONSENSUS) ===
-  // ANIMATOR - FULLY IMPLEMENTED
+  // ANIMATOR - FULLY POLISHED & IMPLEMENTED
   '[animator.name]': 'THE ANIMATOR',
   
   '[animator.intro]': `Hello there, my name is Juan!
 
 I've been translating imagination into pixels since I was a kid. Now I work for big studios - same imagination, more expensive pixels.
 
-But here's the thing - recently I've discovered that motion is way more interesting than animation...`,
+But here's the thing - recently I've been noticing something mysterious about motion itself...`,
 
-  '[animator.inquiry.1]': `Watch this -
+  '[animator.inquiry.1]': `Sure! Let me show you!
 
-When I animate Rocket slapping Thor: frame 1, paw back. Frame 2, paw on jaw. But the actual SLAP? The motion itself? That's not in either frame. It's in the gap. Your brain creates it from nothing.
+In my animation reel, Rocket slaps Thor: frame 1, paw back. Frame 2, paw on jaw. But the actual SLAP? The motion itself? That's not in either frame. It's in the gap. Your brain creates it from nothing.
 
 Over a decade doing this, just noticed...
 
 The frames are dead pixels until someone witnesses them in sequence. Something has to BE there, connecting them. Creating the continuity.
 
-Is that weird to think about?`,
+Do you see what I mean?`,
 
   '[animator.inquiry.2]': `Exactly - consciousness, awareness, whatever we call it.
 
 In animation, we say "persistence of vision" - the eye holds each frame just long enough to blend with the next. But that's just a name for something witnessing. Something creating continuity from stillness.
 
-I've been staring at this problem for months. Motion lives in the gaps between frames. That's my whole discovery. Maybe it helps?
+Motion lives in the gaps between frames. That's my whole discovery.
 
-Here's my map - it's how most of us think about reality. Maybe you'll see something I missed.`,
+Look, it's just something I like to think about. Thanks for listening! Here, I have something for you.`,
 
-  '[animator.map.unlock]': `This map is what most people believe. What I believed.
+  '[animator.map.unlock]': `Here, I found this map. It's very useful - I believe it 100%, like most people do.
 
 Reality is matter and energy. Nothing else.
 Consciousness? Just neurons firing.
@@ -245,19 +245,17 @@ It's just...
 
 'Neurons firing' - that's consciousness? That's like saying the projector IS the movie. The projector runs the film, sure, but who's watching?
 
-Probably nothing. The map must be right. It has to be.`,
+Probably nothing. The map must be right. It has to be.
 
-  '[animator.map.intro]': `There's another candidate here. They see things differently.
+Here, take a look...`,
 
-Maybe they can explain what I'm missing.`,
+  '[animator.map.intro]': `Sorry it's so old and beat up - the edges are all worn and the paper's yellowed. 
 
-  '[animator.map.examine]': `FRAME BY FRAME MAP
+And it smells like... well, like those forgotten sections in libraries, you know?
 
-Every moment is a still image. The motion happens in the gaps. 
+But I found it really interesting! Maybe you will too.`,
 
-The map shows reality as discrete frames - quantum moments of frozen time. But something flows between them. Something that isn't in the frames themselves.
-
-Like animation, but backwards. We think the frames create the motion. What if the motion creates the frames?`,
+  '[animator.map.examine]': `[PENDING MAP CONTENT - TO BE REPLACED]`,
 
   '[animator.death.flee]': `*catches himself*
 
@@ -393,7 +391,7 @@ I still don't fully understand it, but those empty spaces... they might be more 
   '[void.remember]': '[void.remember.text]',
   
   // ================================================
-  // PHASE 4: PIRATE ASCENT - PLACEHOLDERS + ANIMATOR IMPLEMENTED
+  // PHASE 4: PIRATE ASCENT - ANIMATOR IMPLEMENTED
   // ================================================
   // === PIRATE MODE: PLAYER CHOICES ===
   '[button.animator.wind]': 'THE GAPS... YES, THE EMPTINESS MATTERS',
@@ -446,12 +444,13 @@ I still don't fully understand it, but those empty spaces... they might be more 
   '[captain.flow]': '[captain.flow.text]',
   '[captain.anchor]': '[captain.anchor.text]',
   
-  // === CAPTAIN EXPLAIN TEXT - ANIMATOR IMPLEMENTED ===
-  '[captain.animator.explain]': `The Animator understood something crucial - reality isn't continuous. It's frames. Moments. Snapshots.
+  // === CAPTAIN EXPLAIN TEXT - ANIMATOR FULLY IMPLEMENTED ===
+  '[captain.animator.explain]': `The Animator's state is PURE WATCHING - the consciousness that witnesses without interfering, like the audience watching a film.
 
-But something creates the illusion of continuity. That something is you. The observer. The one who connects the frames.
+Reality isn't continuous. It's frames. Moments. Snapshots. But something creates the illusion of continuity. That something is you. The observer. The one who connects the frames.
 
 Without you, there's just a pile of still images. With you, there's a universe in motion.`,
+  
   '[captain.writer.explain]': '[captain.writer.explain.text]',
   '[captain.questioner.explain]': '[captain.questioner.explain.text]',
   '[captain.idiot.explain]': '[captain.idiot.explain.text]',
