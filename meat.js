@@ -95,15 +95,15 @@ Have fun! Stay professional! Don't lose yourself!`,
   '[button.dots]': '...',
   
   // === CONSENSUS MODE: PLAYER CHOICES ===
-  // ANIMATOR (2 inquiries)
-  '[button.animator.inquire]': '[button.animator.inquire]',
-  '[button.animator.flee]': '[button.animator.flee]',
-  '[button.animator.deeper.1]': '[button.animator.deeper.1]',
-  '[button.animator.flee.1]': '[button.animator.flee.1]',
-  '[button.animator.unlock]': '[button.animator.unlock]',
-  '[button.animator.flee.2]': '[button.animator.flee.2]',
-  '[button.animator.accept]': '[button.animator.accept]',
-  '[button.animator.reject]': '[button.animator.reject]',
+  // ANIMATOR (2 inquiries) - FULLY IMPLEMENTED
+  '[button.animator.inquire]': 'SHOW ME WHAT YOU MEAN',
+  '[button.animator.flee]': "I'D LOVE TO SEE THOSE EXPENSIVE PIXELS",
+  '[button.animator.deeper.1]': 'THE GAP BETWEEN FRAMES... I SEE IT',
+  '[button.animator.flee.1]': "THAT'S JUST HOW ANIMATION WORKS THOUGH",
+  '[button.animator.unlock]': "I'LL TAKE THE MAP, SEE WHAT I CAN SEE",
+  '[button.animator.flee.2]': 'THANKS, BUT I UNDERSTAND REALITY FINE',
+  '[button.animator.accept]': 'TAKE MAP',
+  '[button.animator.reject]': 'REFUSE MAP',
   
   // WRITER (2 inquiries)
   '[button.writer.inquire]': '[button.writer.inquire]',
@@ -205,20 +205,92 @@ Have fun! Stay professional! Don't lose yourself!`,
   '[portfolio.navigator]': 'Navigation Charts',
   '[portfolio.void]': '...',
   
-  // === CANDIDATES 1-7 (CONSENSUS) - PLACEHOLDERS ===
-  // ANIMATOR
+  // === CANDIDATES 1-7 (CONSENSUS) ===
+  // ANIMATOR - FULLY IMPLEMENTED
   '[animator.name]': 'THE ANIMATOR',
-  '[animator.intro]': '[animator.intro.text]',
-  '[animator.inquiry.1]': '[animator.inquiry.1.text]',
-  '[animator.inquiry.2]': '[animator.inquiry.2.text]',
-  '[animator.map.unlock]': '[animator.map.unlock.text]',
-  '[animator.map.intro]': '[animator.map.intro.text]',
-  '[animator.map.examine]': '[animator.map.examine.text]',
-  '[animator.death.flee]': '[animator.death.flee.text]',
-  '[animator.death.reject]': '[animator.death.reject.text]',
-  '[animator.revisit]': '[animator.revisit.text]',
-  '[animator.remember]': '[animator.remember.text]',
   
+  '[animator.intro]': `Hello there, my name is Juan!
+
+I've been translating imagination into pixels since I was a kid. Now I work for big studios - same imagination, more expensive pixels.
+
+But here's the thing - recently I've discovered that motion is way more interesting than animation...`,
+
+  '[animator.inquiry.1]': `Watch this -
+
+When I animate Rocket slapping Thor: frame 1, paw back. Frame 2, paw on jaw. But the actual SLAP? The motion itself? That's not in either frame. It's in the gap. Your brain creates it from nothing.
+
+Over a decade doing this, just noticed...
+
+The frames are dead pixels until someone witnesses them in sequence. Something has to BE there, connecting them. Creating the continuity.
+
+Is that weird to think about?`,
+
+  '[animator.inquiry.2]': `Exactly - consciousness, awareness, whatever we call it.
+
+In animation, we say "persistence of vision" - the eye holds each frame just long enough to blend with the next. But that's just a name for something witnessing. Something creating continuity from stillness.
+
+I've been staring at this problem for months. Motion lives in the gaps between frames. That's my whole discovery. Maybe it helps?
+
+Here's my map - it's how most of us think about reality. Maybe you'll see something I missed.`,
+
+  '[animator.map.unlock]': `This map is what most people believe. What I believed.
+
+Reality is matter and energy. Nothing else.
+Consciousness? Just neurons firing.
+Everything reducible to physics.
+
+This map built our entire world. Every cure. Every machine. Every frame I've ever animated. It works. Perfectly.
+
+It's just...
+
+'Neurons firing' - that's consciousness? That's like saying the projector IS the movie. The projector runs the film, sure, but who's watching?
+
+Probably nothing. The map must be right. It has to be.`,
+
+  '[animator.map.intro]': `There's another candidate here. They see things differently.
+
+Maybe they can explain what I'm missing.`,
+
+  '[animator.map.examine]': `FRAME BY FRAME MAP
+
+Every moment is a still image. The motion happens in the gaps. 
+
+The map shows reality as discrete frames - quantum moments of frozen time. But something flows between them. Something that isn't in the frames themselves.
+
+Like animation, but backwards. We think the frames create the motion. What if the motion creates the frames?`,
+
+  '[animator.death.flee]': `*catches himself*
+
+Right, right - you're here for the portfolio, not my philosophical tangents!
+
+*lights up*
+
+Here, let me show you the Rocket slapping Thor - felt nice to hit Chris Hemsworth's annoying perfect jawline through Rocket!`,
+
+  '[animator.death.reject]': `*gets even MORE excited*
+
+Hey that's cool, I wish I knew as much as you about reality!
+
+The only thing I really know is making fake stuff look real.
+
+Speaking of which - want to see the exact frames I was talking about? The Rocket slap? I can show you where the motion ISN'T!`,
+
+  '[animator.revisit]': `Oh, you're back! I'd love to chat more about the motion thing!
+
+Wait...
+
+...oh, I think that's Mila - my daughter - calling for me. She's priority #1.
+
+But hey, the other candidates are pretty cool, you should chat with them!`,
+
+  '[animator.remember]': `Oh! I remember now... the gaps! The motion lives in the gaps between frames.
+
+But also... maybe consciousness is like that too? Living in the spaces between things?
+
+*pauses, uncertain*
+
+I still don't fully understand it, but those empty spaces... they might be more important than what we fill them with.`,
+
   // WRITER
   '[writer.name]': 'THE WRITER',
   '[writer.intro]': '[writer.intro.text]',
@@ -321,11 +393,11 @@ Have fun! Stay professional! Don't lose yourself!`,
   '[void.remember]': '[void.remember.text]',
   
   // ================================================
-  // PHASE 4: PIRATE ASCENT - PLACEHOLDERS
+  // PHASE 4: PIRATE ASCENT - PLACEHOLDERS + ANIMATOR IMPLEMENTED
   // ================================================
   // === PIRATE MODE: PLAYER CHOICES ===
-  '[button.animator.wind]': '[button.animator.wind]',
-  '[button.animator.anchor]': '[button.animator.anchor]',
+  '[button.animator.wind]': 'THE GAPS... YES, THE EMPTINESS MATTERS',
+  '[button.animator.anchor]': 'NO, THERE MUST BE SOMETHING SOLID CREATING MOTION',
   '[button.writer.wind]': '[button.writer.wind]',
   '[button.writer.anchor]': '[button.writer.anchor]',
   '[button.questioner.wind]': '[button.questioner.wind]',
@@ -374,8 +446,12 @@ Have fun! Stay professional! Don't lose yourself!`,
   '[captain.flow]': '[captain.flow.text]',
   '[captain.anchor]': '[captain.anchor.text]',
   
-  // === CAPTAIN EXPLAIN TEXT ===
-  '[captain.animator.explain]': '[captain.animator.explain.text]',
+  // === CAPTAIN EXPLAIN TEXT - ANIMATOR IMPLEMENTED ===
+  '[captain.animator.explain]': `The Animator understood something crucial - reality isn't continuous. It's frames. Moments. Snapshots.
+
+But something creates the illusion of continuity. That something is you. The observer. The one who connects the frames.
+
+Without you, there's just a pile of still images. With you, there's a universe in motion.`,
   '[captain.writer.explain]': '[captain.writer.explain.text]',
   '[captain.questioner.explain]': '[captain.questioner.explain.text]',
   '[captain.idiot.explain]': '[captain.idiot.explain.text]',
