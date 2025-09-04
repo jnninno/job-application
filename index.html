@@ -453,8 +453,6 @@ function showUnlock(id) {
   
   let html = `<h2>${getMeat('[' + id + '.name]')}</h2>`;
   html += `<p>${getMeat('[' + id + '.map.unlock]')}</p>`;
-  html += `<p>${getMeat('[status.current]')} ${STATE.certainty}%</p>`;
-  html += `<p>${getMeat('[status.after]')} ${Math.max(0, STATE.certainty + candidate.certainty_delta)}%</p>`;
   html += randomizeButtons(
     '[button.' + id + '.accept]',
     '[button.' + id + '.reject]',
@@ -849,7 +847,7 @@ function resetGame() {
   STATE.remembered = [];
   STATE.flow_states = [];
   STATE.maps = CONFIG.IS_DEV ? Object.keys(CANDIDATES).filter(k => k !== 'void') : [];
-  STATE.portfolios = CONFIG.IS_DEV ? Object.keys(CANDIDATES).filter(k => k !== 'void' && CANDIDATES[k].portfolio) : [];
+  STATE.portfolios = CONFIG.IS_DEV ? Object.keys(CANDIDATES).filter(k => k !== 'void' && CANDIDATES[k].portfolio) : ['animator'],
   STATE.void_dissolved = false;
   STATE.loop_count++;
   
