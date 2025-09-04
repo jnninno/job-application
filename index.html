@@ -198,7 +198,7 @@ const STATE = {
   remembered: [],
   flow_states: [],
   maps: CONFIG.IS_DEV ? Object.keys(CANDIDATES).filter(k => k !== 'void') : [],
-  portfolios: CONFIG.IS_DEV ? Object.keys(CANDIDATES).filter(k => k !== 'void' && CANDIDATES[k].portfolio) : [],
+  portfolios: CONFIG.IS_DEV ? Object.keys(CANDIDATES).filter(k => k !== 'void' && CANDIDATES[k].portfolio) : ['animator'],
   map_folder_open: false,
   portfolio_folder_open: false,
   loop_count: 1,
