@@ -842,11 +842,14 @@ function resetGame() {
   STATE.bearing = 61.8;
   STATE.current_candidate = null;
   STATE.current_inquiry = 0;
+  STATE.unlocked = CONFIG.IS_DEV ? Object.keys(CANDIDATES) : ['animator'];
   STATE.completed = [];
   STATE.revisitable = [];
   STATE.revisited = [];
   STATE.remembered = [];
   STATE.flow_states = [];
+  STATE.maps = CONFIG.IS_DEV ? Object.keys(CANDIDATES).filter(k => k !== 'void') : [];
+  STATE.portfolios = CONFIG.IS_DEV ? Object.keys(CANDIDATES).filter(k => k !== 'void' && CANDIDATES[k].portfolio) : [];
   STATE.void_dissolved = false;
   STATE.loop_count++;
   
