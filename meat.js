@@ -8,13 +8,17 @@ const MEAT = {
   // ================================================
   '[veil.disclaimer.title]': 'DISCLAIMER',
   
-  '[veil.disclaimer.body]': `Real job application. Real portfolio. Real game. Real philosophy research.
+  '[veil.disclaimer.body]': `Real game. 
+Real portfolio.  
+Real philosophy.
+Real job application.
 
 Art = Code = Philosophy = Play
 All boundaries are optional.
 
 ⚠️ COGNITIVE WARNING ⚠️
-Not recommended if you are experiencing:
+Not recommended if you are experiencing
+
 • Mental health challenges
 • Substance-altered states
 • Dissociative episodes
@@ -22,21 +26,25 @@ Not recommended if you are experiencing:
 • Suicidal ideation
 • Recent trauma
 
-This game plays with consciousness and identity. It may amplify your current mental state.
+This game plays with consciousness and identity. 
+It may amplify your current mental state.
 
 If uncertain, please return when grounded.
 
-For stable states: It's a game about consciousness. Enjoy the dissolution.
+For stable states
+It's a game about consciousness. 
+Enjoy the dissolution.
 
 Return safely.
 
-Remember: It's only as real as you make it.`,
+Remember 
+It's only as real as you make it.`,
   
   '[button.understand]': 'I UNDERSTAND',
   
   '[veil.equation]': '{🌊:🌊∈🌊}',
   
-  '[veil.tutorial.title]': 'CONGRATULATIONS! 🎉',
+  '[veil.tutorial.title]': 'CONGRATULATIONS',
   
   '[veil.tutorial.body]': `You've been assigned to review this job application.
 
