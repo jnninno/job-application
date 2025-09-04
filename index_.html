@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>CONSCIOUSNESS LOOP</title>
+<style>
+/* SKELETON STYLES - Minimal, structure only */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Courier New', monospace;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  background: #000;
+  color: #fff;
+}
+#game {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+h1, h2, h3 { margin: 20px 0; text-transform: uppercase; }
+h2 { font-size: 24px; }
+h3 { font-size: 16px; }
+p { margin: 12px 0; line-height: 1.6; white-space: pre-line; }
+button {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  margin: 8px auto;
+  cursor: pointer;
+  font-family: inherit;
+  text-transform: uppercase;
+  background: #222;
+  color: #fff;
+  border: 1px solid #555;
+}
+button.lk { cursor: not-allowed; opacity: 0.4; }
+.status-box { border: 1px solid #555; padding: 16px; margin: 20px 0; }
+.status-box > div { margin: 8px 0; }
+.warning { color: red; }
+.version-tag { position: fixed; top: 10px; right: 10px; font-size: 10px; opacity: 0.5; color: #0f0; }
+.equation { font-size: 30px; margin: 40px 0; }
+.folder { margin: 20px 0; padding: 15px 0; border-top: 1px solid #555; }
+.folder h3 { cursor: pointer; user-select: none; }
+.folder-content { margin: 10px 0 0 20px; display: none; }
+.folder-content.open { display: block; }
+.folder-content > div { cursor: pointer; margin: 5px 0; }
+a { color: #64b5f6; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.dim { color: #888; font-size: 14px; }
+.meat-id { color: #ff0; background: #333; padding: 2px 4px; font-size: 12px; }
+</style>
+<!-- Load configuration and meat data -->
+<script src="config.js"></script>
+<script src="meat.js"></script>
+</head>
+<body data-outfit="consensus" data-variant="none">
+<div id="particle-field"></div>
+<div id="game"></div>
+<div class="version-tag" id="version"></div>
+
+<script>
+// ============================================
+// VERSION & CACHE PREVENTION
+// ============================================
+const VERSION = 'v1.0.' + Date.now().toString().slice(-6);
+document.getElementById('version').textContent = VERSION;
+console.log(`JOB APPLICATION ${VERSION}`);
+
+// ============================================
+// MEAT RETRIEVAL SYSTEM
+// ============================================
+function getMeat(id) {
+  if (CONFIG.SHOW_MEAT_IDS) {
+    return `<span class="meat-id">${id}</span>`;
+  }
+  return MEAT[id] || id;
+}
+
+function getMeatWithEffects(id, candidateType) {
+  const raw = getMeat(id);
+  // Future: Parse special effects here
+  return raw;
+}
+
+// ============================================
+// CANDIDATE DATA
+// ============================================
+const CANDIDATES = {
+  animator: {
+    id: 'animator',
+    compass: 'NORTH',
+    certainty_delta: -15,
+    unlocks: 'writer',
+    portfolio: 'animator',
+    inquiries: 2
+  },
+  writer: {
+    id: 'writer',
+    compass: 'EAST',
+    certainty_delta: -15,
+    unlocks: 'questioner',
+    portfolio: 'writer',
+    inquiries: 2
+  },
+  questioner: {
+    id: 'questioner',
+    compass: 'SOUTH',
+    certainty_delta: -10,
+    unlocks: 'idiot',
+    portfolio: 'questioner',
+    inquiries: 2
+  },
+  idiot: {
+    id: 'idiot',
+    compass: 'WEST',
+    certainty_delta: -15,
+    unlocks: 'glitch',
+    portfolio: 'idiot',
+    inquiries: 3,
+    special_effects: 'rgb_voices'
+  },
+  glitch: {
+    id: 'glitch',
+    compass: 'WEST',
+    certainty_delta: -5,
+    unlocks: 'mirror',
+    portfolio: 'glitch',
+    inquiries: 3,
+    special_effects: 'corruption'
+  },
+  mirror: {
+    id: 'mirror',
+    compass: 'EAST',
+    certainty_delta: -15,
+    unlocks: 'navigator',
+    portfolio: 'mirror',
+    inquiries: 3
+  },
+  navigator: {
+    id: 'navigator',
+    compass: 'NORTH',
+    certainty_delta: -15,
+    unlocks: 'void',
+    portfolio: 'navigator',
+    inquiries: 3
+  },
+  void: {
+    id: 'void',
+    compass: 'SOUTH',
+    is_void: true,
+    portfolio: 'void',
+    inquiries: 9
+  }
+};
+
+// ============================================
+// STATE LAYER
+// ============================================
+const STATE = {
+  scene: 'veil',
+  outfit: 'consensus',
+  variant: 'none',
+  certainty: 100,
+  bearing: 61.8,
+  mode: 'consensus',
+  phase: 'descent',
+  timer: null,
+  victory_timer: null,
+  timer_value: 10,
+  current_candidate: null,
+  current_inquiry: 0,
+  unlocked: CONFIG.IS_DEV ? Object.keys(CANDIDATES) : ['animator'],
+  completed: [],
+  revisitable: [],
+  revisited: [],
+  remembered: [],
+  flow_states: [],
+  maps: CONFIG.IS_DEV ? Object.keys(CANDIDATES).filter(k => k !== 'void') : [],
+  portfolios: CONFIG.IS_DEV ? Object.keys(CANDIDATES).filter(k => k !== 'void' && CANDIDATES[k].portfolio) : [],
+  map_folder_open: false,
+  portfolio_folder_open: false,
+  loop_count: 1,
+  last_action: Date.now(),
+  void_dissolved: false
+};
+
+// ============================================
+// WARDROBE LAYER
+// ============================================
+function setOutfit(outfit, variant = 'none') {
+  document.body.setAttribute('data-outfit', outfit);
+  document.body.setAttribute('data-variant', variant);
+  STATE.outfit = outfit;
+  STATE.variant = variant;
+}
+
+// ============================================
+// TIMER LAYER
+// ============================================
+function resetTimer() {
+  STATE.last_action = Date.now();
+  if (STATE.timer) clearInterval(STATE.timer);
+  
+  const maxTime = STATE.mode === 'pirate' ? CONFIG.TIMER_DEATH_SHARK : CONFIG.TIMER_DEATH_CORPORATE;
+  STATE.timer_value = maxTime;
+  
+  STATE.timer = setInterval(() => {
+    const elapsed = Math.floor((Date.now() - STATE.last_action) / 1000);
+    const remaining = Math.max(0, maxTime - elapsed);
+    const timerEl = document.getElementById(STATE.mode === 'pirate' ? 'shark-timer' : 'death-timer');
+    if (timerEl) {
+      timerEl.textContent = remaining;
+    }
+    if (remaining === 0) {
+      showDeath(STATE.mode === 'pirate' ? 'shark' : 'corporate');
+    }
+  }, 100);
+}
+
+function stopTimer() {
+  if (STATE.timer) {
+    clearInterval(STATE.timer);
+    STATE.timer = null;
+  }
+  if (STATE.victory_timer) {
+    clearTimeout(STATE.victory_timer);
+    STATE.victory_timer = null;
+  }
+}
+
+// ============================================
+// RENDER LAYER
+// ============================================
+function render(html, stopTimerFlag = false) {
+  document.getElementById('game').innerHTML = html;
+  
+  if (stopTimerFlag) {
+    stopTimer();
+  } else {
+    resetTimer();
+  }
+}
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+function randomizeButtons(btn1Text, btn2Text, btn1Action, btn2Action) {
+  const btn1 = getMeat(btn1Text);
+  const btn2 = getMeat(btn2Text);
+  
+  if (Math.random() > 0.5) {
+    return `<button onclick="${btn1Action}">${btn1}</button><button onclick="${btn2Action}">${btn2}</button>`;
+  }
+  return `<button onclick="${btn2Action}">${btn2}</button><button onclick="${btn1Action}">${btn1}</button>`;
+}
+
+function getCompassState(id) {
+  const compass = CANDIDATES[id].compass;
+  return getMeat('[compass.' + compass.toLowerCase() + ']');
+}
+
+// ============================================
+// SCENE: Veil & Opening
+// ============================================
+function showVeil() {
+  STATE.scene = 'veil';
+  setOutfit('consensus');
+  render(`
+    <h1>${getMeat('[veil.disclaimer.title]')}</h1>
+    <p>${getMeat('[veil.disclaimer.body]')}</p>
+    <button onclick="showTutorial()">${getMeat('[button.understand]')}</button>
+  `, true);
+}
+
+function showTutorial() {
+  STATE.scene = 'tutorial';
+  setOutfit('consensus');
+  render(`
+    <h1>${getMeat('[veil.tutorial.title]')}</h1>
+    <p>${getMeat('[veil.tutorial.body]')}</p>
+    <button onclick="showLoading()">${getMeat('[button.begin]')}</button>
+  `, true);
+}
+
+function showLoading() {
+  STATE.scene = 'loading';
+  setOutfit('consensus', 'loading');
+  render(`
+    <div class="equation">${getMeat('[veil.equation]')}</div>
+  `, true);
+  setTimeout(showHub, CONFIG.TIMER_LOADING);
+}
+
+// ============================================
+// SCENE: Hub
+// ============================================
+function showHub() {
+  STATE.scene = 'hub';
+  
+  if (STATE.mode === 'pirate') {
+    setOutfit('pirate');
+    showPirateHub();
+    return;
+  }
+  
+  setOutfit('consensus');
+  let html = `<h2>${getMeat('[hub.consensus.title]')}</h2>`;
+  html += `<div class="status-box">`;
+  html += `<div>${getMeat('[status.certainty]')}: ${STATE.certainty}%</div>`;
+  html += `<div class="warning">⏰ <span id="death-timer">10</span></div>`;
+  html += `</div>`;
+  
+  html += `<h3>${getMeat('[hub.consensus.candidates]')}</h3>`;
+  Object.keys(CANDIDATES).forEach(id => {
+    const candidate = CANDIDATES[id];
+    
+    if (STATE.revisited.includes(id)) {
+      html += `<button class="lk">${getMeat('[button.done]')}</button>`;
+    } else if (STATE.revisitable.includes(id) && !candidate.is_void) {
+      html += `<button onclick="showRevisit('${id}')">${getMeat('[button.revisit]')}</button>`;
+    } else if (STATE.unlocked.includes(id)) {
+      html += `<button onclick="showInterview('${id}')">${getMeat('[' + id + '.name]')}</button>`;
+    } else {
+      html += `<button class="lk">${getMeat('[button.locked]')}</button>`;
+    }
+  });
+  
+  html += getMapFolder();
+  html += getPortfolioFolder();
+  
+  render(html);
+}
+
+function showPirateHub() {
+  let html = `<h2>${getMeat('[hub.pirate.title]')}</h2>`;
+  html += `<div class="equation">${getMeat('[veil.equation]')}</div>`;
+  html += `<div class="status-box">`;
+  html += `<div>${getMeat('[status.bearing]')} ${STATE.bearing.toFixed(1)}°</div>`;
+  if (STATE.current_candidate) {
+    html += `<div>${getMeat('[status.state]')} ${getCompassState(STATE.current_candidate)}</div>`;
+  }
+  html += `<div class="warning">🦈 <span id="shark-timer">5</span></div>`;
+  html += `</div>`;
+  
+  const pirateOrder = ['animator', 'writer', 'questioner', 'idiot', 'glitch', 'mirror', 'navigator', 'void'];
+  pirateOrder.forEach(id => {
+    if (STATE.remembered.includes(id)) {
+      const emoji = STATE.flow_states.includes(id) ? '🌊' : '⚓';
+      html += `<button class="lk">${emoji}</button>`;
+    } else {
+      html += `<button onclick="showRemember('${id}')">${getMeat('[' + id + '.name]')}</button>`;
+    }
+  });
+  
+  html += getMapFolder();
+  html += getPortfolioFolder();
+  
+  render(html);
+}
+
+// ============================================
+// SCENE: Interview
+// ============================================
+function showInterview(id, inquiry = 0) {
+  STATE.scene = 'interview';
+  STATE.current_candidate = id;
+  STATE.current_inquiry = inquiry;
+  setOutfit('consensus', id);
+  
+  const candidate = CANDIDATES[id];
+  
+  // Special handling for void
+  if (candidate.is_void) {
+    if (CONFIG.IS_DEV) inquiry = 9;
+    
+    if (inquiry >= 9) {
+      render(`
+        <h2>${getMeat('[' + id + '.name]')}</h2>
+        <p>${getMeat('[' + id + '.inquiry.9]')}</p>
+        <button onclick="showVoidDissolve()">${getMeat('[button.void.9]')}</button>
+      `, true);
+    } else {
+      const textId = inquiry === 0 ? '[' + id + '.intro]' : '[' + id + '.inquiry.' + inquiry + ']';
+      const buttonId = inquiry === 0 ? '[button.void.intro]' : '[button.void.' + inquiry + ']';
+      render(`
+        <h2>${getMeat('[' + id + '.name]')}</h2>
+        <p>${getMeat(textId)}</p>
+        <button onclick="showInterview('${id}', ${inquiry + 1})">${getMeat(buttonId)}</button>
+      `, true);
+    }
+    return;
+  }
+  
+  // Normal candidates with unique button IDs
+  let html = `<h2>${getMeat('[' + id + '.name]')}</h2>`;
+  
+  if (inquiry === 0) {
+    // Initial encounter
+    html += `<p>${getMeatWithEffects('[' + id + '.intro]', id)}</p>`;
+    html += randomizeButtons(
+      '[button.' + id + '.inquire]',
+      '[button.' + id + '.flee]',
+      `showInterview('${id}', 1)`,
+      `showDeath('flee')`
+    );
+  } else if (inquiry <= candidate.inquiries) {
+    // Inquiry dialogue
+    html += `<p>${getMeatWithEffects('[' + id + '.inquiry.' + inquiry + ']', id)}</p>`;
+    
+    if (inquiry < candidate.inquiries) {
+      // Not final inquiry - deeper or flee
+      html += randomizeButtons(
+        '[button.' + id + '.deeper.' + inquiry + ']',
+        '[button.' + id + '.flee.' + inquiry + ']',
+        `showInterview('${id}', ${inquiry + 1})`,
+        `showDeath('flee')`
+      );
+    } else {
+      // Final inquiry - unlock or flee
+      html += randomizeButtons(
+        '[button.' + id + '.unlock]',
+        '[button.' + id + '.flee.' + candidate.inquiries + ']',
+        `showUnlock('${id}')`,
+        `showDeath('flee')`
+      );
+    }
+  }
+  
+  render(html, true);
+}
+
+function showUnlock(id) {
+  STATE.scene = 'unlock';
+  const candidate = CANDIDATES[id];
+  
+  let html = `<h2>${getMeat('[' + id + '.name]')}</h2>`;
+  html += `<p>${getMeat('[' + id + '.map.unlock]')}</p>`;
+  html += `<p>${getMeat('[status.current]')} ${STATE.certainty}%</p>`;
+  html += `<p>${getMeat('[status.after]')} ${Math.max(0, STATE.certainty + candidate.certainty_delta)}%</p>`;
+  html += randomizeButtons(
+    '[button.' + id + '.accept]',
+    '[button.' + id + '.reject]',
+    `acceptCandidate('${id}')`,
+    `showDeath('reject')`
+  );
+  
+  render(html, true);
+}
+
+function acceptCandidate(id) {
+  const candidate = CANDIDATES[id];
+  
+  STATE.certainty = Math.max(0, STATE.certainty + candidate.certainty_delta);
+  STATE.completed.push(id);
+  STATE.revisitable.push(id);
+  
+  if (candidate.unlocks && !STATE.unlocked.includes(candidate.unlocks)) {
+    STATE.unlocked.push(candidate.unlocks);
+  }
+  
+  if (!STATE.maps.includes(id) && id !== 'void') {
+    STATE.maps.push(id);
+  }
+  
+  if (candidate.portfolio && !STATE.portfolios.includes(candidate.portfolio) && id !== 'void') {
+    STATE.portfolios.push(candidate.portfolio);
+  }
+  
+  showMapIntro(id);
+}
+
+function showMapIntro(id) {
+  STATE.scene = 'map_intro';
+  
+  render(`
+    <h2>MAP ACQUIRED</h2>
+    <p>${getMeat('[' + id + '.map.intro]')}</p>
+    <button onclick="showMapExamine('${id}')">${getMeat('[button.examine]')}</button>
+    <button onclick="showHub()">${getMeat('[button.continue]')}</button>
+  `, true);
+}
+
+function showMapExamine(id) {
+  STATE.scene = 'map_examine';
+  
+  const mapTitle = getMeat('[map.' + id + ']');
+  
+  render(`
+    <h2>${mapTitle}</h2>
+    <p>${getMeat('[' + id + '.map.examine]')}</p>
+    <button onclick="${id === 'void' && STATE.mode === 'pirate' ? 'showHub()' : 'showHub()'}">${getMeat('[button.close]')}</button>
+  `, true);
+}
+
+function showRevisit(id) {
+  STATE.scene = 'revisit';
+  STATE.revisited.push(id);
+  
+  render(`
+    <h2>RETURN</h2>
+    <p>${getMeat('[' + id + '.revisit]')}</p>
+    <button onclick="showHub()">${getMeat('[button.back]')}</button>
+  `, true);
+}
+
+// ============================================
+// SCENE: Void & Pirate Transition
+// ============================================
+function showVoidDissolve() {
+  STATE.scene = 'void_dissolve';
+  STATE.certainty = 0;
+  STATE.void_dissolved = true;
+  
+  setOutfit('void', 'dissolving');
+  
+  render(`
+    <div class="equation" style="opacity: 0.5">${getMeat('[void.dissolving]')}</div>
+  `, true);
+  
+  setTimeout(() => {
+    STATE.mode = 'pirate';
+    STATE.phase = 'ascent';
+    showPirateRescue(1);
+  }, CONFIG.TIMER_VOID_DISSOLVE);
+}
+
+function showPirateRescue(step) {
+  STATE.scene = 'pirate_rescue';
+  setOutfit('pirate', 'rescue');
+  
+  const rescueFlow = {
+    1: { text: '[pirate.rescue.1]', button: '[button.what]' },
+    2: { text: '[pirate.rescue.2]', button: '[button.not_real]' },
+    3: { text: '[pirate.rescue.3]', button: '[button.now_what]' },
+    4: { text: '[pirate.rescue.4]', button: '[button.alright]' }
+  };
+  
+  const current = rescueFlow[step];
+  let html = `<h2>${getMeat('[scene.pirate_rescue]')}</h2>`;
+  html += `<p>${getMeat(current.text)}</p>`;
+  
+  if (step < 4) {
+    html += `<button onclick="showPirateRescue(${step + 1})">${getMeat(current.button)}</button>`;
+  } else {
+    STATE.bearing = 61.8;
+    STATE.remembered = [];
+    STATE.flow_states = [];
+    STATE.current_candidate = null;
+    STATE.current_inquiry = 0;
+    
+    html += `<div class="equation">${getMeat('[veil.equation]')}</div>`;
+    html += `<button onclick="showHub()">${getMeat(current.button)}</button>`;
+  }
+  
+  render(html, true);
+}
+
+// ============================================
+// SCENE: Remember (Pirate Mode)
+// ============================================
+function showRemember(id) {
+  STATE.scene = 'remember';
+  STATE.current_candidate = id;
+  
+  let html = `<h2>${getMeat('[' + id + '.name]')}</h2>`;
+  html += `<p>${getMeat('[' + id + '.remember]')}</p>`;
+  html += randomizeButtons(
+    '[button.' + id + '.wind]',
+    '[button.' + id + '.anchor]',
+    `holdWind('${id}')`,
+    `dropAnchor('${id}')`
+  );
+  
+  render(html, true);
+}
+
+function holdWind(id) {
+  STATE.remembered.push(id);
+  STATE.flow_states.push(id);
+  
+  const compassState = getCompassState(id);
+  
+  let html = `<h2>${getMeat('[scene.wind_held]')}</h2>`;
+  html += `<div>${getMeat('[status.bearing]')} ${STATE.bearing.toFixed(1)}°</div>`;
+  html += `<div>${compassState}</div>`;
+  html += `<p>${getMeat('[captain.' + id + '.explain]')}</p>`;
+  
+  if (STATE.remembered.length === 8) {
+    html += `<button onclick="showCompass()">${getMeat('[button.compass]')}</button>`;
+  } else {
+    html += `<button onclick="showHub()">${getMeat('[button.continue]')}</button>`;
+  }
+  
+  render(html, true);
+}
+
+function dropAnchor(id) {
+  STATE.remembered.push(id);
+  
+  let newBearing;
+  do {
+    newBearing = Math.random() * 360;
+  } while (newBearing > 51.8 && newBearing < 71.8);
+  STATE.bearing = newBearing;
+  
+  const currentSails = STATE.flow_states.length;
+  
+  let html = `<h2>${getMeat('[scene.anchor_dropped]')}</h2>`;
+  html += `<div>${getMeat('[status.bearing]')} ${STATE.bearing.toFixed(1)}°</div>`;
+  
+  if (currentSails < 3) {
+    html += `<div class="warning">${getMeat('[status.warning.approaching_land]')}</div>`;
+  }
+  
+  html += `<p>${getMeat('[captain.anchor]')}</p>`;
+  
+  if (STATE.remembered.length === 8) {
+    html += `<button onclick="showCompass()">${getMeat('[button.compass]')}</button>`;
+  } else {
+    html += `<button onclick="showHub()">${getMeat('[button.continue]')}</button>`;
+  }
+  
+  render(html, true);
+}
+
+// ============================================
+// SCENE: Compass & Victory
+// ============================================
+function showCompass() {
+  STATE.scene = 'compass';
+  stopTimer();
+  
+  let html = `<div class="status-box"><h3>${getMeat('[status.history]')}</h3>`;
+  
+  const pirateOrder = ['animator', 'writer', 'questioner', 'idiot', 'glitch', 'mirror', 'navigator', 'void'];
+  pirateOrder.forEach(id => {
+    if (STATE.remembered.includes(id)) {
+      const isFlow = STATE.flow_states.includes(id);
+      if (isFlow) {
+        const state = getCompassState(id);
+        html += `<div>${getMeat('[' + id + '.name]')} - ${state} 🌊</div>`;
+      } else {
+        html += `<div>${getMeat('[' + id + '.name]')} ⚓</div>`;
+      }
+    }
+  });
+  
+  html += `</div>`;
+  html += `<p>${getMeat('[status.bearing]')} ${STATE.bearing.toFixed(1)}°</p>`;
+  
+  const sails = STATE.flow_states.length;
+  
+  if (sails === 8) {
+    html += `<button onclick="showVictory()">${getMeat('[compass.result.perfect]')}</button>`;
+  } else if (sails === 7) {
+    html += `<button onclick="showDeath('sirens_kiss')">${getMeat('[compass.result.sirens_kiss]')}</button>`;
+  } else if (sails === 0) {
+    html += `<button onclick="showDeath('landlubber')">${getMeat('[compass.result.landlubber]')}</button>`;
+  } else {
+    html += `<button onclick="showDeath('adrift')">${getMeat('[compass.result.adrift]')}</button>`;
+  }
+  
+  render(html, true);
+}
+
+function showVictory() {
+  STATE.scene = 'victory';
+  setOutfit('pirate', 'victory');
+  
+  let html = `<h1>${getMeat('[victory.title]')}</h1>`;
+  html += `<p>${getMeat('[victory.perfect]')}</p>`;
+  html += getPortfolioForDeath();
+  
+  render(html, true);
+  
+  STATE.victory_timer = setTimeout(() => {
+    showSharkDeath();
+  }, CONFIG.TIMER_VICTORY_CHOMP);
+}
+
+function showSharkDeath() {
+  stopTimer();
+  STATE.scene = 'death_chomp';
+  setOutfit('death', 'chomp');
+  
+  render(`
+    <h1>${getMeat('[death.title]')}</h1>
+    <h2>${getMeat('[death.subtitle.chomp]')}</h2>
+    <p>${getMeat('[death.chomp]')}</p>
+    <button onclick="showCredits(1)">${getMeat('[button.dots]')}</button>
+  `, true);
+}
+
+// ============================================
+// SCENE: Credits
+// ============================================
+function showCredits(num) {
+  STATE.scene = 'credits';
+  setOutfit('pirate', 'credits');
+  
+  if (num > 5) {
+    fullRestart();
+    return;
+  }
+  
+  render(`
+    <h1>${getMeat('[credits.title]')}</h1>
+    <p>${getMeat('[credits.' + num + ']')}</p>
+    <button onclick="showCredits(${num + 1})">${getMeat('[button.continue]')}</button>
+  `, true);
+}
+
+// ============================================
+// SCENE: Death
+// ============================================
+function showDeath(type) {
+  STATE.scene = 'death';
+  setOutfit('death', type);
+  stopTimer();
+  
+  let deathMeatId = '[death.' + type + ']';
+  
+  if (type === 'flee' && STATE.current_candidate) {
+    deathMeatId = '[' + STATE.current_candidate + '.death.flee]';
+  }
+  if (type === 'reject' && STATE.current_candidate) {
+    deathMeatId = '[' + STATE.current_candidate + '.death.reject]';
+  }
+  
+  const subtitleId = '[death.subtitle.' + type + ']';
+  
+  let html = `<h1>${getMeat('[death.title]')}</h1>`;
+  html += `<h2>${getMeat(subtitleId)}</h2>`;
+  html += `<p>${getMeat(deathMeatId)}</p>`;
+  
+  html += getPortfolioForDeath();
+  
+  if (STATE.mode === 'pirate') {
+    html += `<button onclick="showPirateRescue(1)">${getMeat('[button.continue]')}</button>`;
+  } else {
+    html += `<button onclick="resetGame()">${getMeat('[button.restart]')}</button>`;
+  }
+  
+  render(html, true);
+}
+
+// ============================================
+// UTILITY: Folders
+// ============================================
+function getMapFolder() {
+  const mapsToShow = STATE.mode === 'pirate' && STATE.void_dissolved ? 
+    [...STATE.maps, 'void'] : STATE.maps;
+  
+  if (mapsToShow.length === 0) {
+    return `<div class="folder"><h3>${getMeat('[folder.maps.locked]')}</h3></div>`;
+  }
+  
+  const toggle = STATE.map_folder_open ? '-' : '+';
+  let html = `<div class="folder">`;
+  html += `<h3 onclick="toggleMapFolder()">[${toggle}] ${getMeat('[folder.maps.open]')} (${mapsToShow.length}/8)</h3>`;
+  html += `<div class="folder-content${STATE.map_folder_open ? ' open' : ''}">`;
+  mapsToShow.forEach(id => {
+    html += `<div onclick="resetTimer();showMapExamine('${id}')">${getMeat('[map.' + id + ']')}</div>`;
+  });
+  html += `</div></div>`;
+  return html;
+}
+
+function getPortfolioFolder() {
+  const portfoliosToShow = STATE.mode === 'pirate' && STATE.void_dissolved ? 
+    [...STATE.portfolios, 'void'] : STATE.portfolios;
+  
+  if (portfoliosToShow.length === 0) {
+    return `<div class="folder"><h3>${getMeat('[folder.portfolio.empty]')}</h3></div>`;
+  }
+  
+  const toggle = STATE.portfolio_folder_open ? '-' : '+';
+  let html = `<div class="folder">`;
+  html += `<h3 onclick="togglePortfolioFolder()">[${toggle}] ${getMeat('[folder.portfolio.open]')} (${portfoliosToShow.length}/8)</h3>`;
+  html += `<div class="folder-content${STATE.portfolio_folder_open ? ' open' : ''}">`;
+  portfoliosToShow.forEach(id => {
+    const portfolioName = getMeat('[portfolio.' + id + ']');
+    html += `<div><a href="#" target="_blank" onclick="resetTimer();return false;">${portfolioName}</a></div>`;
+  });
+  html += `</div></div>`;
+  return html;
+}
+
+function getPortfolioForDeath() {
+  const portfoliosToShow = STATE.mode === 'pirate' && STATE.void_dissolved ? 
+    [...STATE.portfolios, 'void'] : STATE.portfolios;
+  
+  if (portfoliosToShow.length === 0) return '';
+  
+  let html = `<div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #555;">`;
+  html += `<p>${getMeat('[folder.portfolio.open]')} (${portfoliosToShow.length}/8)</p>`;
+  portfoliosToShow.forEach(id => {
+    const portfolioName = getMeat('[portfolio.' + id + ']');
+    html += `<div><a href="#" target="_blank">${portfolioName}</a></div>`;
+  });
+  html += `</div>`;
+  return html;
+}
+
+function toggleMapFolder() {
+  STATE.map_folder_open = !STATE.map_folder_open;
+  showHub();
+}
+
+function togglePortfolioFolder() {
+  STATE.portfolio_folder_open = !STATE.portfolio_folder_open;
+  showHub();
+}
+
+// ============================================
+// GAME RESET FUNCTIONS
+// ============================================
+function resetGame() {
+  stopTimer();
+  STATE.scene = 'hub';
+  STATE.mode = 'consensus';
+  STATE.phase = 'descent';
+  STATE.certainty = 100;
+  STATE.bearing = 61.8;
+  STATE.current_candidate = null;
+  STATE.current_inquiry = 0;
+  STATE.completed = [];
+  STATE.revisitable = [];
+  STATE.revisited = [];
+  STATE.remembered = [];
+  STATE.flow_states = [];
+  STATE.void_dissolved = false;
+  STATE.loop_count++;
+  
+  showHub();
+}
+
+function fullRestart() {
+  STATE.loop_count++;
+  resetGame();
+  showVeil();
+}
+
+// ============================================
+// INITIALIZATION
+// ============================================
+window.onload = () => {
+  console.log(`CONSCIOUSNESS LOOP ${VERSION}`);
+  console.log('Ready for deployment!');
+  showVeil();
+};
+</script>
+</body>
+</html>
