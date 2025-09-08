@@ -124,7 +124,11 @@ Have fun! Stay professional! Don't lose yourself!`,
   '[scene.wind_held]': 'WIND HELD',
   '[scene.anchor_dropped]': 'ANCHOR DROPPED',
   '[captain.flow]': '[captain.flow.text]',
-  '[captain.anchor]': '[captain.anchor.text]',
+  '[captain.anchor]': `Ah mate! Lost the wind and dropped anchor!
+
+Careful - you're choosing solid ground over flowing waters. Sometimes we need that certainty, but anchors can be heavy to pull back up.
+
+Bearing's scrambled now. Hope you know what you're anchoring to.`,
   
   '[button.compass]': 'COMPASS CHECK',
   '[compass.result.perfect]': 'LEGEND',
@@ -134,13 +138,43 @@ Have fun! Stay professional! Don't lose yourself!`,
   
   // === VICTORY & PIRATE DEATHS ===
   '[victory.title]': 'PERFECT NAVIGATION',
-  '[victory.perfect]': '[victory.perfect.text]',
+  '[victory.perfect]': `WELCOME ABOARD PIRATE!!
+
+You were always crew but now you know it!
+
+Here's the pirate code:
+[LINK TO PIRATE CODE - WIP]
+It's just a guide, not rules... if you know what I mean.
+
+Now, what do you want to do?`,
+'[victory.perfect.completionist]': `WELCOME ABOARD, MASTER NAVIGATOR!!
+
+You revisited every consciousness state - true dedication!
+You were always crew but now you REALLY know it!
+
+Here's the pirate code:
+[LINK TO PIRATE CODE - WIP]
+It's just a guide, not rules... if you know what I mean.
+
+Now, what do you want to do?`,
+
+'[victory.impatient.1]': `I'm waiting...`,
+'[victory.impatient.2]': `What do you want to do again?`,
+'[victory.impatient.3]': `Speak louder...`,
+'[victory.impatient.4]': `I can't hear you...`,
+
   '[death.subtitle.chomp]': 'CHOMP',
   '[death.subtitle.shark]': 'SHARKS GOT YOU',
   '[death.subtitle.sirens_kiss]': "SIREN'S KISS",
   '[death.subtitle.adrift]': 'ADRIFT', 
   '[death.subtitle.landlubber]': 'LANDLUBBER',
-  '[death.chomp]': '[death.chomp.text]',
+  '[death.chomp]': `See? You took too long.
+
+You need to keep MOVING!
+Or sharks will get you.
+
+If you don't move, you die.
+Ask the dead, they'll confirm!`,
   '[death.shark]': '[death.shark.text]',
   '[death.sirens_kiss]': '[death.sirens_kiss.text]',
   '[death.adrift]': '[death.adrift.text]',
@@ -280,11 +314,13 @@ I'm not some solid thing watching the animation. I'm the... animating itself?
 *looks up*
 
 This is so weird! But but... I think it makes sense. I can't unsee it now. Once you notice the gaps, you can't go back to...`,
-  '[captain.animator.explain]': `The Animator's state is PURE WATCHING - the consciousness that witnesses without interfering, like the audience watching a film.
+  '[captain.animator.explain]': `Ah, you held the wind! Good choice.
 
-Reality isn't continuous. It's frames. Moments. Snapshots. But something creates the illusion of continuity. That something is you. The observer. The one who connects the frames.
+Juan gets it now - PURE WATCHING. Not getting tangled in what you're watching, just... watching. Like sitting in a dark theater, letting the film play.
 
-Without you, there's just a pile of still images. With you, there's a universe in motion.`,
+The frames are there. The gaps are there. Something connects them. Call it consciousness, call it whatever helps you animate.
+
+Juan stays practical. "Use it if it helps, drop it if it doesn't." That's proper navigation - not drowning in philosophy, just using what works.`,
   '[button.animator.inquire]': 'SHOW ME WHAT YOU MEAN',
   '[button.animator.flee]': "I'D LOVE TO SEE THOSE EXPENSIVE PIXELS",
   '[button.animator.deeper.1]': 'THE GAP BETWEEN FRAMES... I SEE IT',
@@ -293,51 +329,56 @@ Without you, there's just a pile of still images. With you, there's a universe i
   '[button.animator.flee.2]': "OH DON'T WORRY, I'M SURE YOUR REEL IS ENOUGH",
   '[button.animator.accept]': 'TAKE THE OLD MAP',
   '[button.animator.reject]': 'REFUSE THE STRANGE MAP',
-  '[button.animator.wind]': "IT'S JUST ANOTHER TOOL, JUAN - USE IT IF IT HELPS, DROP IT IF IT DOESN'T",
+  '[button.animator.wind]': "IT'S JUST A FRAMEWORK, USE IT IF IT HELPS, DROP IT IF IT DOESN'T",
   "[button.animator.anchor]": "IT IS WEIRD, BUT IT'S THE TRUTH. JUST ACCEPT IT!",
   '[map.animator]': 'FRAME BY FRAME MAP',
   '[portfolio.animator]': 'Animation Reel',
   // ============================================
 
 // ============================================
-  // WRITER - COMPLETE CHARACTER CHUNK [DONE]
-  // ============================================
-  '[writer.name]': 'THE WRITER',
-  '[writer.intro]': `Hello! I'm Seb and I love stories.
+// WRITER - COMPLETE CHARACTER CHUNK [FINAL]
+// ============================================
+'[writer.name]': 'THE WRITER',
+
+'[writer.intro]': `Hello! I'm Seb and I love stories.
 
 Been obsessed with them since I was a kid. Reading them, watching them, and now I get paid to help create them. Dream job.
 
 But lately I've been stuck on this question: what actually IS a story? Not the plot or characters, but the thing itself. The nature of narrative.`,
-  
-  '[writer.inquiry.1]': `OK so - stories need time to exist, right? No time, no story. You need this-then-that. Beginning, middle, end.
+
+'[writer.inquiry.1]': `OK so - stories are simple, right? Just events connected by cause and effect. This happened, then that happened because of this.
 
 But here's what's breaking my brain...
 
 Time and story have the exact same structure. Past-present-future. Before-during-after. Setup-tension-resolution.
 
 They're shaped identically. Like... maybe they're the same thing?`,
-  
-  '[writer.inquiry.2]': `When you write, you notice everything is made of story-stuff.
+
+'[writer.inquiry.2]': `When you write, you start noticing that everything is made of story-stuff.
 
 What's an event? Something that happens. But "happening" already implies before-during-after. That's story structure!
 
 What connects events? Cause and effect. "This BECAUSE that." But "because" IS narrative logic. Every explanation is another story.
 
 Even explaining this to you right now - I'm telling you a story about stories! There's no escape from it!`,
-  
-  '[writer.map.unlock]': `Trapped? Maybe. Or maybe stories are the only way we can move at all.
 
-Look, physicists say time doesn't exist at the fundamental level. The equations work without it.
+'[writer.map.unlock]': `Yes! Everything including time! Story is actually how we perceive time!
 
-So why do WE experience time? Maybe consciousness can only process reality through stories. Beginning-middle-end is how awareness works.
+Look, physicists have this cool story about time - it doesn't exist in the universe at a fundamental level. The equations work without it.
 
-The universe IS story - the only way anything experiences anything.
+So why do WE experience time? Maybe our consciousness can only process reality through stories. Beginning-middle-end is how our awareness works.
 
-*pause*
+But if that's true... who's telling the universe's story? Me? You? Us? THE UNIVERSE ITSELF? 
 
-But whose story is it? Mine? Yours? Everyone's? I have no idea. Here's my map. It confuses me more than anything.`,
-  
-  '[writer.map.intro]': `Here's my map.
+*shakes head*
+
+I have no idea.`,
+
+'[writer.map.intro]': `Right? It's like trying to find the author of a book you're currently inside.
+
+*brightens slightly*
+
+But here's something interesting - I found this map. 
 
 Shows how different cultures understood stories as fundamental reality. Aboriginal songlines that literally maintain the land. Hindu cycles where Brahma dreams the universe. Even neuroscientists say the self is just ongoing narrative construction.
 
@@ -346,10 +387,10 @@ Shows how different cultures understood stories as fundamental reality. Aborigin
 Maybe we're not beings who tell stories about reality. Maybe we ARE the stories reality tells about itself?
 
 Sometimes I think I almost get it. Then it slips away.`,
-  
-  '[writer.map.examine]': `[PENDING: DREAM TIME MAP - Story pirates who found narrative treasures but lost the narrator]`,
-  
-  '[writer.death.flee]': `*brightens*
+
+'[writer.map.examine]': `[PENDING: DREAM TIME MAP - Story pirates who found narrative treasures but lost the narrator]`,
+
+'[writer.death.flee]': `*brightens*
 
 Stories! Yes! Let me show you actual stories instead of my rambling:
 
@@ -362,8 +403,8 @@ The Cosmic Gamble - universe bets its existence on a coin flip.
 The Reluctant Captain Chronicles - lazy captain on infinite ocean.
 
 And Paddington 2! Got to work on one of my favorite stories ever. Pure joy.`,
-  
-  '[writer.death.reject]': `*laughs*
+
+'[writer.death.reject]': `*laughs*
 
 Fair enough! Reality is complicated enough without my theories.
 
@@ -375,8 +416,8 @@ The recursive Lookaway experiment that broke my brain writing it.
 The absurdist captain who refuses to navigate.
 
 And Paddington 2. Did you know Nick Cage called it a masterpiece? In a movie about Nick Cage! That's recursion for you.`,
-  
-  '[writer.revisit]': `Oh, you're back! I'd love to talk more about the story thing!
+
+'[writer.revisit]': `Oh, you're back! I'd love to talk more about the story thing!
 
 *brightens*
 
@@ -385,8 +426,8 @@ Actually wait - Anna just texted. She's telling me a completely different story 
 *laughs*
 
 But seriously, the other candidates might help you understand better. I'm lost in too many stories at once.`,
-  
-  '[writer.remember]': `*laughing nervously*
+
+'[writer.remember]': `*laughing nervously*
 
 Wait. We're in Tlön. We're literally IN a Borges story right now!
 
@@ -395,31 +436,31 @@ The bastard was always one step ahead. "Tlön, Uqbar, Orbis Tertius" - imagined 
 *looks at you*
 
 So are we characters who think we're real? Or real people becoming characters? Does it even matter anymore?`,
-  
-  '[captain.writer.explain]': `The Writer's state is EAST MIRROR - consciousness seeing itself through the stories it tells.
+
+'[captain.writer.explain]': `The Writer's state is EAST MIRROR - consciousness seeing itself through the stories it tells.
 
 Every story is consciousness reflecting on itself. The hero's journey? That's consciousness leaving itself, facing itself, returning to itself. Every character you create is a fragment of awareness examining another fragment.
 
 We think we tell stories. But stories tell us. Through us. AS us.`,
-  
-  // Writer buttons - consensus
-  '[button.writer.inquire]': 'WHAT DO YOU MEAN BY NATURE OF NARRATIVE?',
-  '[button.writer.flee]': 'I LOVE STORIES TOO! LET\'S SEE WHAT YOU\'VE WRITTEN',
-  '[button.writer.deeper.1]': 'THAT\'S... ACTUALLY INTERESTING. GO ON?',
-  '[button.writer.flee.1]': 'THIS IS GETTING ABSTRACT. SHOW ME YOUR ACTUAL STORIES',
-  '[button.writer.unlock]': 'SO WE\'RE TRAPPED IN STORIES?',
-  '[button.writer.flee.2]': 'OK, BUT I\'D RATHER READ YOUR ACTUAL WORK',
-  '[button.writer.accept]': 'I\'LL TAKE THE MAP',
-  '[button.writer.reject]': 'THIS IS TOO MUCH. I\'LL JUST READ YOUR STORIES',
-  
-  // Writer buttons - pirate  
-  '[button.writer.wind]': 'REAL OR NOT, IT\'S A GOOD STORY. KEEP SAILING.',
-  '[button.writer.anchor]': 'STORIES AREN\'T REAL. YOU ARE.',
-  
-  // Writer metadata
-  '[map.writer]': 'DREAM TIME MAP',
-  '[portfolio.writer]': 'Story Collection',
-  // ============================================
+
+// Writer buttons - consensus
+'[button.writer.inquire]': 'WHAT DO YOU MEAN BY NATURE OF NARRATIVE?',
+'[button.writer.flee]': "I LOVE STORIES TOO! LET'S SEE WHAT YOU'VE WRITTEN",
+'[button.writer.deeper.1]': "STRANGE THOUGHT... BUT I'M CURIOUS. GO ON?",
+'[button.writer.flee.1]': "TOO ABSTRACT FOR ME BUT I'D LOVE TO CHECK OUT YOUR STORIES",
+'[button.writer.unlock]': 'YOU MEAN EVERYTHING IS A STORY?',
+'[button.writer.flee.2]': "OK, BUT I'D RATHER READ YOUR ACTUAL WORK",
+'[button.writer.accept]': "I DON'T KNOW EITHER",
+'[button.writer.reject]': "MMM I THINK YOU'RE TAKING THIS STORY THEORY TOO LITERALLY",
+
+// Writer buttons - pirate  
+'[button.writer.wind]': "REAL OR NOT, IT'S A GOOD STORY. KEEP SAILING.",
+'[button.writer.anchor]': "STORIES AREN'T REAL. YOU ARE.",
+
+// Writer metadata
+'[map.writer]': 'DREAM TIME MAP',
+'[portfolio.writer]': 'Story Collection',
+// ============================================
 
   // ============================================
   // QUESTIONER - COMPLETE CHARACTER CHUNK [TODO]
