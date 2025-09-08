@@ -212,16 +212,16 @@ FIVE DEAD PIRATES AND A FLEET
 {🌊:🌊∈🌊}
 
 ⚛️ DEMOCRITUS (460 BCE)
-💎 Everything's made of tiny balls! "Atoms" he called 'em. Rocks, souls, thoughts - all just balls bouncing. Got this right 2500 years before microscopes. Legend.
+💎 Everything's made of tiny balls! "Atoms" he called 'em. Rocks, souls, thoughts - all just balls bouncing. Got this right 2500 years ago. Legend.
 ☠️ Cast his net to catch reality, caught himself in it! Used his mind to prove minds are just fancy atoms. But here's the hero part: HE ADMITTED IT! "Wretched mind, you overthrow yourself!" First pirate honest enough to see his own trap.
 
 🧩 DESCARTES (1596-1650)
 💎 "I think therefore I am!" Split the ocean: physical stuff (matter) and thinking stuff (mind). This split let science sail free. Every equation since lives in his waters.
-☠️ Princess Elisabeth of Bohemia sank his ship: "If mind's not matter, how's it steer the body?" His answer? "Uh... through this tiny brain valve?" Even his friends laughed. Split the waters so wide he couldn't sail between them.
+☠️ Princess Elisabeth of Bohemia sank his ship: "If mind's not matter, how's it steer the body?" His answer? "Uh... through this tiny brain thingie?" Even his friends laughed. Split the waters so wide he couldn't sail between them.
 
 🍎 NEWTON (1643-1727)
 💎 F=ma. Same math for cannonballs and planets! Made the whole universe calculable. Every bridge, rocket, and machine runs on Newton's charts.
-☠️ Secret alchemist! Million words on turning lead to gold. Got gravity's HOW perfect, never found the WHY. "I frame no hypotheses" = "Works perfect, don't ask me what it IS."
+☠️ Secret alchemist! Million words on turning lead to gold. Got gravity's HOW perfect, never found the WHY. "I frame no hypotheses" = "It works, don't ask me what it IS."
 
 🐢 DARWIN (1809-1882)
 💎 Natural selection - the blind shipbuilder! No designer, just time + death + luck. Connected all life through deep time. Changed everything.
@@ -231,7 +231,7 @@ FIVE DEAD PIRATES AND A FLEET
 💎 E=mc². Space and time are one ocean! Matter bends it, it tells matter where to go. Your phone's GPS literally needs his math to find you.
 ☠️ His math says all time exists at once - past, future, now, all equally real. But you're reading THIS word NOW. Not before, not after, NOW. Lost everyone's most obvious truth somewhere in his perfect equations.
 
-🧠 THE BRAIN MAPPERS (1960-NOW)
+🧠 THE BRAIN MAPPERS (1960-still sailing)
 💎 Found the treasure! Every thought = neurons firing. Damage this bit, lose that function. We can watch thoughts light up live in scanners!
 ☠️ Anesthesia knocks you out cold but nobody knows why. Split-brain patients somehow stay unified. The "hard problem" still standing: WHY is there something it's like to be you? Still charting every current, can't find the sailor reading the chart.
 
@@ -240,14 +240,14 @@ FIVE DEAD PIRATES AND A FLEET
 ⚠️ NAVIGATOR'S WARNING
 Pay attention: These maps work so well, you'll forget they're just maps.
 Not the ocean itself.
-Look away from the map now and then, or you might drown.
+Look away from the map from now and then, or you might crash.
 
 ═══════════════════════════════════════
 
 📜 CAPTAIN'S NOTE
-"These pirates sailed so fast forward...
+These pirates sailed so fast forward...
 But forward to WHERE?
-*yawn* I need a nap."
+*yawn* I need a nap...
 
 {🌊:🌊∈🌊}`,
   '[animator.death.flee]': `*catches himself*
@@ -268,22 +268,23 @@ Speaking of which - want to see the exact frames I was talking about? The Rocket
 
 Wait...
 
-...oh, I think that's Mila - my daughter - calling for me. She's priority #1.
+...oh, I think that's Mila - my daughter - calling for me. She's priority number one.
 
 But hey, the other candidates are pretty cool, you should chat with them!`,
-  '[animator.remember]': `Oh! I remember now... the gaps! The motion lives in the gaps between frames.
+  '[animator.remember]': `*sitting in the dingy, staring at his hands*
 
-But also... maybe consciousness is like that too? Living in the spaces between things?
+So I'm the gaps between frames... I'm not just watching, I'm the process of watching?
 
-*pauses, uncertain*
+I'm not some solid thing watching the animation. I'm the... animating itself?
 
-I still don't fully understand it, but those empty spaces... they might be more important than what we fill them with.`,
+*looks up*
+
+This is so weird! But but... I think it makes sense. I can't unsee it now. Once you notice the gaps, you can't go back to...`,
   '[captain.animator.explain]': `The Animator's state is PURE WATCHING - the consciousness that witnesses without interfering, like the audience watching a film.
 
 Reality isn't continuous. It's frames. Moments. Snapshots. But something creates the illusion of continuity. That something is you. The observer. The one who connects the frames.
 
 Without you, there's just a pile of still images. With you, there's a universe in motion.`,
-  // Animator buttons - consensus
   '[button.animator.inquire]': 'SHOW ME WHAT YOU MEAN',
   '[button.animator.flee]': "I'D LOVE TO SEE THOSE EXPENSIVE PIXELS",
   '[button.animator.deeper.1]': 'THE GAP BETWEEN FRAMES... I SEE IT',
@@ -292,148 +293,44 @@ Without you, there's just a pile of still images. With you, there's a universe i
   '[button.animator.flee.2]': "OH DON'T WORRY, I'M SURE YOUR REEL IS ENOUGH",
   '[button.animator.accept]': 'TAKE THE OLD MAP',
   '[button.animator.reject]': 'REFUSE THE STRANGE MAP',
-  // Animator buttons - pirate
-  '[button.animator.wind]': 'THE GAPS... YES, THE EMPTINESS MATTERS',
-  '[button.animator.anchor]': 'NO, THERE MUST BE SOMETHING SOLID CREATING MOTION',
-  // Animator metadata
+  '[button.animator.wind]': "IT'S JUST ANOTHER TOOL, JUAN - USE IT IF IT HELPS, DROP IT IF IT DOESN'T",
+  "[button.animator.anchor]": "IT IS WEIRD, BUT IT'S THE TRUTH. JUST ACCEPT IT!",
   '[map.animator]': 'FRAME BY FRAME MAP',
   '[portfolio.animator]': 'Animation Reel',
   // ============================================
 
   // ============================================
-// WRITER - COMPLETE CHARACTER CHUNK [DONE]
-// ============================================
-'[writer.name]': 'THE WRITER',
-'[writer.intro]': `Hello! I'm Seb and I love stories.
-
-Been obsessed with them since I was a kid. Reading them, watching them, and now I get paid to help create them. Dream job.
-
-But lately I've been stuck on this question: what actually IS a story? Not the plot or the characters, but the thing itself. The nature of narrative.`,
-
-'[writer.inquiry.1]': `OK so - stories need time to exist, right? No time, no story possible. You need this-then-that. Beginning, middle, end.
-
-But here's what's been breaking my brain...
-
-Time and story have the exact same structure. Past-present-future. Before-during-after. Setup-tension-resolution.
-
-They're shaped identically. Like... maybe they're the same thing?`,
-
-'[writer.inquiry.2]': `When you write, you notice everything is made of story-stuff.
-
-What's an event? Something that happens. But "happening" already implies before-during-after. That's story structure!
-
-What connects events? Cause and effect. "This BECAUSE that." But "because" IS narrative logic. Every explanation becomes another story.
-
-*gets more animated*
-
-Even explaining this to you right now - I'm telling you a story about stories! There's no escape from it!`,
-
-'[writer.map.unlock]': `Trapped? Maybe. Or maybe stories are the only way we can move at all.
-
-Look, there's this physicist who says time doesn't exist at the fundamental level. The universe doesn't need it. The equations work without it.
-
-So why do WE experience time? 
-
-Maybe because consciousness can only experience things through stories. Beginning-middle-end is how awareness processes anything at all.
-
-The universe isn't telling stories. The universe IS story - the only way anything experiences anything at all.
-
-*pause*
-
-But wait... if that's true, it gets weird. Like, we all seem to be in the SAME story, right? Gravity works the same for everyone. Things don't disappear when you're not looking at them.
-
-So... whose story is it? Mine? Yours? Everyone's at once?
-
-I have no idea. But here's my map. It confuses me more than anything.`,
-
-'[writer.map.intro]': `Here's my map.
-
-It shows how different cultures understood stories as fundamental reality. Aboriginal songlines that literally maintain the land. Hindu cycles where Brahma dreams the universe. Even Juan's neuroscientist friends say the self is just ongoing narrative construction.
-
-*looks at map*
-
-Maybe we're not beings who tell stories about reality. Maybe we ARE the stories reality tells about itself?
-
-I've been staring at this for months. Sometimes I think I almost get it. Then it slips away. Like trying to see your own eyes without a mirror.`,
-
-'[writer.map.examine]': `[PENDING: DREAM TIME MAP - Story pirates who found narrative treasures but lost the narrator]`,
-
-'[writer.death.flee]': `*brightens*
-
-Stories! Yes! Let me show you actual stories instead of my rambling:
-
-The River, The Child, and The Great Mirror King - philosophy disguised as a children's story. For my daughter.
-
-Lookaway - recursive show where characters interrogate their own code.
-
-The Cosmic Gamble - universe bets its existence on a coin flip.
-
-The Reluctant Captain Chronicles - lazy captain on infinite ocean. Navigator with shape-shifting scar constellations.
-
-And Paddington 2! Got to work on one of my favorite stories ever. That film is pure joy.`,
-
-'[writer.death.reject]': `*laughs*
-
-Fair enough! Reality is complicated enough without my theories.
-
-You know what? Stories don't need to create reality to matter. They create joy, connection, meaning. That's enough magic.
-
-Here's my work - judge for yourself:
-
-The philosophy-for-kids story that makes my daughter laugh.
-The recursive Lookaway experiment that broke my brain writing it.
-The absurdist captain who refuses to navigate.
-
-And Paddington 2. Got to work on one of my favorite stories ever. Did you know Nick Cage called it a masterpiece? In a movie about Nick Cage! That's recursion for you.`,
-
-'[writer.revisit]': `Oh, you're back! I'd love to talk more about the story thing!
-
-*brightens up*
-
-Actually wait - Anna just texted. She's telling me a completely different story that I need to be part of RIGHT NOW. She's priority number one.
-
-*laughs*
-
-But seriously, the other candidates might help you understand better. I'm lost in too many stories at once.`,
-
-'[writer.remember]': `Wait... I'm starting to remember something...
-
-*pauses*
-
-The story writes itself. And I'm the story? You're the story too? We're all the same story being told from different angles?
-
-*realization dawning*
-
-Unless... unless "I" is just a story. A boundary drawn around nothing. We're not IN the story. We ARE the story telling itself.
-
-*slightly dazed*
-
-Is that what the map was showing me all along?`,
-
-'[captain.writer.explain]': `The Writer's state is EAST MIRROR - consciousness seeing itself through the stories it tells.
-
-Every story is consciousness reflecting on itself. The hero's journey? That's consciousness leaving itself, facing itself, returning to itself. Every character you create is a fragment of awareness examining another fragment.
-
-We think we tell stories. But stories tell us. Through us. AS us.`,
-
-// Writer buttons - consensus
-'[button.writer.inquire]': 'WHAT DO YOU MEAN BY NATURE OF NARRATIVE?',
-'[button.writer.flee]': "I LOVE STORIES TOO! LET'S SEE WHAT YOU'VE WRITTEN",
-'[button.writer.deeper.1]': "THAT'S... ACTUALLY INTERESTING. GO ON?",
-'[button.writer.flee.1]': 'THIS IS GETTING ABSTRACT. SHOW ME YOUR ACTUAL STORIES',
-'[button.writer.unlock]': "SO WE'RE TRAPPED IN STORIES?",
-'[button.writer.flee.2]': "OK, BUT I'D RATHER READ YOUR ACTUAL WORK",
-'[button.writer.accept]': "I'LL TAKE THE MAP",
-'[button.writer.reject]': "THIS IS TOO MUCH. I'LL JUST READ YOUR STORIES",
-
-// Writer buttons - pirate
-'[button.writer.wind]': 'FLOW INTO THE OCEAN OF STORIES',
-'[button.writer.anchor]': 'I NEED TO BE ME, NOT A STORY',
-
-// Writer metadata
-'[map.writer]': 'DREAM TIME MAP',
-'[portfolio.writer]': 'Story Collection',
-// ============================================
+  // WRITER - COMPLETE CHARACTER CHUNK [TODO]
+  // Copy this entire section to replace
+  // ============================================
+  '[writer.name]': 'THE WRITER',
+  '[writer.intro]': '[writer.intro.text]',
+  '[writer.inquiry.1]': '[writer.inquiry.1.text]',
+  '[writer.inquiry.2]': '[writer.inquiry.2.text]',
+  '[writer.map.unlock]': '[writer.map.unlock.text]',
+  '[writer.map.intro]': '[writer.map.intro.text]',
+  '[writer.map.examine]': '[writer.map.examine.text]',
+  '[writer.death.flee]': '[writer.death.flee.text]',
+  '[writer.death.reject]': '[writer.death.reject.text]',
+  '[writer.revisit]': '[writer.revisit.text]',
+  '[writer.remember]': '[writer.remember.text]',
+  '[captain.writer.explain]': '[captain.writer.explain.text]',
+  // Writer buttons - consensus
+  '[button.writer.inquire]': '[button.writer.inquire]',
+  '[button.writer.flee]': '[button.writer.flee]',
+  '[button.writer.deeper.1]': '[button.writer.deeper.1]',
+  '[button.writer.flee.1]': '[button.writer.flee.1]',
+  '[button.writer.unlock]': '[button.writer.unlock]',
+  '[button.writer.flee.2]': '[button.writer.flee.2]',
+  '[button.writer.accept]': '[button.writer.accept]',
+  '[button.writer.reject]': '[button.writer.reject]',
+  // Writer buttons - pirate
+  '[button.writer.wind]': '[button.writer.wind]',
+  '[button.writer.anchor]': '[button.writer.anchor]',
+  // Writer metadata
+  '[map.writer]': 'DREAM TIME MAP',
+  '[portfolio.writer]': 'Story Collection',
+  // ============================================
 
   // ============================================
   // QUESTIONER - COMPLETE CHARACTER CHUNK [TODO]
