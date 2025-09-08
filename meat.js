@@ -299,34 +299,123 @@ Without you, there's just a pile of still images. With you, there's a universe i
   '[portfolio.animator]': 'Animation Reel',
   // ============================================
 
-  // ============================================
-  // WRITER - COMPLETE CHARACTER CHUNK [TODO]
-  // Copy this entire section to replace
+// ============================================
+  // WRITER - COMPLETE CHARACTER CHUNK [DONE]
   // ============================================
   '[writer.name]': 'THE WRITER',
-  '[writer.intro]': '[writer.intro.text]',
-  '[writer.inquiry.1]': '[writer.inquiry.1.text]',
-  '[writer.inquiry.2]': '[writer.inquiry.2.text]',
-  '[writer.map.unlock]': '[writer.map.unlock.text]',
-  '[writer.map.intro]': '[writer.map.intro.text]',
-  '[writer.map.examine]': '[writer.map.examine.text]',
-  '[writer.death.flee]': '[writer.death.flee.text]',
-  '[writer.death.reject]': '[writer.death.reject.text]',
-  '[writer.revisit]': '[writer.revisit.text]',
-  '[writer.remember]': '[writer.remember.text]',
-  '[captain.writer.explain]': '[captain.writer.explain.text]',
+  '[writer.intro]': `Hello! I'm Seb and I love stories.
+
+Been obsessed with them since I was a kid. Reading them, watching them, and now I get paid to help create them. Dream job.
+
+But lately I've been stuck on this question: what actually IS a story? Not the plot or characters, but the thing itself. The nature of narrative.`,
+  
+  '[writer.inquiry.1]': `OK so - stories need time to exist, right? No time, no story. You need this-then-that. Beginning, middle, end.
+
+But here's what's breaking my brain...
+
+Time and story have the exact same structure. Past-present-future. Before-during-after. Setup-tension-resolution.
+
+They're shaped identically. Like... maybe they're the same thing?`,
+  
+  '[writer.inquiry.2]': `When you write, you notice everything is made of story-stuff.
+
+What's an event? Something that happens. But "happening" already implies before-during-after. That's story structure!
+
+What connects events? Cause and effect. "This BECAUSE that." But "because" IS narrative logic. Every explanation is another story.
+
+Even explaining this to you right now - I'm telling you a story about stories! There's no escape from it!`,
+  
+  '[writer.map.unlock]': `Trapped? Maybe. Or maybe stories are the only way we can move at all.
+
+Look, physicists say time doesn't exist at the fundamental level. The equations work without it.
+
+So why do WE experience time? Maybe consciousness can only process reality through stories. Beginning-middle-end is how awareness works.
+
+The universe IS story - the only way anything experiences anything.
+
+*pause*
+
+But whose story is it? Mine? Yours? Everyone's? I have no idea. Here's my map. It confuses me more than anything.`,
+  
+  '[writer.map.intro]': `Here's my map.
+
+Shows how different cultures understood stories as fundamental reality. Aboriginal songlines that literally maintain the land. Hindu cycles where Brahma dreams the universe. Even neuroscientists say the self is just ongoing narrative construction.
+
+*looks at map*
+
+Maybe we're not beings who tell stories about reality. Maybe we ARE the stories reality tells about itself?
+
+Sometimes I think I almost get it. Then it slips away.`,
+  
+  '[writer.map.examine]': `[PENDING: DREAM TIME MAP - Story pirates who found narrative treasures but lost the narrator]`,
+  
+  '[writer.death.flee]': `*brightens*
+
+Stories! Yes! Let me show you actual stories instead of my rambling:
+
+The River, The Child, and The Great Mirror King - philosophy disguised as a children's story.
+
+Lookaway - recursive show where characters interrogate their own code.
+
+The Cosmic Gamble - universe bets its existence on a coin flip.
+
+The Reluctant Captain Chronicles - lazy captain on infinite ocean.
+
+And Paddington 2! Got to work on one of my favorite stories ever. Pure joy.`,
+  
+  '[writer.death.reject]': `*laughs*
+
+Fair enough! Reality is complicated enough without my theories.
+
+Stories don't need to create reality to matter. They create joy, connection, meaning. That's enough magic.
+
+Here's my work:
+The philosophy-for-kids story that makes my daughter laugh.
+The recursive Lookaway experiment that broke my brain writing it.
+The absurdist captain who refuses to navigate.
+
+And Paddington 2. Did you know Nick Cage called it a masterpiece? In a movie about Nick Cage! That's recursion for you.`,
+  
+  '[writer.revisit]': `Oh, you're back! I'd love to talk more about the story thing!
+
+*brightens*
+
+Actually wait - Anna just texted. She's telling me a completely different story that I need to be part of RIGHT NOW. She's priority number one.
+
+*laughs*
+
+But seriously, the other candidates might help you understand better. I'm lost in too many stories at once.`,
+  
+  '[writer.remember]': `*laughing nervously*
+
+Wait. We're in Tlön. We're literally IN a Borges story right now!
+
+The bastard was always one step ahead. "Tlön, Uqbar, Orbis Tertius" - imagined world becomes real, replaces reality...
+
+*looks at you*
+
+So are we characters who think we're real? Or real people becoming characters? Does it even matter anymore?`,
+  
+  '[captain.writer.explain]': `The Writer's state is EAST MIRROR - consciousness seeing itself through the stories it tells.
+
+Every story is consciousness reflecting on itself. The hero's journey? That's consciousness leaving itself, facing itself, returning to itself. Every character you create is a fragment of awareness examining another fragment.
+
+We think we tell stories. But stories tell us. Through us. AS us.`,
+  
   // Writer buttons - consensus
-  '[button.writer.inquire]': '[button.writer.inquire]',
-  '[button.writer.flee]': '[button.writer.flee]',
-  '[button.writer.deeper.1]': '[button.writer.deeper.1]',
-  '[button.writer.flee.1]': '[button.writer.flee.1]',
-  '[button.writer.unlock]': '[button.writer.unlock]',
-  '[button.writer.flee.2]': '[button.writer.flee.2]',
-  '[button.writer.accept]': '[button.writer.accept]',
-  '[button.writer.reject]': '[button.writer.reject]',
-  // Writer buttons - pirate
-  '[button.writer.wind]': '[button.writer.wind]',
-  '[button.writer.anchor]': '[button.writer.anchor]',
+  '[button.writer.inquire]': 'WHAT DO YOU MEAN BY NATURE OF NARRATIVE?',
+  '[button.writer.flee]': 'I LOVE STORIES TOO! LET\'S SEE WHAT YOU\'VE WRITTEN',
+  '[button.writer.deeper.1]': 'THAT\'S... ACTUALLY INTERESTING. GO ON?',
+  '[button.writer.flee.1]': 'THIS IS GETTING ABSTRACT. SHOW ME YOUR ACTUAL STORIES',
+  '[button.writer.unlock]': 'SO WE\'RE TRAPPED IN STORIES?',
+  '[button.writer.flee.2]': 'OK, BUT I\'D RATHER READ YOUR ACTUAL WORK',
+  '[button.writer.accept]': 'I\'LL TAKE THE MAP',
+  '[button.writer.reject]': 'THIS IS TOO MUCH. I\'LL JUST READ YOUR STORIES',
+  
+  // Writer buttons - pirate  
+  '[button.writer.wind]': 'REAL OR NOT, IT\'S A GOOD STORY. KEEP SAILING.',
+  '[button.writer.anchor]': 'STORIES AREN\'T REAL. YOU ARE.',
+  
   // Writer metadata
   '[map.writer]': 'DREAM TIME MAP',
   '[portfolio.writer]': 'Story Collection',
