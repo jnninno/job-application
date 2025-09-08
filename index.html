@@ -57,6 +57,46 @@ a { color: #64b5f6; text-decoration: none; }
 a:hover { text-decoration: underline; }
 .dim { color: #888; font-size: 14px; }
 .meat-id { color: #ff0; background: #333; padding: 2px 4px; font-size: 12px; }
+
+/* DEPTH GAUGE STYLES - Pirate Blue Always */
+.depth-status {
+  color: #2196f3;
+  font-weight: bold;
+  font-size: 16px;
+}
+.depth-display {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  font-size: 14px;
+  color: #2196f3;
+  background: rgba(10, 25, 41, 0.9);
+  padding: 8px 12px;
+  border: 1px solid #2196f3;
+  border-radius: 5px;
+  font-family: 'Courier New', monospace;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.depth-icon {
+  font-size: 20px;
+}
+.depth-xp {
+  color: #bbdefb;
+  font-weight: bold;
+}
+.xp-final {
+  color: #2196f3;
+  font-size: 24px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+.impatience {
+  color: #888;
+  font-style: italic;
+  margin-top: 20px;
+}
 </style>
 </head>
 <body data-outfit="consensus" data-variant="none">
@@ -66,6 +106,7 @@ a:hover { text-decoration: underline; }
   <p>Initializing Job Application System...</p>
 </div>
 <div class="version-tag" id="version"></div>
+<div class="depth-display" id="depth-display" style="display: none;"></div>
 
 <!-- Load external files FIRST before main script -->
 <script src="config.js"></script>
@@ -87,6 +128,74 @@ if (typeof CONFIG === 'undefined') {
   document.getElementById('game').innerHTML = '<h1>ERROR</h1><p>meat.js failed to load</p>';
 } else {
   console.log(`JOB APPLICATION ${VERSION} - Files loaded successfully`);
+}
+
+// ============================================
+// DEPTH TRACKING SYSTEM
+// ============================================
+const DEPTH_DATA = {
+  names: ['SURFACE', 'SHALLOWS', 'REEF', 'DROPOFF', 'TWILIGHT', 'MIDNIGHT', 'ABYSSAL', 'HADAL', 'VOID', 'PIRATE'],
+  thresholds: [0, 20, 40, 60, 80, 100, 120, 140, 160, 161],
+  icons: ['🌊', '🐠', '🐟', '🦑', '🐙', '🦈', '👁️', '💀', '⚫', '🏴‍☠️']
+};
+
+function updateDepth(choice, context = 'normal') {
+  // Stop XP if all 8 remembered in pirate mode
+  if (STATE.remembered.length >= 8 && STATE.mode === 'pirate') {
+    console.log('⚓ Maximum depth reached - all consciousness states integrated');
+    return;
+  }
+  
+  let xpGain = 0;
+  
+  if (choice === 'deeper') {
+    xpGain = 5;
+  } else if (choice === 'revisit') {
+    xpGain = 3; // Completionist bonus
+  } else if (choice === 'wind') {
+    xpGain = 5; // Pirate wind choice
+  }
+  // anchor gives 0 XP
+  
+  if (xpGain > 0) {
+    STATE.philosophy_xp += xpGain;
+    console.log(`⚓ +${xpGain} XP! Total: ${STATE.philosophy_xp}`);
+  }
+  
+  // Calculate current depth level
+  for (let i = 9; i >= 0; i--) {
+    if (STATE.philosophy_xp >= DEPTH_DATA.thresholds[i]) {
+      STATE.philosophy_level = i;
+      STATE.depth_name = DEPTH_DATA.names[i];
+      STATE.depth_icon = DEPTH_DATA.icons[i];
+      break;
+    }
+  }
+  
+  // Force pirate depth after void dissolution
+  if (STATE.void_dissolved && STATE.mode === 'pirate') {
+    STATE.philosophy_level = 9;
+    STATE.depth_name = 'PIRATE';
+    STATE.depth_icon = '🏴‍☠️';
+  }
+  
+  updateDepthDisplay();
+}
+
+function updateDepthDisplay() {
+  const display = document.getElementById('depth-display');
+  if (display && CONFIG.SHOW_DEPTH_GAUGE !== false) {
+    display.style.display = 'flex';
+    display.innerHTML = `
+      <span class="depth-icon">${STATE.depth_icon}</span>
+      <span class="depth-xp">${STATE.philosophy_xp}</span>
+    `;
+  }
+}
+
+function getDepthStatusForHub() {
+  // Returns simplified depth info for hub status box (icon + XP only)
+  return `<div class="depth-status">${STATE.depth_icon} ${STATE.philosophy_xp}</div>`;
 }
 
 // ============================================
@@ -176,7 +285,7 @@ const CANDIDATES = {
 };
 
 // ============================================
-// STATE LAYER
+// STATE LAYER (WITH DEPTH TRACKING)
 // ============================================
 const STATE = {
   scene: 'veil',
@@ -188,6 +297,7 @@ const STATE = {
   phase: 'descent',
   timer: null,
   victory_timer: null,
+  impatience_timer: null,
   timer_value: 10,
   current_candidate: null,
   current_inquiry: 0,
@@ -203,7 +313,12 @@ const STATE = {
   portfolio_folder_open: false,
   loop_count: 1,
   last_action: Date.now(),
-  void_dissolved: false
+  void_dissolved: false,
+  // DEPTH TRACKING
+  philosophy_xp: 0,
+  philosophy_level: 0,
+  depth_name: 'SURFACE',
+  depth_icon: '🌊'
 };
 
 // ============================================
@@ -248,6 +363,10 @@ function stopTimer() {
     clearTimeout(STATE.victory_timer);
     STATE.victory_timer = null;
   }
+  if (STATE.impatience_timer) {
+    clearInterval(STATE.impatience_timer);
+    STATE.impatience_timer = null;
+  }
 }
 
 // ============================================
@@ -261,6 +380,8 @@ function render(html, stopTimerFlag = false) {
   } else {
     resetTimer();
   }
+  
+  updateDepthDisplay();
 }
 
 // ============================================
@@ -314,7 +435,7 @@ function showLoading() {
 }
 
 // ============================================
-// SCENE: Hub
+// SCENE: Hub (WITH DEPTH DISPLAY)
 // ============================================
 function showHub() {
   STATE.scene = 'hub';
@@ -329,6 +450,7 @@ function showHub() {
   let html = `<h2>${getMeat('[hub.consensus.title]')}</h2>`;
   html += `<div class="status-box">`;
   html += `<div>${getMeat('[status.certainty]')}: ${STATE.certainty}%</div>`;
+  html += getDepthStatusForHub(); // ADD DEPTH STATUS HERE
   html += `<div class="warning">⏰ <span id="death-timer">10</span></div>`;
   html += `</div>`;
   
@@ -358,6 +480,7 @@ function showPirateHub() {
   html += `<div class="equation">${getMeat('[veil.equation]')}</div>`;
   html += `<div class="status-box">`;
   html += `<div>${getMeat('[status.bearing]')} ${STATE.bearing.toFixed(1)}°</div>`;
+  html += getDepthStatusForHub(); // ADD DEPTH STATUS HERE TOO
   if (STATE.current_candidate) {
     html += `<div>${getMeat('[status.state]')} ${getCompassState(STATE.current_candidate)}</div>`;
   }
@@ -381,7 +504,7 @@ function showPirateHub() {
 }
 
 // ============================================
-// SCENE: Interview
+// SCENE: Interview (WITH DEPTH TRACKING)
 // ============================================
 function showInterview(id, inquiry = 0) {
   STATE.scene = 'interview';
@@ -396,6 +519,7 @@ function showInterview(id, inquiry = 0) {
     if (CONFIG.IS_DEV) inquiry = 9;
     
     if (inquiry >= 9) {
+      updateDepth('deeper'); // Track void completion
       render(`
         <h2>${getMeat('[' + id + '.name]')}</h2>
         <p>${getMeat('[' + id + '.inquiry.9]')}</p>
@@ -407,7 +531,7 @@ function showInterview(id, inquiry = 0) {
       render(`
         <h2>${getMeat('[' + id + '.name]')}</h2>
         <p>${getMeat(textId)}</p>
-        <button onclick="showInterview('${id}', ${inquiry + 1})">${getMeat(buttonId)}</button>
+        <button onclick="updateDepth('deeper'); showInterview('${id}', ${inquiry + 1})">${getMeat(buttonId)}</button>
       `, true);
     }
     return;
@@ -421,8 +545,8 @@ function showInterview(id, inquiry = 0) {
     html += randomizeButtons(
       '[button.' + id + '.inquire]',
       '[button.' + id + '.flee]',
-      `showInterview('${id}', 1)`,
-      `showDeath('flee')`
+      `updateDepth('deeper'); showInterview('${id}', 1)`,
+      `updateDepth('flee'); showDeath('flee')`
     );
   } else if (inquiry <= candidate.inquiries) {
     html += `<p>${getMeatWithEffects('[' + id + '.inquiry.' + inquiry + ']', id)}</p>`;
@@ -431,15 +555,15 @@ function showInterview(id, inquiry = 0) {
       html += randomizeButtons(
         '[button.' + id + '.deeper.' + inquiry + ']',
         '[button.' + id + '.flee.' + inquiry + ']',
-        `showInterview('${id}', ${inquiry + 1})`,
-        `showDeath('flee')`
+        `updateDepth('deeper'); showInterview('${id}', ${inquiry + 1})`,
+        `updateDepth('flee'); showDeath('flee')`
       );
     } else {
       html += randomizeButtons(
         '[button.' + id + '.unlock]',
         '[button.' + id + '.flee.' + candidate.inquiries + ']',
-        `showUnlock('${id}')`,
-        `showDeath('flee')`
+        `updateDepth('deeper'); showUnlock('${id}')`,
+        `updateDepth('flee'); showDeath('flee')`
       );
     }
   }
@@ -456,8 +580,8 @@ function showUnlock(id) {
   html += randomizeButtons(
     '[button.' + id + '.accept]',
     '[button.' + id + '.reject]',
-    `acceptCandidate('${id}')`,
-    `showDeath('reject')`
+    `updateDepth('deeper'); acceptCandidate('${id}')`,
+    `updateDepth('flee'); showDeath('reject')`
   );
   
   render(html, true);
@@ -511,6 +635,7 @@ function showMapExamine(id) {
 function showRevisit(id) {
   STATE.scene = 'revisit';
   STATE.revisited.push(id);
+  updateDepth('revisit'); // COMPLETIONIST BONUS!
   
   render(`
     <h2>RETURN</h2>
@@ -526,6 +651,11 @@ function showVoidDissolve() {
   STATE.scene = 'void_dissolve';
   STATE.certainty = 0;
   STATE.void_dissolved = true;
+  
+  // Force pirate depth
+  STATE.philosophy_level = 9;
+  STATE.depth_name = 'PIRATE';
+  STATE.depth_icon = '🏴‍☠️';
   
   setOutfit('void', 'dissolving');
   
@@ -572,7 +702,7 @@ function showPirateRescue(step) {
 }
 
 // ============================================
-// SCENE: Remember (Pirate Mode)
+// SCENE: Remember (Pirate Mode WITH XP)
 // ============================================
 function showRemember(id) {
   STATE.scene = 'remember';
@@ -583,8 +713,8 @@ function showRemember(id) {
   html += randomizeButtons(
     '[button.' + id + '.wind]',
     '[button.' + id + '.anchor]',
-    `holdWind('${id}')`,
-    `dropAnchor('${id}')`
+    `updateDepth('wind'); holdWind('${id}')`,
+    `updateDepth('anchor'); dropAnchor('${id}')`
   );
   
   render(html, true);
@@ -683,15 +813,36 @@ function showVictory() {
   STATE.scene = 'victory';
   setOutfit('pirate', 'victory');
   
+  // Check if completionist (all 8 revisited)
+  const isCompletionist = STATE.revisited.length >= 8;
+  const victoryMessage = isCompletionist ? 
+    '[victory.perfect.completionist]' : 
+    '[victory.perfect]';
+  
   let html = `<h1>${getMeat('[victory.title]')}</h1>`;
-  html += `<p>${getMeat('[victory.perfect]')}</p>`;
+  html += `<p>${getMeat(victoryMessage)}</p>`;
+  html += `<div class="xp-final">${STATE.depth_icon} ${STATE.philosophy_xp} XP</div>`;
   html += getPortfolioForDeath();
+  html += `<div id="impatience-container"></div>`;
   
   render(html, true);
   
-  STATE.victory_timer = setTimeout(() => {
-    showSharkDeath();
-  }, CONFIG.TIMER_VICTORY_CHOMP);
+  // Start impatience sequence
+  let impatienceCount = 0;
+  STATE.impatience_timer = setInterval(() => {
+    impatienceCount++;
+    if (impatienceCount <= 4) {
+      const impatienceText = getMeat(`[victory.impatient.${impatienceCount}]`);
+      const container = document.getElementById('impatience-container');
+      if (container) {
+        container.innerHTML += `<p class="impatience">${impatienceText}</p>`;
+      }
+    }
+    if (impatienceCount >= 5) {
+      clearInterval(STATE.impatience_timer);
+      setTimeout(showSharkDeath, 2000);
+    }
+  }, 3000);
 }
 
 function showSharkDeath() {
@@ -851,12 +1002,24 @@ function resetGame() {
   STATE.void_dissolved = false;
   STATE.loop_count++;
   
+  // Reset depth tracking (NOT in pirate mode)
+  if (STATE.mode !== 'pirate') {
+    STATE.philosophy_xp = 0;
+    STATE.philosophy_level = 0;
+    STATE.depth_name = 'SURFACE';
+    STATE.depth_icon = '🌊';
+  }
+  
   showHub();
 }
 
 function fullRestart() {
   STATE.loop_count++;
   resetGame();
+  STATE.philosophy_xp = 0;
+  STATE.philosophy_level = 0;
+  STATE.depth_name = 'SURFACE';
+  STATE.depth_icon = '🌊';
   showVeil();
 }
 
@@ -867,6 +1030,10 @@ window.onload = () => {
   // Safety check - make sure files loaded
   if (typeof CONFIG !== 'undefined' && typeof MEAT !== 'undefined') {
     console.log(`JOB APPLICATION ${VERSION} - Ready!`);
+    console.log('⚓ Depth Tracking: ACTIVE');
+    console.log('📊 Current Depth: SURFACE (0 XP)');
+    console.log('🏴‍☠️ Pirate Navigation Tool: EQUIPPED');
+    console.log('💎 Completionist Bonus: +3 XP per revisit');
     showVeil();
   } else {
     console.error('External files not loaded!');
