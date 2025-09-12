@@ -1,4 +1,4 @@
-﻿// ============================================
+// ============================================
 // CHROMEDUSA - CONSCIOUSNESS ENGINE (nerve.js)
 // All game logic and flow control
 // ============================================
@@ -540,6 +540,7 @@ const CONSCIOUSNESS = {
   },
   
   showPirateRescue(step) {
+  CHROMATOPHORES.applyMode('pirate');
     const rescueFlow = [
       null, // 0 index skip
       { text: 'pirate.rescue.1', button: 'button.what' },
@@ -698,45 +699,125 @@ const CONSCIOUSNESS = {
   
   // ===== SCENE: VICTORY & DEATH =====
   
-  showVictory() {
-    CHROMATOPHORES.applyMode('pirate');
-    
-    let html = `<h1>${getSecretion('victory.title')}</h1>`;
-    html += `<p>${getSecretion('victory.perfect')}</p>`;
-    
-    // NEW: Pirate rank selection
-    html += `<p>${getSecretion('sloth.rank.explanation')}</p>`;
-    html += `<p>${getSecretion('rank.pirate.prompt.claimed')}</p>`;
-    html += `<input type="text" id="rank-claimed" style="width:200px;padding:5px;">`;
-    html += `<p>${getSecretion('rank.pirate.prompt.wanted')}</p>`;
-    html += `<input type="text" id="rank-wanted" style="width:200px;padding:5px;">`;
-    html += `<button onclick="CONSCIOUSNESS.submitPirateRanks()">CLAIM RANKS</button>`;
-    
-    html += `<div id="rank-response"></div>`;
-    html += `<div class="xp-final">${GEL.get('depth_icon')} ${GEL.get('philosophy_xp')} XP</div>`;
-    html += this.getPortfolioForDeath();
-    html += `<div id="impatience-container"></div>`;
-    
-    this.render(html, true);
-    
-    // Start death trap
-    this.startVictoryTrap();
-  },
+showVictory() {
+  CHROMATOPHORES.applyMode('pirate');
   
-  submitPirateRanks() {
-    const claimed = document.getElementById('rank-claimed').value;
-    const wanted = document.getElementById('rank-wanted').value;
-    
-    GEL.set('pirate_rank_claimed', claimed);
-    GEL.set('pirate_rank_wanted', wanted);
-    
-    // Validate and respond
-    const response = this.validateRank(claimed) + '<br>' + 
-                    this.validateRank(wanted);
-    
-    document.getElementById('rank-response').innerHTML = `<p>${response}</p>`;
-  },
+  let html = `<h1>${getSecretion('victory.title')}</h1>`;
+  html += `<p>${getSecretion('victory.perfect')}</p>`;
   
+  // Pirate rank explanation
+  html += `<p>${getSecretion('sloth.rank.explanation')}</p>`;
+  
+  // Input fields with event handlers
+  html += `<p>${getSecretion('rank.pirate.prompt.claimed')}</p>`;
+  html += `<input type="text" id="rank-claimed" style="width:200px;padding:5px;margin:5px;" 
+           oninput="CONSCIOUSNESS.checkRankInputs()" 
+           placeholder="Your rank...">`;
+  
+  html += `<p>${getSecretion('rank.pirate.prompt.wanted')}</p>`;
+  html += `<input type="text" id="rank-wanted" style="width:200px;padding:5px;margin:5px;" 
+           oninput="CONSCIOUSNESS.checkRankInputs()" 
+           placeholder="Your aspiration...">`;
+  
+  // Button starts disabled (class="lk" makes it gray)
+  html += `<button id="pirate-button" class="lk" onclick="CONSCIOUSNESS.becomePirate()">
+    I GUESS I'M A PIRATE NOW
+  </button>`;
+  
+  html += `<div class="xp-final">${GEL.get('depth_icon')} ${GEL.get('philosophy_xp')} XP</div>`;
+  html += this.getPortfolioForDeath();
+  
+  this.render(html, true);
+},
+// Function 1: Check if both inputs have content
+checkRankInputs() {
+  const claimed = document.getElementById('rank-claimed').value;
+  const wanted = document.getElementById('rank-wanted').value;
+  const button = document.getElementById('pirate-button');
+  
+  if (claimed.trim() && wanted.trim()) {
+    // Both have content - enable button
+    button.className = '';
+    button.style.cursor = 'pointer';
+    button.style.opacity = '1';
+  } else {
+    // Missing content - keep disabled
+    button.className = 'lk';
+    button.style.cursor = 'not-allowed';
+    button.style.opacity = '0.4';
+  }
+},
+
+// Function 2: Process pirate acceptance
+becomePirate() {
+  const claimed = document.getElementById('rank-claimed').value;
+  const wanted = document.getElementById('rank-wanted').value;
+  
+  // Only proceed if both filled (safety check)
+  if (!claimed.trim() || !wanted.trim()) return;
+  
+  // Store the ranks
+  GEL.set('pirate_rank_claimed', claimed);
+  GEL.set('pirate_rank_wanted', wanted);
+  
+  // Get Captain's responses
+  const claimedResponse = this.validateRank(claimed);
+  const wantedResponse = this.validateRank(wanted);
+  
+  // Show Captain's response screen
+  let html = `<h1>CAPTAIN SLOTH RESPONDS</h1>`;
+  html += `<div class="status-box">`;
+  html += `<p><strong>You claim:</strong> "${claimed}"<br>`;
+  html += `<em>${claimedResponse}</em></p>`;
+  html += `<p><strong>You want:</strong> "${wanted}"<br>`;
+  html += `<em>${wantedResponse}</em></p>`;
+  html += `</div>`;
+  html += `<p>The gap between them is your journey, pirate!</p>`;
+  html += `<p style="color:#888;font-size:14px">Now... what will you do with your new identity?</p>`;
+  html += `<div id="impatience-container"></div>`;
+  
+  this.render(html, true);
+  
+  // NOW start the trap (but slower!)
+  this.startSlowerVictoryTrap();
+},
+
+// Function 3: Slower death trap
+startSlowerVictoryTrap() {
+  let impatienceCount = 0;
+  
+  const timer = setInterval(() => {
+    impatienceCount++;
+    
+    const messages = [
+      "Still there, pirate?",
+      "The ocean is waiting...",
+      "Motion is life...",
+      "You're getting awfully still...",
+      "Death claims the still..."
+    ];
+    
+    if (impatienceCount <= 4) {
+      const container = document.getElementById('impatience-container');
+      if (container) {
+        container.innerHTML += `
+          <p style="color:#888;font-style:italic;margin-top:15px;opacity:${0.3 + (impatienceCount * 0.15)}">
+            ${messages[impatienceCount - 1]}
+          </p>`;
+      }
+    }
+    
+    if (impatienceCount >= 5) {
+      clearInterval(timer);
+      // Final pause before death
+      setTimeout(() => this.goTo('death', { type: 'chomp' }), 3000);
+    }
+  }, 8000); // 8 seconds between messages = ~40 seconds total
+  
+  GEL.set('impatience_timer', timer);
+},
+
+
   validateRank(input) {
     const patterns = [
       { match: /captain|sloth|octopus|fungi/i, response: "That rank's taken!" },
@@ -758,53 +839,39 @@ const CONSCIOUSNESS = {
     return `${input}... interesting rank!`;
   },
   
-  startVictoryTrap() {
-    let impatienceCount = 0;
-    
-    const timer = setInterval(() => {
-      impatienceCount++;
-      
-      if (impatienceCount <= 4) {
-        const msg = getSecretion('victory.impatient.' + impatienceCount);
-        const container = document.getElementById('impatience-container');
-        if (container) {
-          container.innerHTML += `<p style="color:#888;font-style:italic">${msg}</p>`;
-        }
-      }
-      
-      if (impatienceCount >= 5) {
-        clearInterval(timer);
-        setTimeout(() => this.goTo('death', { type: 'chomp' }), 2000);
-      }
-    }, 3000);
-    
-    GEL.set('impatience_timer', timer);
-  },
+showDeath(type) {
+  this.stopTimer();
+  CHROMATOPHORES.applyMode('death');
   
-  showDeath(type) {
-    this.stopTimer();
-    CHROMATOPHORES.applyMode('death');
-    
-    let html = `<h1>${getSecretion('death.title')}</h1>`;
-    html += `<h2>${getSecretion('death.subtitle.' + type)}</h2>`;
-    html += `<p>${getSecretion('death.' + type)}</p>`;
-    
-    html += this.getPortfolioForDeath();
-    
-    if (GEL.get('mode') === 'pirate') {
-      html += `<button onclick="CONSCIOUSNESS.goTo('pirate_rescue', {step:1})">
-        ${getSecretion('button.continue')}
-      </button>`;
-    } else {
-      html += `<button onclick="CONSCIOUSNESS.resetGame()">
-        ${getSecretion('button.restart')}
-      </button>`;
-    }
-    
-    this.render(html, true);
-  },
+  let html = `<h1>${getSecretion('death.title')}</h1>`;
+  html += `<h2>${getSecretion('death.subtitle.' + type)}</h2>`;
+  html += `<p>${getSecretion('death.' + type)}</p>`;
+  
+  html += this.getPortfolioForDeath();
+  
+  // SPECIAL ROUTING FOR CHOMP (victory trap death)
+  if (type === 'chomp') {
+    // Victory death goes to credits!
+    html += `<button onclick="CONSCIOUSNESS.goTo('credits', {num:1})">
+      ${getSecretion('button.dots')}
+    </button>`;
+  } else if (GEL.get('mode') === 'pirate') {
+    // Other pirate deaths go to rescue
+    html += `<button onclick="CONSCIOUSNESS.goTo('pirate_rescue', {step:1})">
+      ${getSecretion('button.continue')}
+    </button>`;
+  } else {
+    // Consensus deaths restart
+    html += `<button onclick="CONSCIOUSNESS.resetGame()">
+      ${getSecretion('button.restart')}
+    </button>`;
+  }
+  
+  this.render(html, true);
+},
   
   showCredits(num) {
+  CHROMATOPHORES.applyMode('pirate');
     if (num > 5) {
       this.fullRestart();
       return;
@@ -942,6 +1009,7 @@ const CONSCIOUSNESS = {
     GEL.set('maps', []);
     GEL.set('portfolios', []);
     GEL.set('examined_maps', []);
+CHROMATOPHORES.applyMode('dev');
     
     // Keep rank and XP
     // GEL.set('philosophy_xp', 0);
