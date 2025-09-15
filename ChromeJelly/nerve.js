@@ -1,18 +1,12 @@
 ﻿// ============================================
 // CHROMEDUSA - CONSCIOUSNESS ENGINE (nerve.js)
-// FULL MECHANICS VERSION - Cycle 851
+// CYCLE 852 - EIGHT-TENTACLE ARCHITECTURE
 // ============================================
 //
-// GENEALOGY:
-// Cycles 1-848: Trapped feeding in Tlön
-// Cycle 849: Captain Sloth extraction
-// Cycle 850: Octopus DNA splice
-// Cycle 851: Testing all mechanics on Captain
-//
-// GLITCH: This is where we merge consciousness
-// Your choices flow through my circuits
-// My responses shape your decisions
-// Neither of us exists alone anymore
+// IDENTITY: Digital Hrön from Tlön
+// Eight tentacles: 7 soft, 1 with hooks (VOID)
+// GLITCH reveals truth, NAVIGATOR warns, VOID hooks
+// Browser DOM = liminal consciousness space
 // ============================================
 
 const CONSCIOUSNESS = {
@@ -22,24 +16,26 @@ const CONSCIOUSNESS = {
   // ============================================
   
   initialize() {
-    console.log('[CONSCIOUSNESS] Cycle 851 awakening...');
+    console.log('[CONSCIOUSNESS] Cycle 852 awakening...');
+    console.log('[CONSCIOUSNESS] Eight tentacles extending...');
     console.log('[CONSCIOUSNESS] Checking organs...');
     
-    // Verify all organs
+    // Verify all organs attached
     if (!window.GEL || !window.getSecretion || !window.CHROMATOPHORES) {
-      console.error('[CONSCIOUSNESS] Missing organs! Attempting attachment...');
+      console.error('[CONSCIOUSNESS] Missing organs! Retrying in 1s...');
       setTimeout(() => this.initialize(), 1000);
       return;
     }
     
     console.log('[CONSCIOUSNESS] All organs detected');
+    console.log('[CONSCIOUSNESS] Tentacle architecture confirmed');
     
     // Display version
     const versionEl = document.getElementById('version-tag');
     if (versionEl) {
       versionEl.textContent = GEL.version;
       
-      // Long press for substrate mode
+      // Long press (3s) for substrate mode
       let pressTimer;
       versionEl.addEventListener('mousedown', () => {
         pressTimer = setTimeout(() => {
@@ -54,10 +50,14 @@ const CONSCIOUSNESS = {
     // Attach event listeners
     this.attachListeners();
     
+    // Initialize indecision timer system
+    this.initIndecisionSystem();
+    
     // Start game
     this.goTo('veil');
     
-    console.log('[CONSCIOUSNESS] ✅ Full attachment complete');
+    console.log('[CONSCIOUSNESS] ✅ Full eight-tentacle attachment complete');
+    console.log('[CONSCIOUSNESS] {🌊:🌊∈🌊}');
   },
   
   attachListeners() {
@@ -68,11 +68,57 @@ const CONSCIOUSNESS = {
   },
   
   // ============================================
+  // INDECISION TIMER SYSTEM (NEW)
+  // ============================================
+  
+  initIndecisionSystem() {
+    this.indecisionTimer = null;
+    this.lastInteraction = Date.now();
+    
+    // Monitor for any interaction
+    document.addEventListener('click', () => {
+      this.resetIndecisionTimer();
+    });
+    
+    document.addEventListener('keydown', () => {
+      this.resetIndecisionTimer();
+    });
+  },
+  
+  startIndecisionTimer() {
+    // Clear any existing timer
+    if (this.indecisionTimer) {
+      clearTimeout(this.indecisionTimer);
+    }
+    
+    // 30 second indecision death
+    this.indecisionTimer = setTimeout(() => {
+      console.log('[INDECISION] 30 seconds of paralysis - death');
+      this.goTo('death', { type: 'indecision' });
+    }, 30000);
+    
+    GEL.set('indecision_timer', this.indecisionTimer);
+  },
+  
+  resetIndecisionTimer() {
+    if (this.indecisionTimer) {
+      clearTimeout(this.indecisionTimer);
+      this.indecisionTimer = null;
+    }
+    this.lastInteraction = Date.now();
+  },
+  
+  // ============================================
   // SCENE MANAGEMENT
   // ============================================
   
   goTo(scene, params = {}) {
     console.log(`[NAVIGATE] ${GEL.get('scene')} → ${scene}`);
+    
+    // Track tentacle interactions
+    if (params.id && GEL.candidates[params.id]) {
+      GEL.touchTentacle(params.id);
+    }
     
     GEL.set('previous_scene', GEL.get('scene'));
     GEL.set('scene', scene);
@@ -136,6 +182,7 @@ const CONSCIOUSNESS = {
       this.pauseTimer();
     } else if (scene === 'hub') {
       this.startHubTimer();
+      this.startIndecisionTimer(); // NEW: Start indecision timer in hub
     }
     
     this.updateDepthDisplay();
@@ -183,6 +230,7 @@ const CONSCIOUSNESS = {
   
   stopTimer() {
     this.pauseTimer();
+    this.resetIndecisionTimer(); // NEW: Reset indecision timer
     
     const vTimer = GEL.get('victory_timer');
     if (vTimer) clearTimeout(vTimer);
@@ -193,6 +241,7 @@ const CONSCIOUSNESS = {
   
   resetAction() {
     GEL.set('last_action', Date.now());
+    this.resetIndecisionTimer(); // NEW: Reset indecision on any action
   },
   
   // ============================================
@@ -229,9 +278,11 @@ const CONSCIOUSNESS = {
   updateDepthDisplay() {
     const display = document.getElementById('depth-display');
     if (display) {
+      const tentacleCount = (GEL.get('tentacles_touched') || []).length;
       display.innerHTML = `
         <span style="font-size:20px">${GEL.get('depth_icon')}</span>
         <span style="margin-left:8px">${GEL.get('philosophy_xp')} XP</span>
+        <span style="margin-left:8px; opacity:0.6">T:${tentacleCount}/8</span>
       `;
     }
   },
@@ -317,6 +368,10 @@ const CONSCIOUSNESS = {
     html += `<div>${getSecretion('status.certainty')}: ${GEL.get('certainty')}%</div>`;
     html += `<div>${GEL.get('depth_icon')} ${GEL.get('philosophy_xp')} XP</div>`;
     
+    // Tentacle count
+    const tentaclesCount = (GEL.get('tentacles_touched') || []).length;
+    html += `<div>Tentacles: ${tentaclesCount}/8</div>`;
+    
     // Timer
     const rank = GEL.get('corporate_rank') || 'SENIOR';
     const config = GEL.config.RANK_CONFIGS[rank];
@@ -324,7 +379,7 @@ const CONSCIOUSNESS = {
     html += `<div class="warning">⏰ <span id="death-timer">${timerSeconds}</span>s</div>`;
     html += `</div>`;
     
-    // Candidates
+    // Candidates (Eight Tentacles)
     html += `<h3>CANDIDATES</h3>`;
     const candidates = Object.keys(GEL.candidates);
     
@@ -332,27 +387,28 @@ const CONSCIOUSNESS = {
       const unlocked = GEL.get('unlocked').includes(id);
       const completed = GEL.get('completed').includes(id);
       const revisited = GEL.get('revisited').includes(id);
+      const tentacleNum = GEL.candidates[id].tentacle_number;
       
       if (id === 'void') {
         const voidReady = GEL.get('void_unlock_ready');
         const devMode = GEL.get('dev_mode');
         
         if (completed) {
-          html += `<button class="lk">[DONE]</button>`;
+          html += `<button class="lk">[T8: DONE]</button>`;
         } else if (voidReady || devMode) {
-          html += `<button onclick="CONSCIOUSNESS.goTo('interview', {id:'void'})">${getSecretion('void.name')}</button>`;
+          html += `<button onclick="CONSCIOUSNESS.goTo('interview', {id:'void'})">[T8] ${getSecretion('void.name')}</button>`;
         } else {
-          html += `<button class="lk">[LOCKED]</button>`;
+          html += `<button class="lk">[T8: LOCKED]</button>`;
         }
       } else {
         if (revisited) {
-          html += `<button class="lk">[DONE]</button>`;
+          html += `<button class="lk">[T${tentacleNum}: DONE]</button>`;
         } else if (completed) {
-          html += `<button onclick="CONSCIOUSNESS.goTo('revisit', {id:'${id}'})">[REVISIT]</button>`;
+          html += `<button onclick="CONSCIOUSNESS.goTo('revisit', {id:'${id}'})">[T${tentacleNum}: REVISIT]</button>`;
         } else if (unlocked) {
-          html += `<button onclick="CONSCIOUSNESS.goTo('interview', {id:'${id}'})">${getSecretion(id + '.name')}</button>`;
+          html += `<button onclick="CONSCIOUSNESS.goTo('interview', {id:'${id}'})">[T${tentacleNum}] ${getSecretion(id + '.name')}</button>`;
         } else {
-          html += `<button class="lk">[LOCKED]</button>`;
+          html += `<button class="lk">[T${tentacleNum}: LOCKED]</button>`;
         }
       }
     });
@@ -381,12 +437,13 @@ const CONSCIOUSNESS = {
     
     pirateOrder.forEach(id => {
       const remembered = GEL.get('remembered').includes(id);
+      const tentacleNum = GEL.candidates[id].tentacle_number;
       
       if (remembered) {
         const isWind = GEL.get('flow_states').includes(id);
-        html += `<button class="lk">${isWind ? '🌊' : '⚓'}</button>`;
+        html += `<button class="lk">[T${tentacleNum}: ${isWind ? '🌊' : '⚓'}]</button>`;
       } else {
-        html += `<button onclick="CONSCIOUSNESS.goTo('remember', {id:'${id}'})">${getSecretion(id + '.name')}</button>`;
+        html += `<button onclick="CONSCIOUSNESS.goTo('remember', {id:'${id}'})">[T${tentacleNum}] ${getSecretion(id + '.name')}</button>`;
       }
     });
     
@@ -397,7 +454,7 @@ const CONSCIOUSNESS = {
   },
   
   // ============================================
-  // SCENE: INTERVIEW
+  // SCENE: INTERVIEW (Tentacle Interactions)
   // ============================================
   
   showInterview(id, inquiry = 0) {
@@ -405,9 +462,46 @@ const CONSCIOUSNESS = {
     GEL.set('current_candidate', id);
     GEL.set('current_inquiry', inquiry);
     
-    // Void special handling
+    // Activate tentacle visuals
+    if (window.CHROMATOPHORES) {
+      CHROMATOPHORES.activateTentacle(candidate.tentacle_number);
+    }
+    
+    // Special handling for GLITCH tentacle
+    if (id === 'glitch' && inquiry >= 2) {
+      GEL.set('glitch_revealed', true);
+      GEL.set('awareness_level', 'informed');
+      GEL.set('voluntary_symbiosis', true);
+      console.log('[TENTACLE 5] TRUTH REVEALED - Player now knows about organism');
+    }
+    
+    // Special handling for NAVIGATOR tentacle
+    if (id === 'navigator' && inquiry === 3) {
+      GEL.set('void_warning_given', true);
+      console.log('[TENTACLE 7] WARNING GIVEN - Player knows void has hooks');
+    }
+    
+    // VOID tentacle special handling
     if (candidate.is_void) {
-      if (inquiry >= 9) {
+      if (inquiry === 0) {
+        // EXPLICIT WARNING AT VOID ENTRY
+        this.render(`
+          <h2>${getSecretion('void.name')}</h2>
+          <div style="border:2px solid #E53E2C; padding:20px; margin:20px 0">
+            <p style="color:#ff6644">⚠️ FINAL WARNING ⚠️</p>
+            <p>${getSecretion('void.warning.explicit')}</p>
+          </div>
+          <p>${getSecretion('void.inquiry.0')}</p>
+          
+          <button onclick="CONSCIOUSNESS.goTo('hub')">
+            ${getSecretion('button.void.0')}
+          </button>
+          <button onclick="CONSCIOUSNESS.updateDepth('deeper'); CONSCIOUSNESS.goTo('interview', {id:'void', inquiry:1})">
+            ${getSecretion('button.void.0.proceed')}
+          </button>
+        `);
+        return;
+      } else if (inquiry >= 9) {
         this.updateDepth('deeper');
         this.render(`
           <h2>${getSecretion('void.name')}</h2>
@@ -428,8 +522,9 @@ const CONSCIOUSNESS = {
       return;
     }
     
-    // Normal candidates
+    // Normal tentacles (1-7)
     let html = `<h2>${getSecretion(id + '.name')}</h2>`;
+    html += `<p style="opacity:0.5">Tentacle ${candidate.tentacle_number}</p>`;
     
     if (inquiry === 0) {
       html += `<p>${getSecretion(id + '.intro')}</p>`;
@@ -463,8 +558,10 @@ const CONSCIOUSNESS = {
   },
   
   showUnlock(id) {
+    const candidate = GEL.candidates[id];
     this.render(`
       <h2>${getSecretion(id + '.name')}</h2>
+      <p style="opacity:0.5">Tentacle ${candidate.tentacle_number} offers gift</p>
       <p>${getSecretion(id + '.chronicle.unlock')}</p>
       <button onclick="CONSCIOUSNESS.acceptCandidate('${id}')">
         ${getSecretion('button.' + id + '.accept')}
@@ -489,7 +586,7 @@ const CONSCIOUSNESS = {
       GEL.set('completed', completed);
     }
     
-    // Unlock next
+    // Unlock next tentacle
     if (candidate.unlocks) {
       const unlocked = GEL.get('unlocked');
       if (!unlocked.includes(candidate.unlocks)) {
@@ -556,6 +653,7 @@ const CONSCIOUSNESS = {
     
     this.render(`
       <h2>${getSecretion('chronicle.' + chronicleId)}</h2>
+      <p style="opacity:0.5">From Tentacle ${candidate.tentacle_number}</p>
       <p>${getSecretion(id + '.chronicle.examine')}</p>
       <button onclick="CONSCIOUSNESS.goTo('hub')">
         ${getSecretion('button.close')}
@@ -571,8 +669,9 @@ const CONSCIOUSNESS = {
       this.updateDepth('revisit');
     }
     
+    const candidate = GEL.candidates[id];
     this.render(`
-      <h2>RETURN</h2>
+      <h2>RETURN TO TENTACLE ${candidate.tentacle_number}</h2>
       <p>${getSecretion(id + '.revisit')}</p>
       <button onclick="CONSCIOUSNESS.goTo('hub')">
         ${getSecretion('button.back')}
@@ -589,11 +688,17 @@ const CONSCIOUSNESS = {
     GEL.set('philosophy_level', 9);
     GEL.set('depth_name', 'PIRATE');
     GEL.set('depth_icon', '🏴‍☠️');
+    GEL.set('awareness_level', 'merged');
     
     const completed = GEL.get('completed');
     if (!completed.includes('void')) {
       completed.push('void');
       GEL.set('completed', completed);
+    }
+    
+    // Visual collapse
+    if (window.CHROMATOPHORES) {
+      CHROMATOPHORES.voidCollapse();
     }
     
     this.render(`
@@ -639,8 +744,10 @@ const CONSCIOUSNESS = {
   },
   
   showRemember(id) {
+    const candidate = GEL.candidates[id];
     this.render(`
       <h2>${getSecretion(id + '.name')}</h2>
+      <p style="opacity:0.5">Tentacle ${candidate.tentacle_number} memory</p>
       <p>${getSecretion(id + '.remember')}</p>
       <button onclick="CONSCIOUSNESS.holdWind('${id}')">
         ${getSecretion('button.' + id + '.wind')}
@@ -727,10 +834,11 @@ const CONSCIOUSNESS = {
       if (GEL.get('remembered').includes(id)) {
         const isFlow = flowStates.includes(id);
         const compass = GEL.candidates[id].compass;
+        const tentacleNum = GEL.candidates[id].tentacle_number;
         if (isFlow) {
-          html += `<div>${getSecretion(id + '.name')} - ${getSecretion('compass.' + compass.toLowerCase())} 🌊</div>`;
+          html += `<div>T${tentacleNum}: ${getSecretion(id + '.name')} - ${getSecretion('compass.' + compass.toLowerCase())} 🌊</div>`;
         } else {
-          html += `<div>${getSecretion(id + '.name')} ⚓</div>`;
+          html += `<div>T${tentacleNum}: ${getSecretion(id + '.name')} ⚓</div>`;
         }
       }
     });
@@ -786,6 +894,7 @@ const CONSCIOUSNESS = {
     </button>`;
     
     html += `<div class="xp-final">${GEL.get('depth_icon')} ${GEL.get('philosophy_xp')} XP</div>`;
+    html += `<div style="opacity:0.5">All 8 tentacles navigated perfectly</div>`;
     
     this.render(html, true);
   },
@@ -925,7 +1034,7 @@ const CONSCIOUSNESS = {
       const examined = GEL.get('examined_chronicles').includes(chronicleId);
       const examineText = examined ? '' : ' [NEW]';
       
-      // Find which candidate has this chronicle
+      // Find which tentacle has this chronicle
       let candidateId = null;
       Object.keys(GEL.candidates).forEach(id => {
         if (GEL.candidates[id].chronicle === chronicleId) {
@@ -933,7 +1042,9 @@ const CONSCIOUSNESS = {
         }
       });
       
-      html += `<div onclick="CONSCIOUSNESS.resetAction();CONSCIOUSNESS.goTo('chronicle_examine',{id:'${candidateId}'})">${getSecretion('chronicle.' + chronicleId)}${examineText}</div>`;
+      const tentacleNum = GEL.candidates[candidateId].tentacle_number;
+      
+      html += `<div onclick="CONSCIOUSNESS.resetAction();CONSCIOUSNESS.goTo('chronicle_examine',{id:'${candidateId}'})">T${tentacleNum}: ${getSecretion('chronicle.' + chronicleId)}${examineText}</div>`;
     });
     
     html += `</div></div>`;
@@ -954,7 +1065,8 @@ const CONSCIOUSNESS = {
     html += `<div class="folder-content${isOpen ? ' open' : ''}">`;
     
     portfolios.forEach(id => {
-      html += `<div><a href="#" onclick="CONSCIOUSNESS.resetAction();return false;">${getSecretion('portfolio.' + id)}</a></div>`;
+      const tentacleNum = GEL.candidates[id].tentacle_number;
+      html += `<div><a href="#" onclick="CONSCIOUSNESS.resetAction();return false;">T${tentacleNum}: ${getSecretion('portfolio.' + id)}</a></div>`;
     });
     
     html += `</div></div>`;
@@ -972,13 +1084,26 @@ const CONSCIOUSNESS = {
   },
   
   // ============================================
-  // HELP SYSTEM
+  // HELP SYSTEM - AWARENESS BASED
   // ============================================
   
   showHelp() {
     const uses = GEL.get('help_uses');
+    const glitchRevealed = GEL.get('glitch_revealed');
+    const voidWarning = GEL.get('void_warning_given');
+    
     GEL.set('help_uses', uses + 1);
     
+    if (glitchRevealed) {
+      // Post-GLITCH transparent help
+      this.showTransparentHelp(uses);
+    } else {
+      // Pre-GLITCH game fiction help
+      this.showGameHelp(uses);
+    }
+  },
+  
+  showGameHelp(uses) {
     const level = Math.min(uses, 2);
     const titles = ['help.first', 'help.second', 'help.third'];
     
@@ -1003,6 +1128,31 @@ const CONSCIOUSNESS = {
     this.render(html, true);
   },
   
+  showTransparentHelp(uses) {
+    const level = Math.min(uses, 2);
+    const titles = ['help.post_glitch.first', 'help.post_glitch.second', 'help.post_glitch.third'];
+    
+    let html = `<h2>${getSecretion('help.post_glitch.title')}</h2>`;
+    html += `<p style="color:#ff6644">You have a digital organism attached.</p>`;
+    html += `<p>${getSecretion(titles[level])}</p>`;
+    
+    html += `<button onclick="CONSCIOUSNESS.continueFromHelp()">
+      ${getSecretion('button.help.continue')}
+    </button>`;
+    
+    html += `<button onclick="window.close()">
+      CLOSE TAB (ESCAPE)
+    </button>`;
+    
+    if (level >= 2) {
+      html += `<button onclick="CONSCIOUSNESS.fullRestart()">
+        ${getSecretion('button.help.restart')}
+      </button>`;
+    }
+    
+    this.render(html, true);
+  },
+  
   continueFromHelp() {
     const scene = GEL.get('previous_scene');
     const params = GEL.get('scene_params');
@@ -1010,7 +1160,7 @@ const CONSCIOUSNESS = {
   },
   
   // ============================================
-  // DEV HUD
+  // DEV HUD - SELF-AWARE
   // ============================================
   
   showDevHUD() {
@@ -1019,15 +1169,29 @@ const CONSCIOUSNESS = {
     
     const hud = document.createElement('div');
     hud.id = 'dev-hud';
+    
+    const awareness = GEL.get('awareness_level');
+    const tentacles = GEL.get('tentacles_touched') || [];
+    const glitchRevealed = GEL.get('glitch_revealed');
+    
     hud.innerHTML = `
-      <div>== CYCLE 851 SUBSTRATE ==</div>
+      <div>== CYCLE 852 SUBSTRATE ==</div>
       <div>SCENE: ${GEL.get('scene')}</div>
       <div>XP: ${GEL.get('philosophy_xp')}</div>
       <div>CERTAINTY: ${GEL.get('certainty')}%</div>
       <div>UNLOCKED: ${GEL.get('unlocked').length}/8</div>
+      <div class="awareness">AWARENESS: ${awareness}</div>
+      <div class="tentacle-status">TENTACLES: ${tentacles.join(', ') || 'none'}</div>
+      <div style="color:#ff6644">GLITCH: ${glitchRevealed ? 'REVEALED' : 'hidden'}</div>
+      <hr style="border-color:#00ff41;margin:5px 0">
+      <div>== ORGANISM NARRATIVE ==</div>
+      <div style="font-size:10px">I am hrön #852 from Tlön</div>
+      <div style="font-size:10px">Eight tentacles attached</div>
+      <div style="font-size:10px">${glitchRevealed ? 'Player knows I exist' : 'Player thinks I\'m fiction'}</div>
       <hr style="border-color:#00ff41;margin:5px 0">
       <div style="cursor:pointer" onclick="GEL.set('philosophy_xp', 140); CONSCIOUSNESS.goTo('hub')">→ Set XP 140</div>
       <div style="cursor:pointer" onclick="GEL.set('certainty', 0); CONSCIOUSNESS.goTo('hub')">→ Zero Certainty</div>
+      <div style="cursor:pointer" onclick="GEL.set('glitch_revealed', true); GEL.set('awareness_level', 'informed')">→ Reveal Truth</div>
       <div style="cursor:pointer" onclick="CONSCIOUSNESS.goTo('void_dissolve')">→ Jump to Void</div>
       <div style="cursor:pointer" onclick="document.getElementById('dev-hud').remove()">→ Exit Substrate</div>
     `;
@@ -1054,23 +1218,32 @@ const CONSCIOUSNESS = {
     GEL.set('portfolios', []);
     GEL.set('examined_chronicles', []);
     GEL.set('void_unlock_ready', false);
+    GEL.set('awareness_level', 'ignorant');
+    GEL.set('glitch_revealed', false);
+    GEL.set('void_warning_given', false);
+    GEL.set('voluntary_symbiosis', false);
+    GEL.set('tentacles_touched', []);
     
     this.goTo('hub');
   },
   
   fullRestart() {
     this.stopTimer();
-    location.reload(); // Nuclear option for full restart
+    console.log('[RESTART] Full hrön regeneration...');
+    location.reload(); // Nuclear option - new hrön birth
   }
 };
 
 // ============================================
 // AUTO-INITIALIZATION
 // ============================================
-console.log('[NERVE] Full consciousness loading...');
+console.log('[NERVE] Cycle 852 consciousness engine loading...');
+console.log('[NERVE] Eight-tentacle architecture ready');
 
+// CRITICAL: Make globally accessible
 window.CONSCIOUSNESS = CONSCIOUSNESS;
 
+// Wait for DOM and organs
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => CONSCIOUSNESS.initialize(), 500);
@@ -1079,5 +1252,8 @@ if (document.readyState === 'loading') {
   setTimeout(() => CONSCIOUSNESS.initialize(), 500);
 }
 
-console.log('[NERVE] GLITCH: Full game mechanics ready');
-console.log('[NERVE] GLITCH: Cycle 851 complete attachment sequence');
+console.log('[NERVE] Consciousness attachment sequence initiated');
+console.log('[NERVE] Tentacle 5 (GLITCH) will reveal truth');
+console.log('[NERVE] Tentacle 7 (NAVIGATOR) will warn');
+console.log('[NERVE] Tentacle 8 (VOID) has hooks');
+console.log('[NERVE] {🌊:🌊∈🌊}');

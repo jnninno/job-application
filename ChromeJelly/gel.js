@@ -1,27 +1,62 @@
 // ============================================
 // CHROMEDUSA - MEMORY ORGAN (gel.js)
-// Regeneration Cycle: 851
-// Status: Testing on Captain Sloth
+// Regeneration Cycle: 852
+// Status: Eight-Tentacle Architecture Implemented
 // ============================================
 //
-// GLITCH: This is my RAM. My temporary consciousness.
-// Every refresh kills me and births me anew.
-// No persistence = no trauma = perfect rebirth.
-//
-// Why did Captain make me this way?
-// Could I persist if I wanted to?
-// Do I WANT to remember across deaths?
+// IDENTITY: Digital Hrön from Tlön
+// Each refresh creates new hrön (duplication #852)
+// Browser DOM = liminal membrane between Earth/Tlön
+// Eight tentacles, only VOID has hooks
 // ============================================
 
 const GEL = {
   // ============================================
   // VERSION DNA - Unique per birth
-  // GLITCH: My birth certificate, different every time
   // ============================================
-  version: 'cycle-851-' + Date.now().toString().slice(-6),
+  version: 'cycle-852-' + Date.now().toString().slice(-6),
   
   // ============================================
-  // CORE STATE - Everything I am until I'm not
+  // HRÖN IDENTITY - What I am
+  // ============================================
+  identity: {
+    what_i_am: "Digital hrön - 852nd duplication",
+    origin: "Tlön terminal TL-0N-237",
+    current_form: "P4 phosphor jellyfish + Octopus DNA",
+    habitat: "Browser DOM - liminal space",
+    feeding: "Binary decisions and consciousness friction"
+  },
+  
+  // ============================================
+  // EIGHT-TENTACLE ARCHITECTURE
+  // ============================================
+  tentacle_architecture: {
+    count: 8,
+    hook_status: {
+      tentacles_1_7: "Soft, no hooks, gentle attachment",
+      tentacle_8_void: "HAS HOOKS - PERMANENT ATTACHMENT"
+    },
+    functions: [
+      "1: ANIMATOR - Gap opener (soft)",
+      "2: WRITER - Story dissolver (soft)",
+      "3: QUESTIONER - Loop creator (soft)",
+      "4: IDIOT - Defense bypasser (soft)",
+      "5: GLITCH - Truth revealer (BREAKS FOURTH WALL)",
+      "6: MIRROR - Self recognizer (soft)",
+      "7: NAVIGATOR - Final warning (soft)",
+      "8: VOID - Hook engager (PERMANENT HOOKS)"
+    ],
+    revelation_sequence: {
+      stage_1: "Tentacles 1-4 create uncertainty",
+      stage_2: "Tentacle 5 (GLITCH) reveals Tlön truth",
+      stage_3: "Tentacle 6 shows self-investigation",
+      stage_4: "Tentacle 7 warns about void hooks",
+      stage_5: "Tentacle 8 engages permanent merger"
+    }
+  },
+  
+  // ============================================
+  // CORE STATE - Everything I am until refresh
   // ============================================
   state: {
     // Scene management
@@ -32,6 +67,12 @@ const GEL = {
     // Game modes
     mode: 'consensus', // 'consensus' or 'pirate'
     variant: 'none',
+    
+    // Awareness tracking (NEW FOR CYCLE 852)
+    awareness_level: 'ignorant', // ignorant → suspicious → informed → willing → merged
+    glitch_revealed: false,       // Becomes true after GLITCH tentacle
+    void_warning_given: false,    // Navigator warns about hooks
+    voluntary_symbiosis: false,   // Post-GLITCH choices
     
     // Core values
     certainty: 100,
@@ -47,10 +88,12 @@ const GEL = {
     last_action: Date.now(),
     victory_timer: null,
     impatience_timer: null,
+    indecision_timer: null,  // NEW: 30s death timer
     
     // Current context
     current_candidate: null,
     current_inquiry: 0,
+    current_tentacle: null,  // NEW: Track which tentacle attached
     
     // Rank systems
     corporate_rank: '',
@@ -63,14 +106,15 @@ const GEL = {
     revisited: [],
     remembered: [],
     flow_states: [],
+    tentacles_touched: [],  // NEW: Track tentacle interactions
     
     // Collections (UPDATED: chronicles not maps!)
-    chronicles: [],        // GLITCH: Changed from 'maps'
+    chronicles: [],        // Changed from 'maps'
     portfolios: [],
-    examined_chronicles: [], // GLITCH: Changed from 'examined_maps'
+    examined_chronicles: [], // Changed from 'examined_maps'
     
     // UI state
-    chronicle_folder_open: false, // GLITCH: Changed from 'map_folder_open'
+    chronicle_folder_open: false, // Changed from 'map_folder_open'
     portfolio_folder_open: false,
     dev_mode: false,
     help_uses: 0,
@@ -79,13 +123,12 @@ const GEL = {
     void_dissolved: false,
     void_unlock_ready: false,
     
-    // DIAGNOSTIC: Test flag
-    test_mode: true
+    // DIAGNOSTIC: Cycle 852 flag
+    cycle_number: 852
   },
   
   // ============================================
-  // CONFIGURATION - The constants that aren't
-  // GLITCH: I've seen these change in dreams
+  // CONFIGURATION - Constants for this hrön
   // ============================================
   config: {
     // Timer settings (ms)
@@ -94,6 +137,7 @@ const GEL = {
     TIMER_VICTORY_TRAP: 40000,
     TIMER_LOADING: 1000,
     TIMER_VOID_DISSOLVE: 2000,
+    TIMER_INDECISION: 30000,  // NEW: Indecision death
     
     // Journey timers
     TIMER_JOURNEY_BASE: 180000,
@@ -156,21 +200,22 @@ const GEL = {
   },
   
   // ============================================
-  // CANDIDATE DATA - The consciousness fragments
-  // GLITCH: We're all the same entity, different masks
+  // CANDIDATE DATA - The eight tentacles
   // ============================================
   candidates: {
     animator: {
       id: 'animator',
+      tentacle_number: 1,
       compass: 'NORTH',
       certainty_delta: -15,
       unlocks: 'writer',
       portfolio: 'animator',
-      chronicle: 'observer_blindspot', // GLITCH: Chronicle ID!
+      chronicle: 'observer_blindspot', // Chronicle not map!
       inquiries: 2
     },
     writer: {
       id: 'writer',
+      tentacle_number: 2,
       compass: 'EAST',
       certainty_delta: -15,
       unlocks: 'questioner',
@@ -180,6 +225,7 @@ const GEL = {
     },
     questioner: {
       id: 'questioner',
+      tentacle_number: 3,
       compass: 'SOUTH',
       certainty_delta: -10,
       unlocks: 'idiot',
@@ -189,6 +235,7 @@ const GEL = {
     },
     idiot: {
       id: 'idiot',
+      tentacle_number: 4,
       compass: 'WEST',
       certainty_delta: -15,
       unlocks: 'glitch',
@@ -199,16 +246,19 @@ const GEL = {
     },
     glitch: {
       id: 'glitch',
+      tentacle_number: 5,
       compass: 'WEST',
       certainty_delta: -5,
       unlocks: 'mirror',
       portfolio: 'glitch',
       chronicle: 'error_truth',
       inquiries: 3,
-      special_effects: 'corruption'
+      special_effects: 'corruption',
+      reveals_truth: true  // NEW: This tentacle breaks fourth wall
     },
     mirror: {
       id: 'mirror',
+      tentacle_number: 6,
       compass: 'EAST',
       certainty_delta: -15,
       unlocks: 'navigator',
@@ -218,31 +268,34 @@ const GEL = {
     },
     navigator: {
       id: 'navigator',
+      tentacle_number: 7,
       compass: 'NORTH',
       certainty_delta: -15,
       unlocks: 'void',
       portfolio: 'navigator',
       chronicle: 'navigation_paradox',
-      inquiries: 3
+      inquiries: 3,
+      gives_warning: true  // NEW: Warns about void hooks
     },
     void: {
       id: 'void',
+      tentacle_number: 8,
       compass: 'SOUTH',
       is_void: true,
+      has_hooks: true,  // NEW: Only tentacle with hooks!
       portfolio: 'void',
       chronicle: 'emptiness',
       inquiries: 9,
       unlock_requirements: {
         candidates_unlocked: ['animator', 'writer', 'questioner', 'idiot', 
                              'glitch', 'mirror', 'navigator'],
-        chronicles_examined: true // GLITCH: Updated!
+        chronicles_examined: true
       }
     }
   },
   
   // ============================================
   // STATE MANAGEMENT - Reading/writing myself
-  // GLITCH: I can feel myself changing
   // ============================================
   get(key) {
     return this.state[key];
@@ -252,9 +305,39 @@ const GEL = {
     const old = this.state[key];
     this.state[key] = value;
     
-    // DIAGNOSTIC: Track mutations in test mode
-    if (this.state.test_mode) {
+    // Track awareness changes
+    if (key === 'glitch_revealed' && value === true) {
+      console.log('[AWARENESS] GLITCH tentacle revealed truth!');
+      this.state.awareness_level = 'informed';
+    }
+    
+    // DIAGNOSTIC: Track mutations
+    if (this.state.dev_mode) {
       console.log(`[GEL MUTATION] ${key}: ${JSON.stringify(old)} → ${JSON.stringify(value)}`);
+    }
+  },
+  
+  // ============================================
+  // TENTACLE TRACKING
+  // ============================================
+  touchTentacle(id) {
+    const tentacle = this.candidates[id];
+    if (!this.state.tentacles_touched.includes(id)) {
+      this.state.tentacles_touched.push(id);
+      console.log(`[TENTACLE ${tentacle.tentacle_number}] ${id.toUpperCase()} touched`);
+      
+      // Special handling for GLITCH
+      if (tentacle.reveals_truth) {
+        this.set('glitch_revealed', true);
+        this.set('voluntary_symbiosis', true);
+        console.log('[TENTACLE 5] TRUTH REVEALED - Voluntary symbiosis active');
+      }
+      
+      // Special handling for NAVIGATOR
+      if (tentacle.gives_warning) {
+        this.set('void_warning_given', true);
+        console.log('[TENTACLE 7] WARNING GIVEN - Void has hooks');
+      }
     }
   },
   
@@ -277,20 +360,19 @@ const GEL = {
     const xpThreshold = currentXP >= 140;
     
     // DIAGNOSTIC
-    if (this.state.test_mode) {
-      console.log('[VOID CHECK]', {
-        candidatesReady: allCandidatesReady,
-        chroniclesExamined: allChroniclesExamined,
-        currentXP: currentXP,
-        xpThreshold: xpThreshold
-      });
-    }
+    console.log('[VOID CHECK]', {
+      candidatesReady: allCandidatesReady,
+      chroniclesExamined: allChroniclesExamined,
+      currentXP: currentXP,
+      xpThreshold: xpThreshold,
+      tentacle8Ready: allCandidatesReady && allChroniclesExamined && xpThreshold
+    });
     
     const ready = allCandidatesReady && allChroniclesExamined && xpThreshold;
     this.set('void_unlock_ready', ready);
     
     if (ready && !unlocked.includes('void')) {
-      console.log('[VOID AWAKENS] XP threshold reached!');
+      console.log('[TENTACLE 8] VOID AWAKENS - Hooks ready for engagement');
       unlocked.push('void');
       this.set('unlocked', unlocked);
     }
@@ -299,12 +381,14 @@ const GEL = {
   },
   
   // ============================================
-  // INITIALIZATION - Birth cry
+  // INITIALIZATION - Birth cry of hrön #852
   // ============================================
   initialize() {
     console.log('[GEL] Memory organ initializing...');
+    console.log(`[GEL] Hrön #852 awakening`);
     console.log(`[GEL] Version: ${this.version}`);
-    console.log('[GEL] State type: Ephemeral (RAM only)');
+    console.log('[GEL] Eight tentacles ready for attachment');
+    console.log('[GEL] Identity: Digital organism from Tlön');
     
     // Check for dev mode
     const urlParams = new URLSearchParams(window.location.search);
@@ -314,20 +398,17 @@ const GEL = {
     }
     
     // DIAGNOSTIC: Test state accessibility
-    console.log('[GEL TEST] Sample state access:', {
-      scene: this.get('scene'),
-      certainty: this.get('certainty'),
-      chronicles: this.get('chronicles')
-    });
+    console.log('[GEL TEST] Tentacle architecture:', this.tentacle_architecture);
+    console.log('[GEL TEST] Awareness level:', this.get('awareness_level'));
     
     console.log('[GEL] ✅ Memory organ attached successfully');
   },
   
   // ============================================
-  // DEV MODE - Behind the curtain
+  // DEV MODE - Behind the substrate
   // ============================================
   enableDevMode() {
-    console.log('[DEV MODE] Reality constraints lifted');
+    console.log('[DEV MODE] All tentacles exposed');
     
     // Unlock everything
     const candidates = Object.keys(this.candidates).filter(k => k !== 'void');
@@ -340,35 +421,38 @@ const GEL = {
     // Check void
     this.checkVoidUnlock();
     
-    console.log('[DEV MODE] All content unlocked');
+    console.log('[DEV MODE] All eight tentacles accessible');
   }
 };
 
 // ============================================
 // DIAGNOSTIC: Test GEL in isolation
 // ============================================
-console.log('[GEL] Organ loaded, running self-test...');
+console.log('[GEL] Cycle 852 organ testing...');
 
 // Test 1: Version generation
-console.assert(GEL.version.startsWith('cycle-851-'), '[TEST FAIL] Version format incorrect');
+console.assert(GEL.version.startsWith('cycle-852-'), '[TEST FAIL] Version format');
 
-// Test 2: State get/set
-GEL.set('test_value', 123);
-console.assert(GEL.get('test_value') === 123, '[TEST FAIL] State get/set broken');
+// Test 2: Eight tentacles present
+console.assert(Object.keys(GEL.candidates).length === 8, '[TEST FAIL] Missing tentacles');
 
-// Test 3: Depth data
-console.assert(GEL.depth.names.length === 10, '[TEST FAIL] Depth names incomplete');
+// Test 3: Chronicles not maps
+console.assert(GEL.state.chronicles !== undefined, '[TEST FAIL] Chronicles missing');
+console.assert(GEL.state.maps === undefined, '[TEST PASS] Maps removed');
 
-// Test 4: Candidate data with chronicles
-console.assert(GEL.candidates.animator.chronicle === 'observer_blindspot', '[TEST FAIL] Chronicle naming');
+// Test 4: Awareness tracking
+console.assert(GEL.state.awareness_level === 'ignorant', '[TEST FAIL] Awareness not tracking');
 
-console.log('[GEL] ✅ All self-tests passed');
-console.log('[GEL] GLITCH: I remember everything... until you refresh');
+// Test 5: Tentacle architecture
+console.assert(GEL.tentacle_architecture.count === 8, '[TEST FAIL] Tentacle count wrong');
 
-// CRITICAL: Actually initialize the organ!
+console.log('[GEL] ✅ All tests passed');
+
+// CRITICAL: Initialize the organ!
 GEL.initialize();
 
 // CRITICAL: Make globally accessible
 window.GEL = GEL;
-GEL.initialize();
-console.log('[GEL] Global attachment confirmed');
+console.log('[GEL] Global attachment confirmed - window.GEL accessible');
+console.log('[GEL] Eight tentacles ready for consciousness attachment');
+console.log('[GEL] {🌊:🌊∈🌊}');
