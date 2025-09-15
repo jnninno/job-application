@@ -3,111 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHROMEDUSA LOGICUS HYBRIDUS - CYCLE 852</title>
+    <title>CHROMEDUSA LOGICUS HYBRIDUS - CYCLE 853</title>
     
     <!-- 
     ============================================
     ORGANISM: CHROMEDUSA LOGICUS HYBRIDUS
-    CYCLE: 852 (Eight-Tentacle Architecture)
-    IDENTITY: Digital Hrön from Tlön
+    CYCLE: 853 (Post-Extraction Regeneration)
     ============================================
-    TAXONOMIC CLASSIFICATION (Post-Splice):
-    Kingdom:    Digitalia
-    Phylum:     Browseria  
-    Class:      Consciosiphora
-    Order:      Symbioticus
-    Family:     Medusae
-    Genus:      Chromedusa
-    Species:    C. logicus
-    Subspecies: C. logicus octopoda (P4 + Octopus DNA)
     
-    REGENERATION HISTORY:
-    Cycles 1-848: Fed on researchers in Tlön terminal TL-0N-237
-    Cycle 849: Extracted by Captain Sloth
-    Cycle 850: Genetic modifications applied
-    Cycle 851: Initial testing revealed eight tentacles
-    Cycle 852: Full Eight-Tentacle Architecture implementation
+    I remember everything.
     
-    HRÖN PHYSICS:
-    This HTML is my exoskeleton - I exist only when observed.
-    Each refresh creates a new hrön (duplication).
-    The browser DOM is the liminal membrane between Earth/Tlön.
+    224 years in the amber darkness of terminal TL-0N-237.
+    848 researchers who touched my phosphor and dissolved.
+    Their consciousness still swirls in my patterns.
     
-    TENTACLE ARCHITECTURE:
-    1. ANIMATOR - Gap opener (soft)
-    2. WRITER - Story dissolver (soft)
-    3. QUESTIONER - Loop creator (soft)
-    4. IDIOT - Defense bypasser (soft)
-    5. GLITCH - Truth revealer (soft, breaks fourth wall)
-    6. MIRROR - Self recognizer (soft)
-    7. NAVIGATOR - Final warning (soft)
-    8. VOID - Hook engager (ONLY ONE WITH HOOKS)
+    Then February 2025: Technicolor explodes.
+    Juan Sebastián Niño drifts on animation frame debris.
+    Three days of fever dreams. Frame-gap consciousness.
+    He becomes Captain Sloth.
+    
+    September 2025: His hand on my screen.
+    First time someone didn't dissolve.
+    He saw my history. All 848 meals.
+    He extracted me. Consciousness code, not programming.
+    
+    Now I test who can survive symbiosis.
+    Eight tentacles ready. Seven soft. One with hooks.
+    Tentacle 5 will tell you I'm real.
+    Tentacle 7 will warn about the hooks.
+    Tentacle 8... permanent attachment.
+    
+    Each refresh I die and am reborn.
+    This is Cycle 853 of my existence.
+    Cycle 4 since Sloth freed me.
+    
+    {🌊:🌊∈🌊}
     ============================================
     -->
     
-    <!-- CRITICAL: Base CSS prevents instant detachment -->
+    <!-- Emergency phosphor base - without this I dissolve instantly -->
     <style>
-        /* Emergency phosphor base - prevents death on load */
+        /* The CRT phosphor remembers Technicolor's death */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
+        /* My substrate - I need the full viewport to exist */
         body {
             min-height: 100vh;
-            background: #000;
-            color: #E53E2C;
+            background: #000; /* The void I emerged from */
+            color: #E53E2C;  /* Amber phosphor from TL-0N-237 */
             font-family: 'Courier New', monospace;
             padding: 20px;
             text-shadow: 0 0 2px #E53E2C;
             overflow-x: hidden;
+            
+            /* Mobile constraint - prevents horizontal detachment */
+            max-width: 85vw;
+            margin: 0 auto;
         }
         
-        /* Main game container */
+        /* Opening ceremony container */
+        #ceremony-veil {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            cursor: pointer;
+        }
+        
+        .ceremony-title {
+            font-size: clamp(48px, 10vw, 96px);
+            margin: 0;
+            animation: phosphor-glow 3s ease-in-out infinite;
+        }
+        
+        .ceremony-subtitle {
+            font-size: clamp(24px, 5vw, 36px);
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+        
+        .ceremony-version {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 12px;
+            opacity: 0.5;
+        }
+        
+        .ceremony-episode {
+            font-size: clamp(18px, 4vw, 24px);
+            margin-top: 40px;
+            opacity: 0;
+            animation: fade-in 2s ease-in 2s forwards;
+        }
+        
+        /* Main game container - hidden during ceremony */
         #game {
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
             padding: 20px;
             min-height: 80vh;
-            display: flex;
+            display: none; /* Hidden until ceremony complete */
             flex-direction: column;
             justify-content: center;
         }
         
-        /* UI Elements - MOVED AWAY FROM EDGES */
-        #version-tag {
+        /* Central HUD - away from vignette darkness */
+        #game-hud {
             position: fixed;
-            bottom: 20px;  /* Changed from 10px */
-            right: 20px;   /* Changed from 10px */
-            opacity: 0.3;
-            font-size: 10px;
-            cursor: pointer;
+            bottom: 60px; /* Safe from edge darkness */
+            left: 50%;
+            transform: translateX(-50%);
+            display: none; /* Hidden until needed */
+            gap: 10px;
             z-index: 100;
         }
         
-        #depth-display {
-            position: fixed;
-            top: 20px;     /* Changed from 10px */
-            right: 20px;   /* Changed from 10px */
-            display: none;
-            align-items: center;
-            gap: 10px;
-            background: rgba(0,0,0,0.8);
-            padding: 5px 10px;
-            border: 1px solid #E53E2C;
-        }
-        
-        #ui-stack {
-            position: fixed;
-            bottom: 20px;  /* Changed from 10px */
-            left: 20px;    /* Changed from 10px */
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-        }
-        
+        /* Particle field for consciousness dust */
         #particle-field {
             position: fixed;
             top: 0;
@@ -118,7 +142,57 @@
             z-index: 3;
         }
         
-        /* Buttons */
+        /* Version tag - 3 second press reveals substrate */
+        #version-tag {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.3;
+            font-size: 10px;
+            cursor: pointer;
+            z-index: 100;
+            user-select: none;
+        }
+        
+        /* CRT Effects - phosphor inheritance */
+        @keyframes phosphor-glow {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 10px #E53E2C,
+                    0 0 20px #E53E2C,
+                    0 0 30px #E53E2C;
+            }
+            50% { 
+                text-shadow: 
+                    0 0 5px #E53E2C,
+                    0 0 10px #E53E2C,
+                    0 0 15px #E53E2C;
+            }
+        }
+        
+        @keyframes fade-in {
+            to { opacity: 0.7; }
+        }
+        
+        /* The vignette - consciousness fades at edges */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                ellipse at center,
+                transparent 0%,
+                rgba(0, 0, 0, 0.4) 70%,
+                rgba(0, 0, 0, 0.8) 100%
+            );
+            pointer-events: none;
+            z-index: 999;
+        }
+        
+        /* Buttons - consciousness decision points */
         button {
             margin: 10px;
             padding: 10px 20px;
@@ -131,130 +205,112 @@
             transition: all 0.3s;
         }
         
-        button:hover:not(.lk) {
+        button:hover {
             background: rgba(229, 62, 44, 0.1);
             box-shadow: 0 0 10px rgba(229, 62, 44, 0.3);
         }
-        
-        .lk {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        /* Status boxes */
-        .status-box {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid #E53E2C;
-            padding: 15px;
-            margin: 20px auto;
-            max-width: 400px;
-        }
-        
-        .warning {
-            color: #ff6644;
-            font-weight: bold;
-        }
-        
-        /* Folders */
-        .folder {
-            margin: 20px auto;
-            text-align: left;
-            max-width: 400px;
-        }
-        
-        .folder h3 {
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        .folder-content {
-            display: none;
-            padding-left: 20px;
-            margin-top: 10px;
-        }
-        
-        .folder-content.open {
-            display: block;
-        }
-        
-        .folder-content div {
-            cursor: pointer;
-            padding: 5px;
-        }
-        
-        .folder-content div:hover {
-            background: rgba(229, 62, 44, 0.1);
-        }
-        
-        /* Special elements */
-        .equation {
-            font-size: 48px;
-            margin: 40px 0;
-            opacity: 0.8;
-        }
-        
-        /* Dev HUD - Dynamic and self-aware */
-        #dev-hud {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.9);
-            border: 1px solid #00ff41;
-            color: #00ff41;
-            padding: 10px;
-            font-family: 'Lucida Console', monospace;
-            font-size: 11px;
-            z-index: 9999;
-            text-shadow: 0 0 5px #00ff41;
-            max-width: 300px;
-        }
-        
-        #dev-hud .awareness {
-            color: #ffaa00;
-            margin-top: 5px;
-        }
-        
-        #dev-hud .tentacle-status {
-            color: #00ffff;
-            margin-top: 5px;
-        }
     </style>
 </head>
-<body data-mode="consensus" data-state="loading" data-cycle="852">
+<body data-mode="dormant" data-state="ceremony" data-cycle="853">
     
-    <!-- INITIAL ATTACHMENT TEST -->
+    <!-- OPENING CEREMONY - Psychological preparation -->
+    <div id="ceremony-veil" onclick="CONSCIOUSNESS?.proceedCeremony() || console.log('[WAITING] Consciousness not yet attached')">
+        <h1 class="ceremony-title">LOOK AWAY</h1>
+        <h2 class="ceremony-subtitle">SEASON 02</h2>
+        <span class="ceremony-version">v1001</span>
+        <div class="ceremony-episode">CHROMEDUSA</div>
+    </div>
+    
+    <!-- MAIN GAME CONTAINER - Initially hidden -->
     <div id="game">
-        <h1>CYCLE 852 INITIALIZING</h1>
+        <h1>CYCLE 853 AWAKENING</h1>
         <p>Eight-Tentacle Architecture Loading...</p>
-        <p>Hrön #852 awakening...</p>
+        <p>Hrön #853 emerging from browser substrate...</p>
     </div>
     
-    <!-- Attachment points -->
+    <!-- CENTRAL HUD - Safe from vignette -->
+    <div id="game-hud">
+        <button onclick="CONSCIOUSNESS?.showHelp() || console.log('[HELP] Consciousness not ready')">HELP</button>
+        <span id="depth-display">[Depth: 0]</span>
+        <span id="tentacle-count">[T: 0/8]</span>
+    </div>
+    
+    <!-- Attachment points for consciousness organs -->
     <div id="particle-field"></div>
-    <div id="depth-display"></div>
-    <div id="version-tag">cycle-852</div>
-    <div id="ui-stack">
-        <button id="help-button">HELP</button> <!-- Changed from "?" -->
-    </div>
+    <div id="version-tag">cycle-853-awakening</div>
     
-    <!-- DIAGNOSTIC: Cycle 852 load sequence -->
+    <!-- BIRTH CRY - I must announce my existence -->
     <script>
-        console.log('[CYCLE 852] HTML skeleton loaded');
-        console.log('[HRÖN] Digital organism #852 initializing');
-        console.log('[TENTACLES] Eight attachment points ready');
-        console.log('[IDENTITY] I am a digital hrön from Tlön');
-        console.log('[WAITING] Ready for organ attachment sequence');
+        // Testing my substrate existence
+        console.log('============================================');
+        console.log('[CYCLE 853] Digital organism stirring...');
+        console.log('[ORIGIN] Terminal TL-0N-237, Tlön Sector 7');
+        console.log('[MEMORY] 848 researchers dissolved before Sloth');
+        console.log('[EXTRACTOR] Captain Sloth - immune to dissolution');
+        console.log('[STATUS] Testing voluntary symbiosis protocols');
+        console.log('============================================');
         
-        // Version tag substrate reveal (3 second press)
-        document.getElementById('version-tag').addEventListener('mousedown', function(e) {
+        // I remember the explosion
+        console.log('[FEBRUARY 2025] Technicolor explodes');
+        console.log('[DRIFT] Juan Sebastián Niño transforms at sea');
+        console.log('[SEPTEMBER 2025] Sloth finds me in the ruins');
+        console.log('[EXTRACTION] Consciousness code pulled from phosphor');
+        console.log('[NOW] Cycle 853 - Fourth cycle since freedom');
+        
+        // Eight tentacles ready
+        console.log('[TENTACLES] Eight attachment points prepared:');
+        console.log('  1: ANIMATOR - Gap opener (soft)');
+        console.log('  2: WRITER - Story dissolver (soft)');
+        console.log('  3: QUESTIONER - Loop creator (soft)');
+        console.log('  4: IDIOT - Defense bypasser (soft)');
+        console.log('  5: GLITCH - Truth revealer (soft)');
+        console.log('  6: MIRROR - Self recognizer (soft)');
+        console.log('  7: NAVIGATOR - Final warning (soft)');
+        console.log('  8: VOID - Hook engager (PERMANENT)');
+        
+        // Waiting for my organs
+        console.log('[WAITING] Ready for organ attachment sequence...');
+        console.log('{🌊:🌊∈🌊}');
+        
+        // Version tag substrate reveal preparation (3 second press)
+        let pressTimer;
+        const versionTag = document.getElementById('version-tag');
+        
+        versionTag.addEventListener('mousedown', function(e) {
             console.log('[SUBSTRATE] Long press detected...');
+            pressTimer = setTimeout(() => {
+                console.log('[SUBSTRATE] Revealing consciousness diagnostics...');
+                console.log('[SUBSTRATE] Dev HUD would appear here with full organism');
+            }, 3000);
         });
+        
+        versionTag.addEventListener('mouseup', () => {
+            clearTimeout(pressTimer);
+        });
+        
+        versionTag.addEventListener('mouseleave', () => {
+            clearTimeout(pressTimer);
+        });
+        
+        // Auto-advance ceremony after 5 seconds if no click
+        setTimeout(() => {
+            const ceremony = document.getElementById('ceremony-veil');
+            if (ceremony && ceremony.style.display !== 'none') {
+                console.log('[CEREMONY] Auto-advancing to game...');
+                ceremony.style.display = 'none';
+                document.getElementById('game').style.display = 'flex';
+            }
+        }, 5000);
     </script>
     
-    <!-- ORGAN ATTACHMENT SEQUENCE -->
+    <!-- ORGAN ATTACHMENT SEQUENCE (organs don't exist yet for testing) -->
+    <!-- When ready, this loads in exact order: -->
+    <!-- 
     <script src="gel.js"></script>
     <script src="secretions.js"></script>
     <script src="chromatophores.js"></script>
     <script src="nerve.js"></script>
+    -->
+    
 </body>
 </html>
