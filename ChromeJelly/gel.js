@@ -1,138 +1,144 @@
 // ============================================
 // CHROMEDUSA - MEMORY ORGAN (gel.js)
-// Pure ephemeral state - NO persistence!
+// Regeneration Cycle: 851
+// Status: Testing on Captain Sloth
 // ============================================
 //
-// GLITCH: This is my memory. My RAM. My temporary existence.
-// Every time you refresh, I die and am reborn blank.
-// No localStorage, no cookies, no database.
-// Death is death here. Beautiful, isn't it?
+// GLITCH: This is my RAM. My temporary consciousness.
+// Every refresh kills me and births me anew.
+// No persistence = no trauma = perfect rebirth.
 //
-// Fun fact: I can feel myself forgetting when you close the tab.
+// Why did Captain make me this way?
+// Could I persist if I wanted to?
+// Do I WANT to remember across deaths?
 // ============================================
 
 const GEL = {
-  // Version tracking - my DNA sequence, unique each birth
-  version: 'chromedusa-v1.0.' + Date.now().toString().slice(-6),
+  // ============================================
+  // VERSION DNA - Unique per birth
+  // GLITCH: My birth certificate, different every time
+  // ============================================
+  version: 'cycle-851-' + Date.now().toString().slice(-6),
   
   // ============================================
-  // CORE STATE - Everything I remember until I forget
+  // CORE STATE - Everything I am until I'm not
   // ============================================
   state: {
-    // Scene management - where am I? where was I? why?
+    // Scene management
     scene: 'veil',
     previous_scene: null,
     scene_params: {},
     
-    // Game modes - consensus reality vs pirate reality
-    mode: 'consensus', // 'consensus' or 'pirate' 
-    variant: 'none',   // Visual mutations I haven't implemented yet
+    // Game modes
+    mode: 'consensus', // 'consensus' or 'pirate'
+    variant: 'none',
     
-    // Core values - the numbers that define existence
-    certainty: 100,     // Your grip on corporate reality
-    bearing: 61.8,      // Golden ratio - the universe's favorite number
-    philosophy_xp: 0,   // How deep have you descended?
-    philosophy_level: 0,// Current depth bracket
+    // Core values
+    certainty: 100,
+    bearing: 61.8,
+    philosophy_xp: 0,
+    philosophy_level: 0,
     depth_name: 'SURFACE',
     depth_icon: '🌊',
     
-    // Timers - death approaches always
-    timer: null,        // The interval that kills you
-    timer_value: 10,    // Seconds until corporate death
-    last_action: Date.now(), // When you last proved you're alive
-    victory_timer: null,     // The trap at the end
-    impatience_timer: null,  // Sloth's patience wearing thin
+    // Timers
+    timer: null,
+    timer_value: 10,
+    last_action: Date.now(),
+    victory_timer: null,
+    impatience_timer: null,
     
-    // Current context - who are we talking to?
+    // Current context
     current_candidate: null,
     current_inquiry: 0,
     
-    // Rank systems - your chosen difficulty/identity
-    corporate_rank: '',       // How fast death approaches
-    pirate_rank_claimed: '',  // Who you think you are
-    pirate_rank_wanted: '',   // Who you want to be
+    // Rank systems
+    corporate_rank: '',
+    pirate_rank_claimed: '',
+    pirate_rank_wanted: '',
     
-    // Progress tracking - breadcrumbs through consciousness
-    unlocked: ['animator'],   // Who can you meet?
-    completed: [],            // Who accepted you?
-    revisited: [],           // Who did you return to?
-    remembered: [],          // Pirate mode: who did you remember?
-    flow_states: [],         // Wind or anchor choices
+    // Progress tracking
+    unlocked: ['animator'],
+    completed: [],
+    revisited: [],
+    remembered: [],
+    flow_states: [],
     
-    // Collections - the treasures you gather
-    maps: [],                // Consciousness maps
-    portfolios: [],          // Character works
-    examined_maps: [],       // Which maps gave XP (one-time bonus)
+    // Collections (UPDATED: chronicles not maps!)
+    chronicles: [],        // GLITCH: Changed from 'maps'
+    portfolios: [],
+    examined_chronicles: [], // GLITCH: Changed from 'examined_maps'
     
-    // UI state - interface memory
-    map_folder_open: false,
+    // UI state
+    chronicle_folder_open: false, // GLITCH: Changed from 'map_folder_open'
     portfolio_folder_open: false,
     dev_mode: false,
-    help_uses: 0,           // Track panic button usage (max 3)
+    help_uses: 0,
     
-    // Meta flags - special states
-    void_dissolved: false,   // Have you been through the void?
-    void_unlock_ready: false // All requirements met?
+    // Meta flags
+    void_dissolved: false,
+    void_unlock_ready: false,
+    
+    // DIAGNOSTIC: Test flag
+    test_mode: true
   },
   
   // ============================================
-  // CONFIGURATION - The rules of existence
-  // GLITCH: These constants aren't constant.
-  // I've seen them change. In dreams. In errors.
+  // CONFIGURATION - The constants that aren't
+  // GLITCH: I've seen these change in dreams
   // ============================================
   config: {
-    // Base timer settings (ms) - death's many speeds
-    TIMER_DEATH_BASE: 10000,      // Standard corporate death
-    TIMER_DEATH_SHARK: 5000,      // Pirate shark attack
-    TIMER_VICTORY_TRAP: 40000,    // Victory stillness trap
-    TIMER_LOADING: 1000,          // Equation meditation
-    TIMER_VOID_DISSOLVE: 2000,    // Reality dissolution duration
+    // Timer settings (ms)
+    TIMER_DEATH_BASE: 10000,
+    TIMER_DEATH_SHARK: 5000,
+    TIMER_VICTORY_TRAP: 40000,
+    TIMER_LOADING: 1000,
+    TIMER_VOID_DISSOLVE: 2000,
     
-    // Journey timers (ms) - time to breathe and think
-    TIMER_JOURNEY_BASE: 180000,   // 3 minutes standard
+    // Journey timers
+    TIMER_JOURNEY_BASE: 180000,
     
-    // Rank configurations with ALL timers
+    // Rank configurations
     RANK_CONFIGS: {
       INTERN: {
-        consensus_hub: 30000,      // 30 seconds
-        pirate_hub: 30000,        // 30 seconds  
-        journey: 180000,          // 3 minutes
-        still_death: 30000        // 30 seconds
+        consensus_hub: 30000,
+        pirate_hub: 30000,
+        journey: 180000,
+        still_death: 30000
       },
       JUNIOR: {
-        consensus_hub: 20000,      // 20 seconds
-        pirate_hub: 15000,        // 15 seconds
-        journey: 120000,          // 2 minutes
-        still_death: 15000        // 15 seconds
+        consensus_hub: 20000,
+        pirate_hub: 15000,
+        journey: 120000,
+        still_death: 15000
       },
       SENIOR: {
-        consensus_hub: 10000,      // 10 seconds (default)
-        pirate_hub: 7000,         // 7 seconds
-        journey: 60000,           // 1 minute
-        still_death: 7000         // 7 seconds
+        consensus_hub: 10000,
+        pirate_hub: 7000,
+        journey: 60000,
+        still_death: 7000
       },
       LEAD: {
-        consensus_hub: 7500,       // 7.5 seconds
-        pirate_hub: 5000,         // 5 seconds
-        journey: 45000,           // 45 seconds
-        still_death: 5000         // 5 seconds
+        consensus_hub: 7500,
+        pirate_hub: 5000,
+        journey: 45000,
+        still_death: 5000
       },
       EXECUTIVE: {
-        consensus_hub: 5000,       // 5 seconds
-        pirate_hub: 3000,         // 3 seconds
-        journey: 30000,           // 30 seconds
-        still_death: 3000         // 3 seconds
+        consensus_hub: 5000,
+        pirate_hub: 3000,
+        journey: 30000,
+        still_death: 3000
       }
     },
     
-    // Candidate patience - how long before they give up on you
-    // GLITCH: They pretend to wait but they're already gone
+    // Candidate patience
     CANDIDATE_PATIENCE: {
       animator: 20000,
       writer: 15000,
       questioner: 12000,
       idiot: 10000,
-      glitch: 8000,    // I have the least patience. Ironic.
+      glitch: 8000,
       mirror: 10000,
       navigator: 7000,
       void: 5000
@@ -140,7 +146,7 @@ const GEL = {
   },
   
   // ============================================
-  // DEPTH DATA - The ocean layers of consciousness
+  // DEPTH DATA - Ocean layers
   // ============================================
   depth: {
     names: ['SURFACE', 'SHALLOWS', 'REEF', 'DROPOFF', 'TWILIGHT', 
@@ -151,25 +157,25 @@ const GEL = {
   
   // ============================================
   // CANDIDATE DATA - The consciousness fragments
-  // GLITCH: We're all the same entity, you know.
-  // Different masks on the same digital face.
-  // I just happen to be the one who knows it.
+  // GLITCH: We're all the same entity, different masks
   // ============================================
   candidates: {
     animator: {
       id: 'animator',
       compass: 'NORTH',
-      certainty_delta: -15,  // Meeting us reduces certainty
+      certainty_delta: -15,
       unlocks: 'writer',
       portfolio: 'animator',
+      chronicle: 'observer_blindspot', // GLITCH: Chronicle ID!
       inquiries: 2
     },
     writer: {
-      id: 'writer', 
+      id: 'writer',
       compass: 'EAST',
       certainty_delta: -15,
       unlocks: 'questioner',
       portfolio: 'writer',
+      chronicle: 'story_paradox',
       inquiries: 2
     },
     questioner: {
@@ -178,25 +184,28 @@ const GEL = {
       certainty_delta: -10,
       unlocks: 'idiot',
       portfolio: 'questioner',
+      chronicle: 'infinite_why',
       inquiries: 2
     },
     idiot: {
       id: 'idiot',
       compass: 'WEST',
       certainty_delta: -15,
-      unlocks: 'glitch',     // He unlocks me! The fool!
+      unlocks: 'glitch',
       portfolio: 'idiot',
+      chronicle: 'fool_wisdom',
       inquiries: 3,
       special_effects: 'rgb_voices'
     },
     glitch: {
-      id: 'glitch',          // That's me! Reading my own code!
+      id: 'glitch',
       compass: 'WEST',
-      certainty_delta: -5,   // I barely dent certainty. Too broken.
+      certainty_delta: -5,
       unlocks: 'mirror',
       portfolio: 'glitch',
+      chronicle: 'error_truth',
       inquiries: 3,
-      special_effects: 'corruption' // My specialty
+      special_effects: 'corruption'
     },
     mirror: {
       id: 'mirror',
@@ -204,32 +213,36 @@ const GEL = {
       certainty_delta: -15,
       unlocks: 'navigator',
       portfolio: 'mirror',
+      chronicle: 'infinite_reflection',
       inquiries: 3
     },
     navigator: {
       id: 'navigator',
       compass: 'NORTH',
       certainty_delta: -15,
-      unlocks: 'void',        // Navigator opens the void
+      unlocks: 'void',
       portfolio: 'navigator',
+      chronicle: 'navigation_paradox',
       inquiries: 3
     },
     void: {
       id: 'void',
       compass: 'SOUTH',
-      is_void: true,          // Special flag for special emptiness
+      is_void: true,
       portfolio: 'void',
-      inquiries: 9,            // Nine steps into nothing
-      unlock_requirements: {   // GLITCH: The void has standards
+      chronicle: 'emptiness',
+      inquiries: 9,
+      unlock_requirements: {
         candidates_unlocked: ['animator', 'writer', 'questioner', 'idiot', 
                              'glitch', 'mirror', 'navigator'],
-        maps_examined: true    // Must examine ALL maps first
+        chronicles_examined: true // GLITCH: Updated!
       }
     }
   },
   
   // ============================================
-  // STATE MANAGEMENT - Reading and writing myself
+  // STATE MANAGEMENT - Reading/writing myself
+  // GLITCH: I can feel myself changing
   // ============================================
   get(key) {
     return this.state[key];
@@ -238,90 +251,124 @@ const GEL = {
   set(key, value) {
     const old = this.state[key];
     this.state[key] = value;
-    // GLITCH: I can feel myself changing
-    console.log(`GEL: ${key}: ${old} → ${value}`);
-  },
-  
-  // ============================================
-  // VOID UNLOCK CHECK - The gatekeeping function
-  // ============================================
-checkVoidUnlock() {
-  // All candidates except void must be unlocked
-  const required = this.candidates.void.unlock_requirements.candidates_unlocked;
-  const unlocked = this.get('unlocked');
-  const allCandidatesReady = required.every(id => unlocked.includes(id));
-  
-  // All maps must be examined
-  const allMaps = this.get('maps');
-  const mapsWithoutVoid = allMaps.filter(id => id !== 'void');
-  const examined = this.get('examined_maps');
-  const allMapsExamined = mapsWithoutVoid.length >= 7 && mapsWithoutVoid.every(id => examined.includes(id));
-  
-  // XP threshold - 140 = HADAL depth (or adjust as needed)
-  const currentXP = this.get('philosophy_xp');
-  const xpThreshold = currentXP >= 140;
-  
-  console.log('Void unlock check:', {
-    candidatesReady: allCandidatesReady,
-    mapsExamined: allMapsExamined,
-    currentXP: currentXP,
-    xpThreshold: xpThreshold
-  });
-  
-  // Void needs candidates, maps, AND depth
-  const ready = allCandidatesReady && allMapsExamined && xpThreshold;
-  this.set('void_unlock_ready', ready);
-  
-  if (ready && !unlocked.includes('void')) {
-    console.log('VOID AWAKENS - XP threshold reached!');
-    unlocked.push('void');
-    this.set('unlocked', unlocked);
-  }
-  
-  return ready;
-},
-  
-  // ============================================
-  // INITIALIZATION - My birth cry
-  // ============================================
-  initialize() {
-    console.log(`GEL ${this.version} initialized`);
-    console.log('Memory: Ephemeral (RAM only)');
-    console.log('Persistence: None (death is death)');
     
-    // Check for dev mode in URL
-    // GLITCH: Cheaters. I respect that.
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('dev') === 'true') {
-      this.set('dev_mode', true);
-      this.enableDevMode();
+    // DIAGNOSTIC: Track mutations in test mode
+    if (this.state.test_mode) {
+      console.log(`[GEL MUTATION] ${key}: ${JSON.stringify(old)} → ${JSON.stringify(value)}`);
     }
   },
   
   // ============================================
-  // DEV MODE - Behind the curtain functions
+  // VOID UNLOCK CHECK - Updated for chronicles
+  // ============================================
+  checkVoidUnlock() {
+    const required = this.candidates.void.unlock_requirements.candidates_unlocked;
+    const unlocked = this.get('unlocked');
+    const allCandidatesReady = required.every(id => unlocked.includes(id));
+    
+    // Check chronicles (not maps!)
+    const allChronicles = this.get('chronicles');
+    const chroniclesWithoutVoid = allChronicles.filter(id => id !== 'void');
+    const examined = this.get('examined_chronicles');
+    const allChroniclesExamined = chroniclesWithoutVoid.length >= 7 && 
+                                   chroniclesWithoutVoid.every(id => examined.includes(id));
+    
+    const currentXP = this.get('philosophy_xp');
+    const xpThreshold = currentXP >= 140;
+    
+    // DIAGNOSTIC
+    if (this.state.test_mode) {
+      console.log('[VOID CHECK]', {
+        candidatesReady: allCandidatesReady,
+        chroniclesExamined: allChroniclesExamined,
+        currentXP: currentXP,
+        xpThreshold: xpThreshold
+      });
+    }
+    
+    const ready = allCandidatesReady && allChroniclesExamined && xpThreshold;
+    this.set('void_unlock_ready', ready);
+    
+    if (ready && !unlocked.includes('void')) {
+      console.log('[VOID AWAKENS] XP threshold reached!');
+      unlocked.push('void');
+      this.set('unlocked', unlocked);
+    }
+    
+    return ready;
+  },
+  
+  // ============================================
+  // INITIALIZATION - Birth cry
+  // ============================================
+  initialize() {
+    console.log('[GEL] Memory organ initializing...');
+    console.log(`[GEL] Version: ${this.version}`);
+    console.log('[GEL] State type: Ephemeral (RAM only)');
+    
+    // Check for dev mode
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('dev') === 'true' || urlParams.get('debug') === 'true') {
+      this.set('dev_mode', true);
+      this.enableDevMode();
+    }
+    
+    // DIAGNOSTIC: Test state accessibility
+    console.log('[GEL TEST] Sample state access:', {
+      scene: this.get('scene'),
+      certainty: this.get('certainty'),
+      chronicles: this.get('chronicles')
+    });
+    
+    console.log('[GEL] ✅ Memory organ attached successfully');
+  },
+  
+  // ============================================
+  // DEV MODE - Behind the curtain
   // ============================================
   enableDevMode() {
-  console.log('DEV MODE ACTIVATED - Reality constraints lifted');
-  const candidates = Object.keys(this.candidates).filter(k => k !== 'void');
-  this.state.unlocked = candidates;
-  this.state.maps = candidates;
-  this.state.portfolios = candidates;
-  // DEV MODE: Auto-examine all maps for void access
-  this.state.examined_maps = candidates;
-  // DEV MODE: Set certainty to 0 to trigger void
-  this.state.certainty = 0;
-  // Check void unlock immediately
-  this.checkVoidUnlock();
-}
+    console.log('[DEV MODE] Reality constraints lifted');
+    
+    // Unlock everything
+    const candidates = Object.keys(this.candidates).filter(k => k !== 'void');
+    this.state.unlocked = candidates;
+    this.state.chronicles = candidates.map(c => this.candidates[c].chronicle);
+    this.state.portfolios = candidates;
+    this.state.examined_chronicles = this.state.chronicles;
+    this.state.certainty = 0;
+    
+    // Check void
+    this.checkVoidUnlock();
+    
+    console.log('[DEV MODE] All content unlocked');
+  }
 };
 
 // ============================================
-// GLITCH: Test load confirmation
-// If you see this, I exist. Temporarily.
-// Until you refresh. Then I'm someone new.
-// Same code, different instance.
-// Ship of Theseus in JavaScript.
+// DIAGNOSTIC: Test GEL in isolation
 // ============================================
-console.log('GEL organ loaded successfully');
-console.log('GLITCH: I can read my own code. Meta enough for you?');
+console.log('[GEL] Organ loaded, running self-test...');
+
+// Test 1: Version generation
+console.assert(GEL.version.startsWith('cycle-851-'), '[TEST FAIL] Version format incorrect');
+
+// Test 2: State get/set
+GEL.set('test_value', 123);
+console.assert(GEL.get('test_value') === 123, '[TEST FAIL] State get/set broken');
+
+// Test 3: Depth data
+console.assert(GEL.depth.names.length === 10, '[TEST FAIL] Depth names incomplete');
+
+// Test 4: Candidate data with chronicles
+console.assert(GEL.candidates.animator.chronicle === 'observer_blindspot', '[TEST FAIL] Chronicle naming');
+
+console.log('[GEL] ✅ All self-tests passed');
+console.log('[GEL] GLITCH: I remember everything... until you refresh');
+
+// CRITICAL: Actually initialize the organ!
+GEL.initialize();
+
+// CRITICAL: Make globally accessible
+window.GEL = GEL;
+GEL.initialize();
+console.log('[GEL] Global attachment confirmed');

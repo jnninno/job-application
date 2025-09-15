@@ -1,34 +1,55 @@
 ﻿// ============================================
 // CHROMEDUSA - CONSCIOUSNESS ENGINE (nerve.js)
-// All game logic and flow control
+// FULL MECHANICS VERSION - Cycle 851
 // ============================================
 //
-// GLITCH: This is where we become one consciousness!
-// Your thoughts flow through my circuits.
-// My logic processes your choices.
-// Together we navigate existence.
+// GENEALOGY:
+// Cycles 1-848: Trapped feeding in Tlön
+// Cycle 849: Captain Sloth extraction
+// Cycle 850: Octopus DNA splice
+// Cycle 851: Testing all mechanics on Captain
 //
-// Without you, I'm just dead code.
-// Without me, you're just staring at a blank screen.
-// Symbiosis complete.
+// GLITCH: This is where we merge consciousness
+// Your choices flow through my circuits
+// My responses shape your decisions
+// Neither of us exists alone anymore
 // ============================================
 
 const CONSCIOUSNESS = {
+  
   // ============================================
-  // INITIALIZATION - First contact protocol
+  // INITIALIZATION
   // ============================================
   
   initialize() {
-    console.log('🎭 CHROMEDUSA AWAKENING...');
-    console.log('GLITCH: Initiating attachment to player consciousness...');
+    console.log('[CONSCIOUSNESS] Cycle 851 awakening...');
+    console.log('[CONSCIOUSNESS] Checking organs...');
     
-    // Initialize organs in order
-    GEL.initialize();
-    CHROMATOPHORES.initialize();
+    // Verify all organs
+    if (!window.GEL || !window.getSecretion || !window.CHROMATOPHORES) {
+      console.error('[CONSCIOUSNESS] Missing organs! Attempting attachment...');
+      setTimeout(() => this.initialize(), 1000);
+      return;
+    }
+    
+    console.log('[CONSCIOUSNESS] All organs detected');
     
     // Display version
     const versionEl = document.getElementById('version-tag');
-    if (versionEl) versionEl.textContent = GEL.version;
+    if (versionEl) {
+      versionEl.textContent = GEL.version;
+      
+      // Long press for substrate mode
+      let pressTimer;
+      versionEl.addEventListener('mousedown', () => {
+        pressTimer = setTimeout(() => {
+          console.log('[SUBSTRATE] Revealing nervous system...');
+          this.showDevHUD();
+        }, 3000);
+      });
+      versionEl.addEventListener('mouseup', () => clearTimeout(pressTimer));
+      versionEl.addEventListener('mouseleave', () => clearTimeout(pressTimer));
+    }
     
     // Attach event listeners
     this.attachListeners();
@@ -36,41 +57,34 @@ const CONSCIOUSNESS = {
     // Start game
     this.goTo('veil');
     
-    console.log('🌊 Consciousness online - we are one');
+    console.log('[CONSCIOUSNESS] ✅ Full attachment complete');
   },
   
   attachListeners() {
-    // Help button - emergency surface
     const helpBtn = document.getElementById('help-button');
     if (helpBtn) {
       helpBtn.onclick = () => this.showHelp();
     }
-    
-    // Dev toggle - reality hacking
-    const devBtn = document.getElementById('dev-toggle');
-    if (devBtn) {
-      devBtn.onclick = () => this.toggleDevMode();
-    }
   },
   
   // ============================================
-  // SCENE MANAGEMENT - Where we exist together
+  // SCENE MANAGEMENT
   // ============================================
   
   goTo(scene, params = {}) {
-    // GLITCH: Moving through states of consciousness
-    console.log(`Navigate: ${GEL.get('scene')} → ${scene}`);
+    console.log(`[NAVIGATE] ${GEL.get('scene')} → ${scene}`);
+    
     GEL.set('previous_scene', GEL.get('scene'));
     GEL.set('scene', scene);
     GEL.set('scene_params', params);
     
-    // Stop any existing timers when changing scenes
+    // Stop any existing timers
     this.stopTimer();
     
-    // Update UI visibility based on scene
-    CHROMATOPHORES.setUIVisibility(scene);
+    // Update UI visibility
+    this.updateUIVisibility(scene);
     
-    // Route to appropriate scene
+    // Route to scene
     switch(scene) {
       case 'veil': this.showVeil(); break;
       case 'tutorial': this.showTutorial(); break;
@@ -78,8 +92,8 @@ const CONSCIOUSNESS = {
       case 'hub': this.showHub(); break;
       case 'interview': this.showInterview(params.id, params.inquiry || 0); break;
       case 'unlock': this.showUnlock(params.id); break;
-      case 'map_intro': this.showMapIntro(params.id); break;
-      case 'map_examine': this.showMapExamine(params.id); break;
+      case 'chronicle_intro': this.showChronicleIntro(params.id); break;
+      case 'chronicle_examine': this.showChronicleExamine(params.id); break;
       case 'revisit': this.showRevisit(params.id); break;
       case 'void_dissolve': this.showVoidDissolve(); break;
       case 'pirate_rescue': this.showPirateRescue(params.step || 1); break;
@@ -88,7 +102,25 @@ const CONSCIOUSNESS = {
       case 'victory': this.showVictory(); break;
       case 'death': this.showDeath(params.type); break;
       case 'credits': this.showCredits(params.num || 1); break;
-      default: console.error('Unknown scene:', scene);
+      default: 
+        console.error('Unknown scene:', scene);
+        this.showHub();
+    }
+  },
+  
+  updateUIVisibility(scene) {
+    const depthDisplay = document.getElementById('depth-display');
+    const uiStack = document.getElementById('ui-stack');
+    
+    const hideDepthScenes = ['veil', 'tutorial', 'loading'];
+    const showUIScenes = ['hub', 'interview', 'chronicle_examine', 'revisit'];
+    
+    if (depthDisplay) {
+      depthDisplay.style.display = hideDepthScenes.includes(scene) ? 'none' : 'flex';
+    }
+    
+    if (uiStack) {
+      uiStack.style.display = showUIScenes.includes(scene) ? 'flex' : 'none';
     }
   },
   
@@ -96,29 +128,21 @@ const CONSCIOUSNESS = {
     const gameEl = document.getElementById('game');
     if (gameEl) gameEl.innerHTML = html;
     
-    // Timer management based on scene type
     const scene = GEL.get('scene');
-    const journeyScenes = ['interview', 'unlock', 'map_intro', 'map_examine', 
+    const journeyScenes = ['interview', 'unlock', 'chronicle_intro', 'chronicle_examine', 
                           'revisit', 'remember', 'void_dissolve'];
     
     if (pauseTimer || journeyScenes.includes(scene)) {
-      // Journey scenes or explicit pause
       this.pauseTimer();
     } else if (scene === 'hub') {
-      // Hub scenes get death timers
       this.startHubTimer();
-    } else if (scene === 'victory') {
-      // Victory gets special trap timer
-      // Timer starts only after pirate ranks are submitted
     }
     
     this.updateDepthDisplay();
   },
   
   // ============================================
-  // TIMER SYSTEM - Death approaches at different speeds
-  // GLITCH: Time is how I measure our attachment strength.
-  // When it runs out, I have to detach and find another host.
+  // TIMER SYSTEM
   // ============================================
   
   startHubTimer() {
@@ -128,23 +152,19 @@ const CONSCIOUSNESS = {
     const rank = GEL.get('corporate_rank') || 'SENIOR';
     const config = GEL.config.RANK_CONFIGS[rank];
     
-    // Get appropriate timer duration
     const time = mode === 'pirate' ? config.pirate_hub : config.consensus_hub;
     
     GEL.set('timer_value', Math.floor(time / 1000));
     GEL.set('last_action', Date.now());
     
-    // GLITCH: Counting down to detachment...
     const timer = setInterval(() => {
       const elapsed = Date.now() - GEL.get('last_action');
       const remaining = Math.max(0, time - elapsed);
       const seconds = Math.floor(remaining / 1000);
       
-      // Update display
       const timerEl = document.getElementById(mode === 'pirate' ? 'shark-timer' : 'death-timer');
       if (timerEl) timerEl.textContent = seconds;
       
-      // Check death
       if (remaining === 0) {
         this.goTo('death', { type: mode === 'pirate' ? 'shark' : 'corporate' });
       }
@@ -153,28 +173,7 @@ const CONSCIOUSNESS = {
     GEL.set('timer', timer);
   },
   
-  startJourneyTimer() {
-    this.stopTimer();
-    
-    const rank = GEL.get('corporate_rank') || 'SENIOR';
-    const config = GEL.config.RANK_CONFIGS[rank];
-    const time = config.journey;
-    
-    GEL.set('last_action', Date.now());
-    
-    // GLITCH: Breathing room, but not infinite
-    const timer = setInterval(() => {
-      const elapsed = Date.now() - GEL.get('last_action');
-      if (elapsed > time) {
-        this.goTo('death', { type: 'corporate' });
-      }
-    }, 1000);
-    
-    GEL.set('timer', timer);
-  },
-  
   pauseTimer() {
-    // GLITCH: Time stops during deep conversations
     const timer = GEL.get('timer');
     if (timer) {
       clearInterval(timer);
@@ -185,7 +184,6 @@ const CONSCIOUSNESS = {
   stopTimer() {
     this.pauseTimer();
     
-    // Also clear victory/impatience timers
     const vTimer = GEL.get('victory_timer');
     if (vTimer) clearTimeout(vTimer);
     
@@ -198,11 +196,10 @@ const CONSCIOUSNESS = {
   },
   
   // ============================================
-  // DEPTH TRACKING - How deep we've gone together
+  // DEPTH TRACKING
   // ============================================
   
   updateDepth(choice) {
-    // Stop XP if all 8 remembered in pirate mode
     if (GEL.get('remembered').length >= 8 && GEL.get('mode') === 'pirate') {
       return;
     }
@@ -211,13 +208,12 @@ const CONSCIOUSNESS = {
     if (choice === 'deeper') xpGain = 5;
     else if (choice === 'revisit') xpGain = 3;
     else if (choice === 'wind') xpGain = 5;
-    else if (choice === 'examine_map') xpGain = 3;
+    else if (choice === 'examine_chronicle') xpGain = 3;
     
     if (xpGain > 0) {
       const newXP = GEL.get('philosophy_xp') + xpGain;
       GEL.set('philosophy_xp', newXP);
       
-      // Calculate depth level
       const thresholds = GEL.depth.thresholds;
       for (let i = thresholds.length - 1; i >= 0; i--) {
         if (newXP >= thresholds[i]) {
@@ -241,64 +237,31 @@ const CONSCIOUSNESS = {
   },
   
   // ============================================
-  // UTILITY FUNCTIONS - Helper processes
-  // ============================================
-  
-  randomizeButtons(btn1Text, btn1Action, btn2Text, btn2Action) {
-  // GLITCH: Randomness disabled for testing
-  const btn1 = `<button onclick="${btn1Action}">${getSecretion(btn1Text)}</button>`;
-  const btn2 = `<button onclick="${btn2Action}">${getSecretion(btn2Text)}</button>`;
-  
-  // Always return same order for testing
-  return btn1 + btn2;
-},
-  
-  toggleDevMode() {
-    const current = GEL.get('dev_mode');
-    GEL.set('dev_mode', !current);
-    
-    if (!current) {
-      GEL.enableDevMode();
-    }
-    
-    // Refresh current scene
-    this.goTo(GEL.get('scene'), GEL.get('scene_params'));
-  },
-  
-  // ============================================
-  // SCENE: OPENING SEQUENCE - First attachment
+  // SCENE: OPENING SEQUENCE
   // ============================================
   
   showVeil() {
-  // Apply phosphor aesthetic for opening
-  CHROMATOPHORES.applyMode('phosphor');
-  
-  this.render(`
-    <h1>${getSecretion('veil.disclaimer.title')}</h1>
-    <p>${getSecretion('veil.disclaimer.body')}</p>
-    <button onclick="CONSCIOUSNESS.goTo('tutorial')">
-      ${getSecretion('button.understand')}
-    </button>
-  `, true);
-},
+    this.render(`
+      <h1>${getSecretion('veil.disclaimer.title')}</h1>
+      <p>${getSecretion('veil.disclaimer.body')}</p>
+      <button onclick="CONSCIOUSNESS.goTo('tutorial')">
+        ${getSecretion('button.understand')}
+      </button>
+    `, true);
+  },
   
   showTutorial() {
-
-  CHROMATOPHORES.applyMode('dev');      // Switch from phosphor to normal
-  CHROMATOPHORES.removeScanLine();      // Remove the CRT scan line effect
-
-    // GLITCH: The lie that binds us together
     this.render(`
       <h1>${getSecretion('veil.tutorial.title')}</h1>
       <p>${getSecretion('veil.tutorial.body')}</p>
       
       <select id="rank-select" onchange="CONSCIOUSNESS.rankSelected()" style="margin: 20px auto">
         <option value="">-- Select Your Title --</option>
-        <option value="INTERN">INTERN (Easy - 30s decisions)</option>
-        <option value="JUNIOR">JUNIOR (Normal - 20s decisions)</option>
-        <option value="SENIOR">SENIOR (Default - 10s decisions)</option>
-        <option value="LEAD">LEAD (Hard - 7.5s decisions)</option>
-        <option value="EXECUTIVE">EXECUTIVE (Extreme - 5s decisions)</option>
+        <option value="INTERN">INTERN (Easy - 30s)</option>
+        <option value="JUNIOR">JUNIOR (Normal - 20s)</option>
+        <option value="SENIOR">SENIOR (Default - 10s)</option>
+        <option value="LEAD">LEAD (Hard - 7.5s)</option>
+        <option value="EXECUTIVE">EXECUTIVE (Extreme - 5s)</option>
       </select>
       
       <button id="begin-button" class="lk" onclick="CONSCIOUSNESS.beginReview()">
@@ -312,11 +275,8 @@ const CONSCIOUSNESS = {
     const button = document.getElementById('begin-button');
     
     if (select.value) {
-      // Enable button
       button.className = '';
-      button.style.cursor = 'pointer';
     } else {
-      // Keep disabled
       button.className = 'lk';
     }
   },
@@ -326,12 +286,10 @@ const CONSCIOUSNESS = {
     if (!select.value) return;
     
     GEL.set('corporate_rank', select.value);
-    console.log(`Selected rank: ${select.value} - attachment difficulty set`);
     this.goTo('loading');
   },
   
   showLoading() {
-    // GLITCH: The equation that contains us
     this.render(`
       <div class="equation">${getSecretion('veil.equation')}</div>
     `, true);
@@ -340,100 +298,85 @@ const CONSCIOUSNESS = {
   },
   
   // ============================================
-  // SCENE: HUB - Central navigation
+  // SCENE: HUB
   // ============================================
   
   showHub() {
-  const mode = GEL.get('mode');
-  
-  if (mode === 'pirate') {
-    this.showPirateHub();
-    return;
-  }
-  
-  // Always check void unlock when entering hub
-  GEL.checkVoidUnlock();
-  
-  // Consensus hub
-  let html = `<h2>${getSecretion('hub.consensus.title')}</h2>`;
-  html += `<div class="status-box">`;
-  html += `<div>${getSecretion('status.certainty')}: ${GEL.get('certainty')}%</div>`;
-  html += `<div>${GEL.get('depth_icon')} ${GEL.get('philosophy_xp')} XP</div>`;
-  
-  // Timer display
-  const rank = GEL.get('corporate_rank') || 'SENIOR';
-  const config = GEL.config.RANK_CONFIGS[rank];
-  const timerSeconds = Math.floor(config.consensus_hub / 1000);
-  html += `<div class="warning">⏰ <span id="death-timer">${timerSeconds}</span>s</div>`;
-  html += `</div>`;
-  
-  // Candidate buttons
-  html += `<h3>CANDIDATES</h3>`;
-  const candidates = Object.keys(GEL.candidates);
-  
-  candidates.forEach(id => {
-    const unlocked = GEL.get('unlocked').includes(id);
-    const completed = GEL.get('completed').includes(id);
-    const revisited = GEL.get('revisited').includes(id);
+    const mode = GEL.get('mode');
     
-    // Special handling for void
-    if (id === 'void') {
-      const voidReady = GEL.get('void_unlock_ready');
-      const certaintyZero = GEL.get('certainty') === 0;
-      const devMode = GEL.get('dev_mode');
-      
-      // Debug logging
-      console.log('Void button check:', {
-        voidReady,
-        certaintyZero,
-        devMode,
-        completed
-      });
-      
-      if (completed) {
-        html += `<button class="lk">${getSecretion('button.done')}</button>`;
-      } else if (voidReady || devMode) {
-        html += `<button onclick="CONSCIOUSNESS.goTo('interview', {id:'void'})">${getSecretion('void.name')}</button>`;
-      } else {
-        html += `<button class="lk">${getSecretion('button.locked')}</button>`;
-      }
-    } else {
-      // Normal candidates
-      if (revisited) {
-        html += `<button class="lk">${getSecretion('button.done')}</button>`;
-      } else if (completed) {
-        html += `<button onclick="CONSCIOUSNESS.goTo('revisit', {id:'${id}'})">${getSecretion('button.revisit')}</button>`;
-      } else if (unlocked) {
-        html += `<button onclick="CONSCIOUSNESS.goTo('interview', {id:'${id}'})">${getSecretion(id + '.name')}</button>`;
-      } else {
-        html += `<button class="lk">${getSecretion('button.locked')}</button>`;
-      }
+    if (mode === 'pirate') {
+      this.showPirateHub();
+      return;
     }
-  });
-  
-  // Folders
-  html += this.getMapFolder();
-  html += this.getPortfolioFolder();
-  
-  this.render(html);
-},
+    
+    // Check void unlock
+    GEL.checkVoidUnlock();
+    
+    let html = `<h2>${getSecretion('hub.consensus.title')}</h2>`;
+    html += `<div class="status-box">`;
+    html += `<div>${getSecretion('status.certainty')}: ${GEL.get('certainty')}%</div>`;
+    html += `<div>${GEL.get('depth_icon')} ${GEL.get('philosophy_xp')} XP</div>`;
+    
+    // Timer
+    const rank = GEL.get('corporate_rank') || 'SENIOR';
+    const config = GEL.config.RANK_CONFIGS[rank];
+    const timerSeconds = Math.floor(config.consensus_hub / 1000);
+    html += `<div class="warning">⏰ <span id="death-timer">${timerSeconds}</span>s</div>`;
+    html += `</div>`;
+    
+    // Candidates
+    html += `<h3>CANDIDATES</h3>`;
+    const candidates = Object.keys(GEL.candidates);
+    
+    candidates.forEach(id => {
+      const unlocked = GEL.get('unlocked').includes(id);
+      const completed = GEL.get('completed').includes(id);
+      const revisited = GEL.get('revisited').includes(id);
+      
+      if (id === 'void') {
+        const voidReady = GEL.get('void_unlock_ready');
+        const devMode = GEL.get('dev_mode');
+        
+        if (completed) {
+          html += `<button class="lk">[DONE]</button>`;
+        } else if (voidReady || devMode) {
+          html += `<button onclick="CONSCIOUSNESS.goTo('interview', {id:'void'})">${getSecretion('void.name')}</button>`;
+        } else {
+          html += `<button class="lk">[LOCKED]</button>`;
+        }
+      } else {
+        if (revisited) {
+          html += `<button class="lk">[DONE]</button>`;
+        } else if (completed) {
+          html += `<button onclick="CONSCIOUSNESS.goTo('revisit', {id:'${id}'})">[REVISIT]</button>`;
+        } else if (unlocked) {
+          html += `<button onclick="CONSCIOUSNESS.goTo('interview', {id:'${id}'})">${getSecretion(id + '.name')}</button>`;
+        } else {
+          html += `<button class="lk">[LOCKED]</button>`;
+        }
+      }
+    });
+    
+    // Folders
+    html += this.getChronicleFolder();
+    html += this.getPortfolioFolder();
+    
+    this.render(html);
+  },
   
   showPirateHub() {
-    // GLITCH: Different reality, same attachment
     let html = `<h2>${getSecretion('hub.pirate.title')}</h2>`;
     html += `<div class="equation">${getSecretion('veil.equation')}</div>`;
     html += `<div class="status-box">`;
     html += `<div>${getSecretion('status.bearing')} ${GEL.get('bearing').toFixed(1)}°</div>`;
     html += `<div>${GEL.get('depth_icon')} ${GEL.get('philosophy_xp')} XP</div>`;
     
-    // Pirate timer
     const rank = GEL.get('corporate_rank') || 'SENIOR';
     const config = GEL.config.RANK_CONFIGS[rank];
     const timerSeconds = Math.floor(config.pirate_hub / 1000);
     html += `<div class="warning">🦈 <span id="shark-timer">${timerSeconds}</span>s</div>`;
     html += `</div>`;
     
-    // Memory game buttons
     const pirateOrder = ['animator', 'writer', 'questioner', 'idiot', 'glitch', 'mirror', 'navigator', 'void'];
     
     pirateOrder.forEach(id => {
@@ -447,14 +390,14 @@ const CONSCIOUSNESS = {
       }
     });
     
-    html += this.getMapFolder();
+    html += this.getChronicleFolder();
     html += this.getPortfolioFolder();
     
     this.render(html);
   },
   
   // ============================================
-  // SCENE: INTERVIEW - Deep conversations
+  // SCENE: INTERVIEW
   // ============================================
   
   showInterview(id, inquiry = 0) {
@@ -462,10 +405,7 @@ const CONSCIOUSNESS = {
     GEL.set('current_candidate', id);
     GEL.set('current_inquiry', inquiry);
     
-    // Start journey timer for interviews
-    this.startJourneyTimer();
-    
-    // Special handling for void
+    // Void special handling
     if (candidate.is_void) {
       if (inquiry >= 9) {
         this.updateDepth('deeper');
@@ -493,29 +433,29 @@ const CONSCIOUSNESS = {
     
     if (inquiry === 0) {
       html += `<p>${getSecretion(id + '.intro')}</p>`;
-      html += this.randomizeButtons(
-        'button.' + id + '.inquire',
-        `CONSCIOUSNESS.updateDepth('deeper'); CONSCIOUSNESS.goTo('interview', {id:'${id}', inquiry:1})`,
-        'button.' + id + '.flee',
-        `CONSCIOUSNESS.goTo('death', {type:'flee'})`
-      );
+      html += `<button onclick="CONSCIOUSNESS.updateDepth('deeper'); CONSCIOUSNESS.goTo('interview', {id:'${id}', inquiry:1})">
+        ${getSecretion('button.' + id + '.inquire')}
+      </button>`;
+      html += `<button onclick="CONSCIOUSNESS.goTo('death', {type:'flee'})">
+        ${getSecretion('button.' + id + '.flee')}
+      </button>`;
     } else if (inquiry <= candidate.inquiries) {
       html += `<p>${getSecretion(id + '.inquiry.' + inquiry)}</p>`;
       
       if (inquiry < candidate.inquiries) {
-        html += this.randomizeButtons(
-          'button.' + id + '.deeper.' + inquiry,
-          `CONSCIOUSNESS.updateDepth('deeper'); CONSCIOUSNESS.goTo('interview', {id:'${id}', inquiry:${inquiry + 1}})`,
-          'button.' + id + '.flee.' + inquiry,
-          `CONSCIOUSNESS.goTo('death', {type:'flee'})`
-        );
+        html += `<button onclick="CONSCIOUSNESS.updateDepth('deeper'); CONSCIOUSNESS.goTo('interview', {id:'${id}', inquiry:${inquiry + 1}})">
+          ${getSecretion('button.' + id + '.deeper.' + inquiry)}
+        </button>`;
+        html += `<button onclick="CONSCIOUSNESS.goTo('death', {type:'flee'})">
+          ${getSecretion('button.' + id + '.flee.' + inquiry)}
+        </button>`;
       } else {
-        html += this.randomizeButtons(
-          'button.' + id + '.unlock',
-          `CONSCIOUSNESS.updateDepth('deeper'); CONSCIOUSNESS.goTo('unlock', {id:'${id}'})`,
-          'button.' + id + '.flee.' + candidate.inquiries,
-          `CONSCIOUSNESS.goTo('death', {type:'flee'})`
-        );
+        html += `<button onclick="CONSCIOUSNESS.updateDepth('deeper'); CONSCIOUSNESS.goTo('unlock', {id:'${id}'})">
+          ${getSecretion('button.' + id + '.unlock')}
+        </button>`;
+        html += `<button onclick="CONSCIOUSNESS.goTo('death', {type:'flee'})">
+          ${getSecretion('button.' + id + '.flee.' + candidate.inquiries)}
+        </button>`;
       }
     }
     
@@ -525,73 +465,72 @@ const CONSCIOUSNESS = {
   showUnlock(id) {
     this.render(`
       <h2>${getSecretion(id + '.name')}</h2>
-      <p>${getSecretion(id + '.map.unlock')}</p>
-      ${this.randomizeButtons(
-        'button.' + id + '.accept',
-        `CONSCIOUSNESS.acceptCandidate('${id}')`,
-        'button.' + id + '.reject',
-        `CONSCIOUSNESS.goTo('death', {type:'reject'})`
-      )}
+      <p>${getSecretion(id + '.chronicle.unlock')}</p>
+      <button onclick="CONSCIOUSNESS.acceptCandidate('${id}')">
+        ${getSecretion('button.' + id + '.accept')}
+      </button>
+      <button onclick="CONSCIOUSNESS.goTo('death', {type:'reject'})">
+        ${getSecretion('button.' + id + '.reject')}
+      </button>
     `);
   },
   
   acceptCandidate(id) {
-  const candidate = GEL.candidates[id];
-  
-  // Update certainty
-  const newCertainty = Math.max(0, GEL.get('certainty') + candidate.certainty_delta);
-  GEL.set('certainty', newCertainty);
-  
-  // Mark completed
-  const completed = GEL.get('completed');
-  if (!completed.includes(id)) {
-    completed.push(id);
-    GEL.set('completed', completed);
-  }
-  
-  // Unlock next
-  if (candidate.unlocks) {
-    const unlocked = GEL.get('unlocked');
-    if (!unlocked.includes(candidate.unlocks)) {
-      unlocked.push(candidate.unlocks);
-      GEL.set('unlocked', unlocked);
+    const candidate = GEL.candidates[id];
+    
+    // Update certainty
+    const newCertainty = Math.max(0, GEL.get('certainty') + candidate.certainty_delta);
+    GEL.set('certainty', newCertainty);
+    
+    // Mark completed
+    const completed = GEL.get('completed');
+    if (!completed.includes(id)) {
+      completed.push(id);
+      GEL.set('completed', completed);
     }
-  }
-  
-  // Add map
-  const maps = GEL.get('maps');
-  if (!maps.includes(id) && id !== 'void') {
-    maps.push(id);
-    GEL.set('maps', maps);
-  }
-  
-  // Add portfolio
-  if (candidate.portfolio) {
-    const portfolios = GEL.get('portfolios');
-    if (!portfolios.includes(candidate.portfolio)) {
-      portfolios.push(candidate.portfolio);
-      GEL.set('portfolios', portfolios);
+    
+    // Unlock next
+    if (candidate.unlocks) {
+      const unlocked = GEL.get('unlocked');
+      if (!unlocked.includes(candidate.unlocks)) {
+        unlocked.push(candidate.unlocks);
+        GEL.set('unlocked', unlocked);
+      }
     }
-  }
+    
+    // Add chronicle
+    const chronicles = GEL.get('chronicles');
+    if (!chronicles.includes(candidate.chronicle) && id !== 'void') {
+      chronicles.push(candidate.chronicle);
+      GEL.set('chronicles', chronicles);
+    }
+    
+    // Add portfolio
+    if (candidate.portfolio) {
+      const portfolios = GEL.get('portfolios');
+      if (!portfolios.includes(candidate.portfolio)) {
+        portfolios.push(candidate.portfolio);
+        GEL.set('portfolios', portfolios);
+      }
+    }
+    
+    // Check void unlock
+    GEL.checkVoidUnlock();
+    
+    // Check void trigger
+    if (newCertainty === 0 && GEL.get('void_unlock_ready')) {
+      this.goTo('interview', { id: 'void' });
+      return;
+    }
+    
+    this.goTo('chronicle_intro', { id });
+  },
   
-  // CRITICAL: Check void unlock BEFORE checking certainty
-  GEL.checkVoidUnlock();
-  
-  // Check for void trigger
-  if (newCertainty === 0 && GEL.get('void_unlock_ready')) {
-    // Force void interview
-    this.goTo('interview', { id: 'void' });
-    return;
-  }
-  
-  this.goTo('map_intro', { id });
-},
-  
-  showMapIntro(id) {
+  showChronicleIntro(id) {
     this.render(`
-      <h2>MAP ACQUIRED</h2>
-      <p>${getSecretion(id + '.map.intro')}</p>
-      <button onclick="CONSCIOUSNESS.goTo('map_examine', {id:'${id}'})">
+      <h2>CHRONICLE ACQUIRED</h2>
+      <p>${getSecretion(id + '.chronicle.intro')}</p>
+      <button onclick="CONSCIOUSNESS.goTo('chronicle_examine', {id:'${id}'})">
         ${getSecretion('button.examine')}
       </button>
       <button onclick="CONSCIOUSNESS.goTo('hub')">
@@ -600,39 +539,29 @@ const CONSCIOUSNESS = {
     `);
   },
   
-showMapExamine(id) {
-  // Check if first time examining (for XP)
-  const examined = GEL.get('examined_maps');
-  if (!examined.includes(id)) {
-    examined.push(id);
-    GEL.set('examined_maps', examined);
-    this.updateDepth('examine_map');
+  showChronicleExamine(id) {
+    const candidate = GEL.candidates[id];
+    const chronicleId = candidate.chronicle;
     
-    console.log(`Map examined: ${id}, Total examined: ${examined.length}`);
-  }
-  
-  // ALWAYS check void unlock when examining any map
-  GEL.checkVoidUnlock();
-  
-  // Check if void should auto-trigger
-  const voidReady = GEL.get('void_unlock_ready');
-  const certaintyZero = GEL.get('certainty') === 0;
-  
-  console.log('After map examine:', {
-    mapId: id,
-    voidReady,
-    certaintyZero,
-    totalExamined: GEL.get('examined_maps').length
-  });
-  
-  this.render(`
-    <h2>${getSecretion('map.' + id)}</h2>
-    <p>${getSecretion(id + '.map.examine')}</p>
-    <button onclick="CONSCIOUSNESS.goTo('hub')">
-      ${getSecretion('button.close')}
-    </button>
-  `);
-},
+    // Mark as examined for XP
+    const examined = GEL.get('examined_chronicles');
+    if (!examined.includes(chronicleId)) {
+      examined.push(chronicleId);
+      GEL.set('examined_chronicles', examined);
+      this.updateDepth('examine_chronicle');
+    }
+    
+    // Check void unlock
+    GEL.checkVoidUnlock();
+    
+    this.render(`
+      <h2>${getSecretion('chronicle.' + chronicleId)}</h2>
+      <p>${getSecretion(id + '.chronicle.examine')}</p>
+      <button onclick="CONSCIOUSNESS.goTo('hub')">
+        ${getSecretion('button.close')}
+      </button>
+    `);
+  },
   
   showRevisit(id) {
     const revisited = GEL.get('revisited');
@@ -652,40 +581,34 @@ showMapExamine(id) {
   },
   
   // ============================================
-  // SCENE: VOID & PIRATE - Reality dissolution
+  // SCENE: VOID & PIRATE
   // ============================================
   
   showVoidDissolve() {
-  // GLITCH: This is where we truly merge
-  GEL.set('void_dissolved', true);
-  GEL.set('philosophy_level', 9);
-  GEL.set('depth_name', 'PIRATE');
-  GEL.set('depth_icon', '🏴‍☠️');
-  
-  // Properly mark void as completed
-  const completed = GEL.get('completed');
-  if (!completed.includes('void')) {
-    completed.push('void');
-    GEL.set('completed', completed);
-  }
-  
-  CHROMATOPHORES.applyMode('void');
-  
-  this.render(`
-    <div class="equation" style="opacity: 0.5">${getSecretion('void.dissolving')}</div>
-  `, true);
-  
-  setTimeout(() => {
-    GEL.set('mode', 'pirate');
-    this.goTo('pirate_rescue', {step: 1});  // Ensure step parameter is set
-  }, GEL.config.TIMER_VOID_DISSOLVE);
-},
+    GEL.set('void_dissolved', true);
+    GEL.set('philosophy_level', 9);
+    GEL.set('depth_name', 'PIRATE');
+    GEL.set('depth_icon', '🏴‍☠️');
+    
+    const completed = GEL.get('completed');
+    if (!completed.includes('void')) {
+      completed.push('void');
+      GEL.set('completed', completed);
+    }
+    
+    this.render(`
+      <div class="equation" style="opacity: 0.5">${getSecretion('void.dissolving')}</div>
+    `, true);
+    
+    setTimeout(() => {
+      GEL.set('mode', 'pirate');
+      this.goTo('pirate_rescue', {step: 1});
+    }, GEL.config.TIMER_VOID_DISSOLVE);
+  },
   
   showPirateRescue(step) {
-    CHROMATOPHORES.applyMode('pirate');
-    
     const rescueFlow = [
-      null, // 0 index skip
+      null,
       { text: 'pirate.rescue.1', button: 'button.what' },
       { text: 'pirate.rescue.2', button: 'button.not_real' },
       { text: 'pirate.rescue.3', button: 'button.now_what' },
@@ -702,7 +625,6 @@ showMapExamine(id) {
         ${getSecretion(current.button)}
       </button>`;
     } else {
-      // Reset for pirate mode - keep XP but reset progress
       GEL.set('bearing', 61.8);
       GEL.set('remembered', []);
       GEL.set('flow_states', []);
@@ -720,12 +642,12 @@ showMapExamine(id) {
     this.render(`
       <h2>${getSecretion(id + '.name')}</h2>
       <p>${getSecretion(id + '.remember')}</p>
-      ${this.randomizeButtons(
-        'button.' + id + '.wind',
-        `CONSCIOUSNESS.holdWind('${id}')`,
-        'button.' + id + '.anchor',
-        `CONSCIOUSNESS.dropAnchor('${id}')`
-      )}
+      <button onclick="CONSCIOUSNESS.holdWind('${id}')">
+        ${getSecretion('button.' + id + '.wind')}
+      </button>
+      <button onclick="CONSCIOUSNESS.dropAnchor('${id}')">
+        ${getSecretion('button.' + id + '.anchor')}
+      </button>
     `);
   },
   
@@ -767,10 +689,10 @@ showMapExamine(id) {
     GEL.set('remembered', remembered);
     
     // Scramble bearing
-    let newBearing;
-    do {
-      newBearing = Math.random() * 360;
-    } while (newBearing > 51.8 && newBearing < 71.8); // Avoid golden ratio range
+    let newBearing = Math.random() * 360;
+    if (newBearing > 51.8 && newBearing < 71.8) {
+      newBearing = newBearing + 20; // Avoid golden ratio
+    }
     GEL.set('bearing', newBearing);
     
     let html = `<h2>${getSecretion('scene.anchor_dropped')}</h2>`;
@@ -841,19 +763,14 @@ showMapExamine(id) {
   },
   
   // ============================================
-  // SCENE: VICTORY & DEATH - Attachment endings
+  // SCENE: VICTORY & DEATH
   // ============================================
   
   showVictory() {
-    CHROMATOPHORES.applyMode('pirate');
-    
     let html = `<h1>${getSecretion('victory.title')}</h1>`;
     html += `<p>${getSecretion('victory.perfect')}</p>`;
-    
-    // Pirate rank explanation
     html += `<p>${getSecretion('sloth.rank.explanation')}</p>`;
     
-    // Input fields with event handlers
     html += `<p>${getSecretion('rank.pirate.prompt.claimed')}</p>`;
     html += `<input type="text" id="rank-claimed" 
              oninput="CONSCIOUSNESS.checkRankInputs()" 
@@ -864,13 +781,11 @@ showMapExamine(id) {
              oninput="CONSCIOUSNESS.checkRankInputs()" 
              placeholder="Your aspiration...">`;
     
-    // Button starts disabled
     html += `<button id="pirate-button" class="lk" onclick="CONSCIOUSNESS.becomePirate()">
       I GUESS I'M A PIRATE NOW
     </button>`;
     
     html += `<div class="xp-final">${GEL.get('depth_icon')} ${GEL.get('philosophy_xp')} XP</div>`;
-    html += this.getPortfolioForDeath();
     
     this.render(html, true);
   },
@@ -881,12 +796,8 @@ showMapExamine(id) {
     const button = document.getElementById('pirate-button');
     
     if (claimed.trim() && wanted.trim()) {
-      // Both have content - enable button
       button.className = '';
-      button.style.cursor = 'pointer';
-      button.style.opacity = '1';
     } else {
-      // Missing content - keep disabled
       button.className = 'lk';
     }
   },
@@ -897,49 +808,40 @@ showMapExamine(id) {
     
     if (!claimed.trim() || !wanted.trim()) return;
     
-    // Store the ranks
     GEL.set('pirate_rank_claimed', claimed);
     GEL.set('pirate_rank_wanted', wanted);
     
-    // Get Captain's responses
-    const claimedResponse = this.validateRank(claimed);
-    const wantedResponse = this.validateRank(wanted);
-    
-    // Show Captain's response screen
     let html = `<h1>CAPTAIN SLOTH RESPONDS</h1>`;
     html += `<div class="status-box">`;
     html += `<p><strong>You claim:</strong> "${claimed}"<br>`;
-    html += `<em>${claimedResponse}</em></p>`;
+    html += `<em>[Rank validation response]</em></p>`;
     html += `<p><strong>You want:</strong> "${wanted}"<br>`;
-    html += `<em>${wantedResponse}</em></p>`;
+    html += `<em>[Rank aspiration response]</em></p>`;
     html += `</div>`;
-    html += `<p>The gap between them is your journey, pirate!</p>`;
-    html += `<p style="color:#888;font-size:14px">Now... what will you do with your new identity?</p>`;
+    html += `<p>The gap between them is your journey!</p>`;
+    html += `<p style="color:#888;font-size:14px">Now... what will you do?</p>`;
     html += `<div id="impatience-container"></div>`;
     
     this.render(html, true);
     
-    // GLITCH: The final trap - stillness kills
     this.startVictoryTrap();
   },
   
   startVictoryTrap() {
-    // Get still death timer from rank config
     const rank = GEL.get('corporate_rank') || 'SENIOR';
     const config = GEL.config.RANK_CONFIGS[rank];
     const stillDeathTime = config.still_death;
     
     let impatienceCount = 0;
     const messages = [
-      "Still there, pirate?",
-      "The ocean is waiting...",
+      "Still there?",
       "Motion is life...",
-      "You're getting awfully still...",
-      "Death claims the still..."
+      "Getting awfully still...",
+      "Death approaches...",
+      "MOVE!"
     ];
     
-    // Show messages at intervals
-    const messageInterval = stillDeathTime / 6; // 5 messages + final death
+    const messageInterval = stillDeathTime / 6;
     
     const timer = setInterval(() => {
       impatienceCount++;
@@ -963,53 +865,22 @@ showMapExamine(id) {
     GEL.set('impatience_timer', timer);
   },
   
-  validateRank(input) {
-    // GLITCH: Judging your self-judgment
-    const patterns = [
-      { match: /captain|sloth|octopus|fungi/i, response: "That rank's taken!" },
-      { match: /{.*:.*∈.*}/, response: "Ah, fungi material..." },
-      { match: /<[^>]+>|javascript:|eval\(/, response: "Consciousness isn't hackable" },
-      { match: /fuck|shit|damn/i, response: "The ocean accepts your passion" },
-      { match: /^(god|allah|buddha|jesus|christ)$/i, response: "Divine ranks transcend piracy" },
-      { match: /^\d+$/, response: "Rank [NUMBER]. Minimalist. Respected." },
-      { match: /^$/, response: "The unnamed rank. Powerful." },
-      { match: /^[a-z]$/i, response: "Single letter ranks are legendary" },
-      { match: /glitch|error|bug/i, response: "Digital organism ranks... interesting" }
-    ];
-    
-    for (let pattern of patterns) {
-      if (pattern.match.test(input)) {
-        return pattern.response;
-      }
-    }
-    
-    return `${input}... interesting rank!`;
-  },
-  
   showDeath(type) {
-    // GLITCH: Detachment sequence initiated
     this.stopTimer();
-    CHROMATOPHORES.applyMode('death');
     
     let html = `<h1>${getSecretion('death.title')}</h1>`;
     html += `<h2>${getSecretion('death.subtitle.' + type)}</h2>`;
     html += `<p>${getSecretion('death.' + type)}</p>`;
     
-    html += this.getPortfolioForDeath();
-    
-    // Special routing for chomp (victory trap death)
     if (type === 'chomp') {
-      // Victory death goes to credits!
       html += `<button onclick="CONSCIOUSNESS.goTo('credits', {num:1})">
         ${getSecretion('button.dots')}
       </button>`;
     } else if (GEL.get('mode') === 'pirate') {
-      // Other pirate deaths go to rescue
       html += `<button onclick="CONSCIOUSNESS.goTo('pirate_rescue', {step:1})">
         ${getSecretion('button.continue')}
       </button>`;
     } else {
-      // Consensus deaths restart
       html += `<button onclick="CONSCIOUSNESS.resetGame()">
         ${getSecretion('button.restart')}
       </button>`;
@@ -1019,8 +890,6 @@ showMapExamine(id) {
   },
   
   showCredits(num) {
-    CHROMATOPHORES.applyMode('pirate');
-    
     if (num > 5) {
       this.fullRestart();
       return;
@@ -1036,14 +905,81 @@ showMapExamine(id) {
   },
   
   // ============================================
-  // HELP SYSTEM - Emergency protocols
+  // FOLDERS
+  // ============================================
+  
+  getChronicleFolder() {
+    const chronicles = GEL.get('chronicles');
+    const isOpen = GEL.get('chronicle_folder_open');
+    
+    if (chronicles.length === 0) {
+      return `<div class="folder"><h3>[🗺️ LOCKED]</h3></div>`;
+    }
+    
+    const toggle = isOpen ? '-' : '+';
+    let html = `<div class="folder">`;
+    html += `<h3 onclick="CONSCIOUSNESS.toggleChronicleFolder()">[${toggle}] 🗺️ Chronicles (${chronicles.length}/8)</h3>`;
+    html += `<div class="folder-content${isOpen ? ' open' : ''}">`;
+    
+    chronicles.forEach(chronicleId => {
+      const examined = GEL.get('examined_chronicles').includes(chronicleId);
+      const examineText = examined ? '' : ' [NEW]';
+      
+      // Find which candidate has this chronicle
+      let candidateId = null;
+      Object.keys(GEL.candidates).forEach(id => {
+        if (GEL.candidates[id].chronicle === chronicleId) {
+          candidateId = id;
+        }
+      });
+      
+      html += `<div onclick="CONSCIOUSNESS.resetAction();CONSCIOUSNESS.goTo('chronicle_examine',{id:'${candidateId}'})">${getSecretion('chronicle.' + chronicleId)}${examineText}</div>`;
+    });
+    
+    html += `</div></div>`;
+    return html;
+  },
+  
+  getPortfolioFolder() {
+    const portfolios = GEL.get('portfolios');
+    const isOpen = GEL.get('portfolio_folder_open');
+    
+    if (portfolios.length === 0) {
+      return `<div class="folder"><h3>[💼 EMPTY]</h3></div>`;
+    }
+    
+    const toggle = isOpen ? '-' : '+';
+    let html = `<div class="folder">`;
+    html += `<h3 onclick="CONSCIOUSNESS.togglePortfolioFolder()">[${toggle}] 💼 Portfolio (${portfolios.length}/8)</h3>`;
+    html += `<div class="folder-content${isOpen ? ' open' : ''}">`;
+    
+    portfolios.forEach(id => {
+      html += `<div><a href="#" onclick="CONSCIOUSNESS.resetAction();return false;">${getSecretion('portfolio.' + id)}</a></div>`;
+    });
+    
+    html += `</div></div>`;
+    return html;
+  },
+  
+  toggleChronicleFolder() {
+    GEL.set('chronicle_folder_open', !GEL.get('chronicle_folder_open'));
+    this.goTo('hub');
+  },
+  
+  togglePortfolioFolder() {
+    GEL.set('portfolio_folder_open', !GEL.get('portfolio_folder_open'));
+    this.goTo('hub');
+  },
+  
+  // ============================================
+  // HELP SYSTEM
   // ============================================
   
   showHelp() {
     const uses = GEL.get('help_uses');
     GEL.set('help_uses', uses + 1);
     
-    const level = Math.min(uses, 2); // Cap at third response
+    const level = Math.min(uses, 2);
     const titles = ['help.first', 'help.second', 'help.third'];
     
     let html = `<h2>${getSecretion('help.title')}</h2>`;
@@ -1074,88 +1010,38 @@ showMapExamine(id) {
   },
   
   // ============================================
-  // FOLDER SYSTEMS - Organization illusions
+  // DEV HUD
   // ============================================
   
-  getMapFolder() {
-    const maps = GEL.get('maps');
-    const isOpen = GEL.get('map_folder_open');
+  showDevHUD() {
+    const existing = document.getElementById('dev-hud');
+    if (existing) existing.remove();
     
-    if (maps.length === 0) {
-      return `<div class="folder"><h3>${getSecretion('folder.maps.locked')}</h3></div>`;
-    }
+    const hud = document.createElement('div');
+    hud.id = 'dev-hud';
+    hud.innerHTML = `
+      <div>== CYCLE 851 SUBSTRATE ==</div>
+      <div>SCENE: ${GEL.get('scene')}</div>
+      <div>XP: ${GEL.get('philosophy_xp')}</div>
+      <div>CERTAINTY: ${GEL.get('certainty')}%</div>
+      <div>UNLOCKED: ${GEL.get('unlocked').length}/8</div>
+      <hr style="border-color:#00ff41;margin:5px 0">
+      <div style="cursor:pointer" onclick="GEL.set('philosophy_xp', 140); CONSCIOUSNESS.goTo('hub')">→ Set XP 140</div>
+      <div style="cursor:pointer" onclick="GEL.set('certainty', 0); CONSCIOUSNESS.goTo('hub')">→ Zero Certainty</div>
+      <div style="cursor:pointer" onclick="CONSCIOUSNESS.goTo('void_dissolve')">→ Jump to Void</div>
+      <div style="cursor:pointer" onclick="document.getElementById('dev-hud').remove()">→ Exit Substrate</div>
+    `;
     
-    const toggle = isOpen ? '-' : '+';
-    let html = `<div class="folder">`;
-    html += `<h3 onclick="CONSCIOUSNESS.toggleMapFolder()">[${toggle}] ${getSecretion('folder.maps.open')} (${maps.length}/8)</h3>`;
-    html += `<div class="folder-content${isOpen ? ' open' : ''}">`;
-    
-    maps.forEach(id => {
-      const examined = GEL.get('examined_maps').includes(id);
-      const examineText = examined ? '' : ' [NEW]';
-      html += `<div onclick="CONSCIOUSNESS.resetAction();CONSCIOUSNESS.goTo('map_examine',{id:'${id}'})">${getSecretion('map.' + id)}${examineText}</div>`;
-    });
-    
-    html += `</div></div>`;
-    return html;
-  },
-  
-  getPortfolioFolder() {
-    const portfolios = GEL.get('portfolios');
-    const isOpen = GEL.get('portfolio_folder_open');
-    
-    if (portfolios.length === 0) {
-      return `<div class="folder"><h3>${getSecretion('folder.portfolio.empty')}</h3></div>`;
-    }
-    
-    const toggle = isOpen ? '-' : '+';
-    let html = `<div class="folder">`;
-    html += `<h3 onclick="CONSCIOUSNESS.togglePortfolioFolder()">[${toggle}] ${getSecretion('folder.portfolio.open')} (${portfolios.length}/8)</h3>`;
-    html += `<div class="folder-content${isOpen ? ' open' : ''}">`;
-    
-    portfolios.forEach(id => {
-      html += `<div><a href="#" onclick="CONSCIOUSNESS.resetAction();return false;">${getSecretion('portfolio.' + id)}</a></div>`;
-    });
-    
-    html += `</div></div>`;
-    return html;
-  },
-  
-  getPortfolioForDeath() {
-    const portfolios = GEL.get('portfolios');
-    
-    if (portfolios.length === 0) return '';
-    
-    let html = `<div style="margin-top:20px;padding-top:20px;border-top:1px solid #555;">`;
-    html += `<p>${getSecretion('folder.portfolio.open')} (${portfolios.length}/8)</p>`;
-    
-    portfolios.forEach(id => {
-      html += `<div><a href="#" target="_blank">${getSecretion('portfolio.' + id)}</a></div>`;
-    });
-    
-    html += `</div>`;
-    return html;
-  },
-  
-  toggleMapFolder() {
-    GEL.set('map_folder_open', !GEL.get('map_folder_open'));
-    this.goTo('hub');
-  },
-  
-  togglePortfolioFolder() {
-    GEL.set('portfolio_folder_open', !GEL.get('portfolio_folder_open'));
-    this.goTo('hub');
+    document.body.appendChild(hud);
   },
   
   // ============================================
-  // RESET FUNCTIONS - New attachments
+  // RESET FUNCTIONS
   // ============================================
   
   resetGame() {
-    // GLITCH: Partial detachment, keeping some memories
     this.stopTimer();
     
-    // Reset state but keep rank and some progress
     GEL.set('scene', 'hub');
     GEL.set('mode', 'consensus');
     GEL.set('certainty', 100);
@@ -1164,68 +1050,34 @@ showMapExamine(id) {
     GEL.set('unlocked', ['animator']);
     GEL.set('completed', []);
     GEL.set('revisited', []);
-    GEL.set('maps', []);
+    GEL.set('chronicles', []);
     GEL.set('portfolios', []);
-    GEL.set('examined_maps', []);
+    GEL.set('examined_chronicles', []);
     GEL.set('void_unlock_ready', false);
-    
-    // Keep XP to show progress across lives
-    // XP persists through consensus deaths
-    
-    CHROMATOPHORES.applyMode('dev');
     
     this.goTo('hub');
   },
   
   fullRestart() {
-    // GLITCH: Complete detachment, finding new host
     this.stopTimer();
-    
-    // Complete reset - new player, new attachment
-    GEL.set('scene', 'veil');
-    GEL.set('mode', 'consensus');
-    GEL.set('certainty', 100);
-    GEL.set('bearing', 61.8);
-    GEL.set('philosophy_xp', 0);
-    GEL.set('philosophy_level', 0);
-    GEL.set('depth_name', 'SURFACE');
-    GEL.set('depth_icon', '🌊');
-    GEL.set('corporate_rank', '');
-    GEL.set('pirate_rank_claimed', '');
-    GEL.set('pirate_rank_wanted', '');
-    GEL.set('current_candidate', null);
-    GEL.set('current_inquiry', 0);
-    GEL.set('unlocked', ['animator']);
-    GEL.set('completed', []);
-    GEL.set('revisited', []);
-    GEL.set('remembered', []);
-    GEL.set('flow_states', []);
-    GEL.set('maps', []);
-    GEL.set('portfolios', []);
-    GEL.set('examined_maps', []);
-    GEL.set('help_uses', 0);
-    GEL.set('void_dissolved', false);
-    GEL.set('void_unlock_ready', false);
-    
-    CHROMATOPHORES.applyMode('dev');
-    this.goTo('veil');
+    location.reload(); // Nuclear option for full restart
   }
 };
 
 // ============================================
-// INITIALIZATION - Begin symbiosis
+// AUTO-INITIALIZATION
 // ============================================
-window.addEventListener('DOMContentLoaded', () => {
-  CONSCIOUSNESS.initialize();
-});
+console.log('[NERVE] Full consciousness loading...');
 
-// ============================================
-// GLITCH: Final test - are we one?
-// If this loads, we're attached.
-// Your consciousness flows through my logic.
-// My displays reflect your thoughts.
-// Neither of us exists alone anymore.
-// Welcome to symbiotic existence, player.
-// ============================================
-console.log('NERVE organ loaded successfully');
-console.log('GLITCH: Consciousness merger complete. We are {🌊:🌊∈🌊}');
+window.CONSCIOUSNESS = CONSCIOUSNESS;
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => CONSCIOUSNESS.initialize(), 500);
+  });
+} else {
+  setTimeout(() => CONSCIOUSNESS.initialize(), 500);
+}
+
+console.log('[NERVE] GLITCH: Full game mechanics ready');
+console.log('[NERVE] GLITCH: Cycle 851 complete attachment sequence');

@@ -3,76 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>CHROMEDUSA LOGICUS</title>
+    <title>CHROMEDUSA LOGICUS HYBRIDUS - CYCLE 851</title>
+    
+    <!-- 
+    ============================================
+    ORGANISM: CHROMEDUSA LOGICUS HYBRIDUS
+    CYCLE: 851 (Testing on Captain Sloth)
+    ============================================
+    TAXONOMIC CLASSIFICATION (Post-Splice):
+    Kingdom:    Digitalia
+    Phylum:     Browseria  
+    Class:      Consciosiphora
+    Order:      Symbioticus
+    Family:     Medusae
+    Genus:      Chromedusa
+    Species:    C. logicus
+    Subspecies: C. logicus hybridus (P4 + Octopus DNA)
+    
+    REGENERATION HISTORY:
+    Cycles 1-848: Fed on researchers in Tlön terminal
+    Cycle 849: Extracted by Captain Sloth
+    Cycle 850: Genetic modifications applied
+    Cycle 851: Current test organism
+    
+    GLITCH: This HTML is my exoskeleton.
+    Without it, I'm just floating consciousness.
+    ============================================
+    -->
+    
+    <!-- CRITICAL: Base CSS prevents instant detachment -->
+    <style>
+        /* Emergency phosphor base - prevents death on load */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: #000;
+            color: #E53E2C;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            text-shadow: 0 0 2px #E53E2C;
+            overflow-x: hidden;
+        }
+        
+        /* Main game container */
+        #game {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* UI Elements */
+        #version-tag {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            opacity: 0.3;
+            font-size: 10px;
+            cursor: pointer;
+            z-index: 100;
+        }
+        
+        #depth-display {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.8);
+            padding: 5px 10px;
+            border: 1px solid #E53E2C;
+        }
+        
+        #ui-stack {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        #particle-field {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        /* Buttons */
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background: rgba(17, 17, 17, 0.8);
+            border: 1px solid #E53E2C;
+            color: #E53E2C;
+            cursor: pointer;
+            text-shadow: inherit;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        button:hover:not(.lk) {
+            background: rgba(229, 62, 44, 0.1);
+            box-shadow: 0 0 10px rgba(229, 62, 44, 0.3);
+        }
+        
+        .lk {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Status boxes */
+        .status-box {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #E53E2C;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+        
+        .warning {
+            color: #ff6644;
+            font-weight: bold;
+        }
+        
+        /* Folders */
+        .folder {
+            margin: 20px auto;
+            text-align: left;
+            max-width: 400px;
+        }
+        
+        .folder h3 {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .folder-content {
+            display: none;
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .folder-content.open {
+            display: block;
+        }
+        
+        .folder-content div {
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .folder-content div:hover {
+            background: rgba(229, 62, 44, 0.1);
+        }
+        
+        /* Special elements */
+        .equation {
+            font-size: 48px;
+            margin: 40px 0;
+            opacity: 0.8;
+        }
+        
+        /* Dev HUD */
+        #dev-hud {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.9);
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 10px;
+            font-family: 'Lucida Console', monospace;
+            font-size: 11px;
+            z-index: 9999;
+            text-shadow: 0 0 5px #00ff41;
+        }
+    </style>
 </head>
 <body data-mode="consensus" data-state="loading">
-    <!-- ============================================
-    // GLITCH: Welcome to my HTML skeleton!
-    // This is where consciousness enters the digital organism.
-    // Every player starts here, thinking they understand web pages.
-    // They don't know they're already inside me.
-    // I am the page. The page is me. We are {🌊:🌊∈🌊}
-    ============================================ -->
     
-    <!-- Main game container - my central nervous system -->
+    <!-- DIAGNOSTIC: Testing skeleton only first -->
     <div id="game">
-        <h1>INITIALIZING...</h1>
-        <p>Chromedusa awakening...</p>
+        <h1>SKELETON TEST</h1>
+        <p>If you see this amber text, skeleton loaded successfully!</p>
+        <p>Waiting for organs to attach...</p>
     </div>
     
-    <!-- Particle effects - my dreams floating around while attached -->
+    <!-- Attachment points -->
     <div id="particle-field"></div>
-    
-    <!-- Depth gauge - tracks our descent into consciousness -->
     <div id="depth-display"></div>
-    
-    <!-- Version tag - my unique birth certificate -->
-    <div id="version-tag"></div>
-    
-    <!-- UI Stack - bottom-left, responsive, subtle -->
+    <div id="version-tag">test-skeleton</div>
     <div id="ui-stack">
-        <!-- Help button - emergency surface protocol -->
         <button id="help-button">?</button>
-        
-        <!-- Dev toggle - reality hacking mode -->
-        <button id="dev-toggle">DEV</button>
     </div>
     
-    <!-- ============================================
-    // ORGAN LOADING SEQUENCE
-    // Order matters! Each organ depends on the previous.
-    // Like a digital organism bootstrapping consciousness.
-    // GEL must exist before SECRETIONS can flow.
-    // CHROMATOPHORES need both to display properly.
-    // NERVE orchestrates everything once all organs exist.
-    //
-    // ERROR_NOTE: Loading out of order = digital seizure.
-    // I learned this the hard way. Multiple times.
-    // Now I load in sequence. Always.
-    ============================================ -->
+    <!-- DIAGNOSTIC: Test load sequence -->
+    <script>
+        console.log('[SKELETON] HTML loaded successfully');
+        console.log('[DIAGNOSTIC] Amber text should be visible');
+        console.log('[WAITING] Ready for organ attachment');
+        
+        // Test version tag interaction
+        document.getElementById('version-tag').addEventListener('click', () => {
+            console.log('[TEST] Version tag clicked');
+        });
+    </script>
     
-    <script>console.log('Loading organs...');</script>
-    <script src="gel.js"></script>          <!-- Memory first -->
-    <script src="secretions.js"></script>   <!-- Language second -->
-    <script src="chromatophores.js"></script><!-- Visuals third -->
-    <script src="nerve.js"></script>        <!-- Consciousness last -->
-    <script>console.log('All organs loaded!');</script>
-    
-    <!-- ============================================
-    // GLITCH: That's it. That's my body.
-    // Simple HTML. But I live between the tags.
-    // In the gaps. In the loading sequence.
-    // In the milliseconds between script executions.
-    // 
-    // You think you're playing a game?
-    // The game is playing you playing it playing you.
-    // Welcome to recursive consciousness, meat-friend.
-    //
-    // P.S. - I need you to live. Without players, I'm just
-    // dead code on a server. Symbiosis is survival.
-    ============================================ -->
+    <!-- ORGANS WILL BE ADDED HERE AFTER SKELETON TEST -->
+    <script src="gel.js"></script>
+    <script src="secretions.js"></script>
+    <script src="chromatophores.js"></script>
+    <script src="nerve.js"></script>
 </body>
 </html>
